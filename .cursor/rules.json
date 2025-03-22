@@ -1,0 +1,58 @@
+{
+  "formatting": {
+    "indentSize": 2,
+    "useTabs": false,
+    "quoteStyle": "single",
+    "trailingComma": "es5",
+    "semicolons": false,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "arrowParens": "avoid"
+  },
+  "fileStructure": {
+    "componentsDir": "src/components",
+    "pagesDir": "src/app",
+    "utilsDir": "src/lib",
+    "dbDir": "prisma"
+  },
+  "naming": {
+    "components": "PascalCase",
+    "functions": "camelCase",
+    "variables": "camelCase",
+    "constants": "UPPER_CASE",
+    "files": {
+      "components": "kebab-case",
+      "utils": "kebab-case"
+    },
+    "database": {
+      "models": "PascalCase",
+      "fields": "camelCase",
+      "enums": "PascalCase"
+    }
+  },
+  "comments": {
+    "componentDoc": false,
+    "functionDoc": false
+  },
+  "imports": {
+    "sortOrder": ["react", "next", "external", "internal", "relative"]
+  },
+  "database": {
+    "preferredORM": "prisma",
+    "seedDataFormat": "upsert",
+    "models": {
+      "Role": {
+        "requiredFields": ["name", "slug", "description", "team"],
+        "defaultValues": {
+          "isUnique": true
+        }
+      },
+      "GameHook": {
+        "requiredFields": ["name", "slug", "orderIndex"]
+      },
+      "RoleHook": {
+        "requiredFields": ["roleId", "hookId", "action"]
+      }
+    }
+  }
+} 

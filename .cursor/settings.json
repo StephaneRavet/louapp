@@ -1,0 +1,34 @@
+{
+  "language": "français",
+  "codeStyle": {
+    "indent": 2,
+    "quotes": "single",
+    "semicolons": false
+  },
+  "projectContext": "Application d'aide au maître du jeu du loup-garou",
+  "reactPreferences": {
+    "componentType": "functional",
+    "stateManagement": "local"
+  },
+  "folderStructure": {
+    "sourceCode": "/src",
+    "components": "/src/components",
+    "pages": "/src/app",
+    "database": "/prisma"
+  },
+  "databasePreferences": {
+    "orm": "prisma",
+    "provider": "sqlite",
+    "schemaLocation": "/prisma/schema.prisma",
+    "seedScript": "pnpm seed",
+    "mainEntities": ["Role", "GameHook", "RoleHook"],
+    "teamTypes": ["village", "loups", "independant", "multi"]
+  },
+  "commands": {
+    "dev": "pnpm dev",
+    "build": "pnpm build",
+    "seed": "pnpm seed",
+    "prismaGenerate": "npx prisma generate",
+    "prismaStudio": "npx prisma studio"
+  }
+} 

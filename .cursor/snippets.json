@@ -1,0 +1,135 @@
+{
+  "React Component": {
+    "prefix": "rfc",
+    "body": [
+      "import React from 'react'",
+      "",
+      "interface ${1:ComponentName}Props {",
+      "  $2",
+      "}",
+      "",
+      "export const ${1:ComponentName} = ({ $3 }: ${1:ComponentName}Props) => {",
+      "  return (",
+      "    <div>",
+      "      $4",
+      "    </div>",
+      "  )",
+      "}",
+      ""
+    ],
+    "description": "Crée un composant React fonctionnel avec TypeScript"
+  },
+  "Next.js Page": {
+    "prefix": "npage",
+    "body": [
+      "export default function ${1:PageName}() {",
+      "  return (",
+      "    <main>",
+      "      <h1>${2:Titre de la page}</h1>",
+      "      $3",
+      "    </main>",
+      "  )",
+      "}",
+      ""
+    ],
+    "description": "Crée une page Next.js"
+  },
+  "useState Hook": {
+    "prefix": "ush",
+    "body": [
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState${2:<${3:type}>}(${4:initialValue})"
+    ],
+    "description": "Ajoute un hook useState"
+  },
+  "useEffect Hook": {
+    "prefix": "ueh",
+    "body": [
+      "useEffect(() => {",
+      "  $1",
+      "  return () => {",
+      "    $2",
+      "  }",
+      "}, [${3:dependencies}])"
+    ],
+    "description": "Ajoute un hook useEffect"
+  },
+  "Prisma Query": {
+    "prefix": "pquery",
+    "body": [
+      "const ${1:result} = await prisma.${2:model}.${3:findMany}({",
+      "  ${4:where: {",
+      "    ${5:field}: ${6:value}",
+      "  }}",
+      "})"
+    ],
+    "description": "Ajoute une requête Prisma"
+  },
+  "Role Create": {
+    "prefix": "roleCreate",
+    "body": [
+      "await prisma.role.create({",
+      "  data: {",
+      "    name: '${1:Nom du rôle}',",
+      "    slug: '${2:slug_du_role}',",
+      "    description: '${3:Description du rôle}',",
+      "    team: '${4|village,loups,independant,multi|}',",
+      "    color: '${5:BLEU}',",
+      "    objectif: '${6:Objectif du rôle}',",
+      "    isUnique: ${7:true}",
+      "  }",
+      "})"
+    ],
+    "description": "Crée un nouveau rôle"
+  },
+  "GameHook Create": {
+    "prefix": "hookCreate",
+    "body": [
+      "await prisma.gameHook.create({",
+      "  data: {",
+      "    name: '${1:Nom du hook}',",
+      "    slug: '${2:slug_du_hook}',",
+      "    orderIndex: ${3:0}",
+      "  }",
+      "})"
+    ],
+    "description": "Crée un nouveau hook de jeu"
+  },
+  "RoleHook Create": {
+    "prefix": "roleHookCreate",
+    "body": [
+      "await prisma.roleHook.create({",
+      "  data: {",
+      "    roleId: ${1:roleId},",
+      "    hookId: ${2:hookId},",
+      "    action: '${3:Action à effectuer}'",
+      "  }",
+      "})"
+    ],
+    "description": "Crée une association rôle-hook"
+  },
+  "Find Role by Slug": {
+    "prefix": "findRole",
+    "body": [
+      "const ${1:role} = await prisma.role.findUnique({",
+      "  where: {",
+      "    slug: '${2:slug_du_role}'",
+      "  }${3:,",
+      "  include: {",
+      "    roleHooks: true",
+      "  }}",
+      "})"
+    ],
+    "description": "Trouve un rôle par son slug"
+  },
+  "Find GameHook by Slug": {
+    "prefix": "findHook",
+    "body": [
+      "const ${1:hook} = await prisma.gameHook.findUnique({",
+      "  where: {",
+      "    slug: '${2:slug_du_hook}'",
+      "  }",
+      "})"
+    ],
+    "description": "Trouve un hook de jeu par son slug"
+  }
+} 

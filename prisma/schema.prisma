@@ -13,9 +13,46 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+enum TeamType {
+  village
+  loups
+  independant
+  multi
+}
+
 model Role {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int         @id @default(autoincrement())
+  name        String
+  slug        String      @unique
+  description String
+  team        TeamType
+  color       String?
+  objectif    String?
+  isUnique    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  roleHooks   RoleHook[]
+}
+
+model GameHook {
+  id          Int         @id @default(autoincrement())
+  name        String
+  slug        String      @unique
+  orderIndex  Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  roleHooks   RoleHook[]
+}
+
+model RoleHook {
+  id        Int       @id @default(autoincrement())
+  roleId    Int
+  hookId    Int
+  action    String
+  role      Role      @relation(fields: [roleId], references: [id])
+  hook      GameHook  @relation(fields: [hookId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([roleId, hookId])
 }

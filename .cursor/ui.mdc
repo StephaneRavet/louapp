@@ -1,0 +1,62 @@
+---
+description: 
+globs: *.tsx
+alwaysApply: false
+---
+* L'application est destiné à l'affichage mobile uniquement. Utilise TailwindCss pour gérer l'affichage mobile first.
+* L'UI est basé sur des composants shadcn/ui. Utilise toujours des composants shadcn pour créer les interfaces.
+* S'il manque des composants utiles, ajoute les au projet. Ex : pnpm dlx shadcn@latest add button
+* La config shadcn/ui est dans [components.json](mdc:components.json)
+
+Voici la liste des composants shadcn/ui dispo :
+Components
+Accordion
+Alert
+Alert Dialog
+Aspect Ratio
+Avatar
+Badge
+Breadcrumb
+Button
+Calendar
+Card
+Carousel
+Chart
+Checkbox
+Collapsible
+Combobox
+Command
+Context Menu
+Data Table
+Date Picker
+Dialog
+Drawer
+Dropdown Menu
+Form
+Hover Card
+Input
+Input OTP
+Label
+Menubar
+Navigation Menu
+Pagination
+Popover
+Progress
+Radio Group
+Resizable
+Scroll Area
+Select
+Separator
+Sheet
+Sidebar
+Skeleton
+Slider
+Sonner
+Switch
+Table
+Tabs
+Textarea
+Toast
+Toggle
+Toggle Group
+Tooltip
