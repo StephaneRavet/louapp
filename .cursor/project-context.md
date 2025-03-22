@@ -24,7 +24,7 @@ Cette application vise à aider les maîtres du jeu du Loup-Garou à gérer leur
 ## Modèle de données
 Le modèle de données principal comprend trois entités :
 
-1. `Role` : Représente les rôles du jeu (Loup-Garou, Chasseur, etc.)
+1. `Role` : Représente les rôles du jeu (Loup, Chasseur, etc.)
    - Attributs : nom, slug, description, équipe, couleur, objectif, etc.
    - Les équipes sont définies par l'enum `TeamType` : village, loups, independant, multi
 

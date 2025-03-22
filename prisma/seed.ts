@@ -29,7 +29,7 @@ async function main() {
       description: 'Peut éliminer un joueur en mourant',
       team: TeamType.village,
       color: 'BLEU',
-      objectif: 'Éliminer tous les loups-garous',
+      objectif: 'Éliminer tous les loups',
     },
     create: {
       name: 'Le Chasseur',
@@ -37,7 +37,7 @@ async function main() {
       description: 'Peut éliminer un joueur en mourant',
       team: TeamType.village,
       color: 'BLEU',
-      objectif: 'Éliminer tous les loups-garous',
+      objectif: 'Éliminer tous les loups',
       isUnique: true,
     },
   });
