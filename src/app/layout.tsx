@@ -24,15 +24,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+          enableSystem={false}
+          disableTransitionOnChange={true}
         >
-          {children}
+          <div className="min-h-screen">
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
