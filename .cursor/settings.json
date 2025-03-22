@@ -5,7 +5,7 @@
     "quotes": "single",
     "semicolons": false
   },
-  "projectContext": "Application d'aide au maître du jeu du loup-garou",
+  "projectContext": "Application d'aide au maître du jeu du loup",
   "reactPreferences": {
     "componentType": "functional",
     "stateManagement": "local"

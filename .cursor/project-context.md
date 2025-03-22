@@ -1,6 +1,6 @@
-# Contexte du projet : Application d'aide au maître du jeu du Loup-Garou
+# Contexte du projet : Application d'aide au maître du jeu du Loup
 
-Cette application vise à aider les maîtres du jeu du Loup-Garou à gérer leurs parties.
+Cette application vise à aider les maîtres du jeu du Loup à gérer leurs parties.
 
 ## Technologies utilisées
 - Next.js 15 avec React 19

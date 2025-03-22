@@ -36,7 +36,9 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
   const [players, setPlayers] = useState<Player[]>([
     { id: '1', name: '' }
   ])
-  const [selectedRoles, setSelectedRoles] = useState<Record<number, number>>({})
+  const [selectedRoles, setSelectedRoles] = useState<Record<number, number>>(
+    roles.reduce((acc, role) => ({ ...acc, [role.id]: 0 }), {})
+  )
   const [lastAddedId, setLastAddedId] = useState<string>('1')
   const inputRefs = useRef<Map<string, HTMLInputElement>>(new Map())
 
@@ -57,6 +59,9 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
   }, [lastAddedId])
 
   const addPlayer = () => {
+    const lastPlayer = players[players.length - 1]
+    if (!lastPlayer.name.trim()) return
+
     const newId = String(Date.now())
     setPlayers([...players, { id: newId, name: '' }])
     setLastAddedId(newId)
@@ -70,7 +75,7 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
 
   const updatePlayerName = (id: string, name: string) => {
     setPlayers(
-      players.map(player => 
+      players.map(player =>
         player.id === id ? { ...player, name } : player
       )
     )
@@ -96,14 +101,8 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
   }
 
   const updateRoleCount = (roleId: number, count: number) => {
-    if (count > 0) {
+    if (count >= 0) {
       setSelectedRoles(prev => ({ ...prev, [roleId]: count }))
-    } else {
-      setSelectedRoles(prev => {
-        const updated = { ...prev }
-        delete updated[roleId]
-        return updated
-      })
     }
   }
 
@@ -151,7 +150,7 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
               onClick={addPlayer}
               className="w-full flex items-center justify-center gap-1"
             >
-              <Plus className="h-4 w-4" /> 
+              <Plus className="h-4 w-4" />
               Ajouter un joueur
             </Button>
           </CardContent>
@@ -165,37 +164,28 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
           <CardContent>
             <div className="space-y-4">
               {roles.map(role => (
-                <div key={role.id} className="flex items-center gap-3">
-                  <div className="flex items-center flex-1 gap-2">
-                    <Checkbox
-                      id={`role-${role.id}`}
-                      checked={Boolean(selectedRoles[role.id])}
-                      onCheckedChange={(checked) => 
-                        toggleRole(role.id, checked === true)
-                      }
-                    />
+                <div key={role.id} className="flex items-center">
+                  <div className="flex items-center flex-1">
                     <label
-                      htmlFor={`role-${role.id}`}
-                      className="text-sm font-medium flex items-center gap-2 cursor-pointer flex-1"
+                      className="text-sm font-medium flex items-center cursor-pointer flex-1"
                     >
-                      <span 
-                        className="inline-block w-3 h-3 rounded-full" 
-                        style={{ backgroundColor: role.color || '#9CA3AF' }} 
+                      <span
+                        className="inline-block w-3 h-3 rounded-full"
+                        style={{ backgroundColor: role.color || '#9CA3AF' }}
                       />
                       {role.name}
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-muted-foreground ml-1">
                         ({role.team})
                       </span>
                     </label>
                   </div>
                   <Input
                     type="number"
-                    min="1"
+                    min="0"
                     max="99"
-                    value={selectedRoles[role.id] || 1}
-                    onChange={e => updateRoleCount(role.id, parseInt(e.target.value, 10))}
+                    value={selectedRoles[role.id]}
+                    onChange={e => updateRoleCount(role.id, parseInt(e.target.value, 10) || 0)}
                     className="w-16"
-                    disabled={!selectedRoles[role.id]}
                   />
                 </div>
               ))}

@@ -1,12 +1,20 @@
 import { GameSetupForm } from '@/components/game-setup-form'
 import { prisma } from '@/lib/prisma'
+import { Role } from '@prisma/client'
 
-async function getRoles() {
-  return await prisma.role.findMany({
-    orderBy: {
-      team: 'asc'
-    }
-  })
+async function getRoles(): Promise<Role[]> {
+  return await prisma.$queryRaw<Role[]>`
+    SELECT * FROM Role 
+    ORDER BY 
+      CASE team
+        WHEN 'loups' THEN 0
+        WHEN 'village' THEN 1
+        WHEN 'independant' THEN 2
+        WHEN 'multi' THEN 3
+        ELSE 4
+      END,
+      id ASC
+  `
 }
 
 export default async function Home() {
