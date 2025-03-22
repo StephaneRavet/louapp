@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -41,6 +41,16 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
   )
   const [lastAddedId, setLastAddedId] = useState<string>('1')
   const inputRefs = useRef<Map<string, HTMLInputElement>>(new Map())
+
+  const totalRoles = useMemo(() => 
+    Object.values(selectedRoles).reduce((sum, count) => sum + count, 0),
+    [selectedRoles]
+  )
+
+  const validPlayersCount = useMemo(() => 
+    players.filter(p => p.name.trim()).length,
+    [players]
+  )
 
   // Focus le premier input au chargement du composant
   useEffect(() => {
@@ -113,7 +123,7 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <>
       <div className="grid grid-cols-1 gap-6">
         {/* Section Joueurs */}
         <Card>
@@ -159,7 +169,18 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
         {/* Section Rôles */}
         <Card>
           <CardHeader>
-            <CardTitle>Rôles</CardTitle>
+            <CardTitle className="flex items-center justify-between">
+              <span>Rôles</span>
+              <span className={`text-sm font-normal mr-6 ${
+                totalRoles < validPlayersCount
+                  ? 'text-yellow-500'
+                  : totalRoles === validPlayersCount
+                    ? 'text-green-500'
+                    : 'text-red-500'
+              }`}>
+                {totalRoles}/{validPlayersCount}
+              </span>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -199,6 +220,6 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
           Commencer la partie
         </Button>
       </div>
-    </div>
+    </>
   )
 } 
