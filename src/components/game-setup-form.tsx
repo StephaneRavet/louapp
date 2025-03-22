@@ -216,7 +216,7 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={startGame} className="px-8">
+        <Button onClick={startGame} variant="default" className="w-full">
           Commencer la partie
         </Button>
       </div>
