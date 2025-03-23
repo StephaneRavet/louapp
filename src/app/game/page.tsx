@@ -1,5 +1,69 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
+import { useGame } from '@/app/hooks/useGame'
+import { useEffect } from 'react'
+
 function GamePage() {
-  return <div>GamePage</div>
+  const router = useRouter()
+  const { totalRoles, validPlayersCount, selectedRoles, players } = useGame()
+  
+  useEffect(() => {
+    console.log('Valeurs de débogage:')
+    console.log('totalRoles:', totalRoles)
+    console.log('validPlayersCount:', validPlayersCount)
+    console.log('selectedRoles:', selectedRoles)
+    console.log('players:', players)
+    console.log('isAttributionDisabled:', totalRoles === 0 || validPlayersCount === 0 || totalRoles !== validPlayersCount)
+  }, [totalRoles, validPlayersCount, selectedRoles, players])
+  
+  const handleAttributeRoles = () => {
+    console.log('Clic sur Attribuer les rôles')
+    router.push('/game/roles')
+  }
+  
+  // Condition temporairement désactivée pour déboguer
+  const isAttributionDisabled = false // totalRoles === 0 || validPlayersCount === 0 || totalRoles !== validPlayersCount
+  
+  return (
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Gestion de la partie</h1>
+      
+      <div className="flex flex-col items-center space-y-4">
+        <div className="text-center mb-4">
+          <p>Rôles sélectionnés: {totalRoles}</p>
+          <p>Joueurs valides: {validPlayersCount}</p>
+          <p>Nombre de joueurs: {players.length}</p>
+          <p>Le bouton est forcé à actif pour test</p>
+        </div>
+      
+        <button
+          onClick={handleAttributeRoles}
+          disabled={isAttributionDisabled}
+          className="px-6 py-3 rounded-md text-white font-medium transition bg-blue-600 hover:bg-blue-700"
+        >
+          Attribuer les rôles
+        </button>
+        
+        <p className="text-sm text-gray-500">
+          Normalement, le bouton serait 
+          {(totalRoles === 0 || validPlayersCount === 0 || totalRoles !== validPlayersCount) 
+            ? ' désactivé' 
+            : ' actif'}
+        </p>
+        
+        <p className="text-red-500 text-sm">
+          {totalRoles === 0 
+            ? "Aucun rôle n'a été sélectionné" 
+            : validPlayersCount === 0 
+              ? "Aucun joueur valide" 
+              : totalRoles !== validPlayersCount 
+                ? "Le nombre de rôles doit être égal au nombre de joueurs"
+                : ""}
+        </p>
+      </div>
+    </div>
+  )
 }
 
 export default GamePage

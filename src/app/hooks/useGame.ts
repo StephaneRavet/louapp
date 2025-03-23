@@ -11,6 +11,7 @@ export function useGame() {
     roles,
     players,
     selectedRoles,
+    playerRoles,
     lastAddedIndex,
     loading,
     error,
@@ -19,6 +20,7 @@ export function useGame() {
     removePlayer,
     updatePlayerName,
     updateRoleCount,
+    randomRolesAttribution,
     startGame,
     getTotalRoles,
     getValidPlayersCount,
@@ -32,11 +34,25 @@ export function useGame() {
     }
   }, [fetchRoles, roles.length])
   
+  // Calculer les valeurs à l'avance
+  const totalRoles = getTotalRoles()
+  const validPlayersCount = getValidPlayersCount()
+  
+  // Ajouter un log pour le débogage
+  useEffect(() => {
+    console.log('DEBUG useGame hook:')
+    console.log('- totalRoles:', totalRoles)
+    console.log('- validPlayersCount:', validPlayersCount)
+    console.log('- players:', players)
+    console.log('- selectedRoles:', selectedRoles)
+  }, [totalRoles, validPlayersCount, players, selectedRoles])
+  
   return {
     // État
     roles,
     players,
     selectedRoles,
+    playerRoles,
     lastAddedIndex,
     loading,
     error,
@@ -46,10 +62,11 @@ export function useGame() {
     removePlayer,
     updatePlayerName,
     updateRoleCount,
+    randomRolesAttribution,
     startGame,
     
     // Valeurs calculées
-    totalRoles: getTotalRoles(),
-    validPlayersCount: getValidPlayersCount()
+    totalRoles,
+    validPlayersCount
   }
 } 
