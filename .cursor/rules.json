@@ -13,7 +13,13 @@
     "componentsDir": "src/components",
     "pagesDir": "src/app",
     "utilsDir": "src/lib",
-    "dbDir": "prisma"
+    "dbDir": "prisma",
+    "typesDir": "src/types",
+    "testsDir": "src/lib/__tests__",
+    "uiComponentsDir": "src/components/ui",
+    "apiDir": "src/app/api",
+    "actionsDir": "src/app/actions",
+    "storeDir": "src/app/store"
   },
   "naming": {
     "components": "PascalCase",
@@ -22,7 +28,8 @@
     "constants": "UPPER_CASE",
     "files": {
       "components": "kebab-case",
-      "utils": "kebab-case"
+      "utils": "kebab-case",
+      "types": "PascalCase.type.ts"
     },
     "database": {
       "models": "PascalCase",
@@ -37,12 +44,20 @@
   "imports": {
     "sortOrder": ["react", "next", "external", "internal", "relative"]
   },
+  "packageManager": {
+    "use": "pnpm",
+    "version": "10.6.5",
+    "avoid": ["npm", "yarn"],
+    "installCommand": "pnpm add",
+    "devDependencyCommand": "pnpm add -D"
+  },
   "database": {
     "preferredORM": "prisma",
+    "version": "6.5.0",
     "seedDataFormat": "upsert",
     "models": {
       "Role": {
-        "requiredFields": ["name", "slug", "description", "team"],
+        "requiredFields": ["name", "shortName", "slug", "description", "team"],
         "defaultValues": {
           "isUnique": true
         }
@@ -53,6 +68,61 @@
       "RoleHook": {
         "requiredFields": ["roleId", "hookId", "action"]
       }
+    }
+  },
+  "typescript": {
+    "strictMode": true,
+    "noImplicitAny": true,
+    "useTypeImports": true,
+    "preferInterfaceOverType": true
+  },
+  "react": {
+    "preferFunctionalComponents": true,
+    "useHooks": true,
+    "avoidClassComponents": true,
+    "preferDestructuring": true,
+    "stateManager": "zustand"
+  },
+  "nextjs": {
+    "useAppRouter": true,
+    "useTurbopack": true,
+    "useServerActions": true,
+    "apiStyle": "route.ts"
+  },
+  "testing": {
+    "framework": "jest",
+    "filePattern": "**/__tests__/**/*.test.ts",
+    "coverage": true
+  },
+  "environment": {
+    "dotEnvLocation": ".env",
+    "requiredVars": [
+      "DATABASE_URL",
+      "NEXT_PUBLIC_APP_URL"
+    ],
+    "productionProvider": "sqlite",
+    "developmentProvider": "sqlite"
+  },
+  "seo": {
+    "includeMetadata": true,
+    "titleFormat": "%s | LouApp",
+    "defaultDescription": "Application d'aide pour les maîtres du jeu de Loup-Garou",
+    "includeOpenGraph": true
+  },
+  "deployment": {
+    "platform": "vercel",
+    "node": "18.x",
+    "buildCommand": "pnpm build",
+    "devCommand": "pnpm dev"
+  },
+  "errorHandling": {
+    "serverErrors": {
+      "logToConsole": true,
+      "returnFormat": "{ success: false, error: string }"
+    },
+    "clientErrors": {
+      "useErrorBoundary": false,
+      "useErrorComponent": true
     }
   }
 } 

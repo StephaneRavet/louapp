@@ -1,62 +1,98 @@
 ---
-description: 
+description: Guide d'interface utilisateur pour LouApp
 globs: *.tsx
-alwaysApply: false
+alwaysApply: true
 ---
-* L'application est destiné à l'affichage mobile uniquement. Utilise TailwindCss pour gérer l'affichage mobile first.
-* L'UI est basé sur des composants shadcn/ui. Utilise toujours des composants shadcn pour créer les interfaces.
-* S'il manque des composants utiles, ajoute les au projet. Ex : pnpm dlx shadcn@latest add button
+* L'application est destinée à l'affichage mobile uniquement. Utilise TailwindCSS 4 pour gérer l'affichage mobile first.
+* L'UI est basée sur des composants shadcn/ui avec Radix UI. Utilise toujours ces composants pour créer les interfaces.
+* Les composants UI personnalisés se trouvent dans `src/components/ui`.
+* S'il manque des composants utiles, ajoute-les au projet. Ex : `pnpm dlx shadcn@latest add button`
 * La config shadcn/ui est dans [components.json](mdc:components.json)
+* Utilise le mode sombre via le ThemeProvider déjà configuré (`src/components/theme-provider.tsx`).
+* Préfère les classes de Tailwind aux styles inline ou CSS personnalisé.
+* Les composants actuellement implémentés sont : button, card, checkbox, input.
+* Pour la palette de couleurs, utilise les variables CSS définies dans `src/app/globals.css`.
 
-Voici la liste des composants shadcn/ui dispo :
+## Directives Mobile
+
+* Design mobile-first : commence toujours par la mise en page mobile.
+* Utilise des breakpoints en em ou rem plutôt qu'en px.
+* Les boutons et zones cliquables doivent avoir une taille minimale de 44px.
+* Évite les hovers comme interaction principale (privilégie tap/press).
+
+## États d'interface
+
+* **État de chargement** : Utilise le composant `Loader` pour les états de chargement.
+* **État d'erreur** : Utilise le composant `ErrorMessage` pour afficher les erreurs.
+* **État vide** : Crée des états vides explicites plutôt que de montrer un écran vide.
+* **État de succès** : Donne un feedback positif après une action réussie.
+
+## Accessibilité
+
+* Utilise toujours des attributs `aria-*` appropriés pour les composants interactifs.
+* Assure-toi que tous les éléments interactifs sont accessibles au clavier.
+* Maintiens un ratio de contraste suffisant pour les textes (WCAG AA minimum).
+* Utilise des textes alternatifs descriptifs pour les images.
+* Les composants Radix UI sont déjà accessibles, préfère-les à des implémentations personnalisées.
+
+## Bonnes pratiques UI
+
+* Utilise des skeletons lors du chargement initial des données.
+* Implémente des transitions fluides entre les états (loading, success, error).
+* Évite les modales autant que possible, préfère les navigation inline.
+* Utilise des toast pour les notifications temporaires.
+* Conserve un style cohérent à travers l'application.
+
+## Composants shadcn/ui disponibles
+
 Components
-Accordion
-Alert
-Alert Dialog
-Aspect Ratio
-Avatar
-Badge
-Breadcrumb
-Button
-Calendar
-Card
-Carousel
-Chart
-Checkbox
-Collapsible
-Combobox
-Command
-Context Menu
-Data Table
-Date Picker
-Dialog
-Drawer
-Dropdown Menu
-Form
-Hover Card
-Input
-Input OTP
-Label
-Menubar
-Navigation Menu
-Pagination
-Popover
-Progress
-Radio Group
-Resizable
-Scroll Area
-Select
-Separator
-Sheet
-Sidebar
-Skeleton
-Slider
-Sonner
-Switch
-Table
-Tabs
-Textarea
-Toast
-Toggle
-Toggle Group
-Tooltip
+- Accordion
+- Alert
+- Alert Dialog
+- Aspect Ratio
+- Avatar
+- Badge
+- Breadcrumb
+- Button
+- Calendar
+- Card
+- Carousel
+- Chart
+- Checkbox
+- Collapsible
+- Combobox
+- Command
+- Context Menu
+- Data Table
+- Date Picker
+- Dialog
+- Drawer
+- Dropdown Menu
+- Form
+- Hover Card
+- Input
+- Input OTP
+- Label
+- Menubar
+- Navigation Menu
+- Pagination
+- Popover
+- Progress
+- Radio Group
+- Resizable
+- Scroll Area
+- Select
+- Separator
+- Sheet
+- Sidebar
+- Skeleton
+- Slider
+- Sonner
+- Switch
+- Table
+- Tabs
+- Textarea
+- Toast
+- Toggle
+- Toggle Group
+- Tooltip

@@ -24,8 +24,8 @@
     "body": [
       "export default function ${1:PageName}() {",
       "  return (",
-      "    <main>",
-      "      <h1>${2:Titre de la page}</h1>",
+      "    <main className=\"container p-4\">",
+      "      <h1 className=\"text-2xl font-bold mb-4\">${2:Titre de la page}</h1>",
       "      $3",
       "    </main>",
       "  )",
@@ -33,6 +33,26 @@
       ""
     ],
     "description": "Crée une page Next.js"
+  },
+  "Server Action": {
+    "prefix": "saction",
+    "body": [
+      "'use server'",
+      "",
+      "import { prisma } from '@/lib/prisma'",
+      "",
+      "export async function ${1:actionName}(${2:params}) {",
+      "  try {",
+      "    $3",
+      "    return { success: true, data: $4 }",
+      "  } catch (error) {",
+      "    console.error('Error in ${1:actionName}:', error)",
+      "    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": "Crée une action serveur Next.js"
   },
   "useState Hook": {
     "prefix": "ush",
@@ -53,6 +73,24 @@
     ],
     "description": "Ajoute un hook useEffect"
   },
+  "Zustand Store": {
+    "prefix": "zstore",
+    "body": [
+      "import { create } from 'zustand'",
+      "",
+      "interface ${1:StoreName}State {",
+      "  ${2:property}: ${3:type}",
+      "  ${4:setProperty}: (${5:value}: ${3:type}) => void",
+      "}",
+      "",
+      "export const use${1:StoreName}Store = create<${1:StoreName}State>((set) => ({",
+      "  ${2:property}: ${6:initialValue},",
+      "  ${4:setProperty}: (${5:value}) => set({ ${2:property}: ${5:value} }),",
+      "}))",
+      ""
+    ],
+    "description": "Crée un store Zustand"
+  },
   "Prisma Query": {
     "prefix": "pquery",
     "body": [
@@ -70,12 +108,13 @@
       "await prisma.role.create({",
       "  data: {",
       "    name: '${1:Nom du rôle}',",
-      "    slug: '${2:slug_du_role}',",
-      "    description: '${3:Description du rôle}',",
-      "    team: '${4|village,loup,independant,multi|}',",
-      "    color: '${5:BLEU}',",
-      "    objectif: '${6:Objectif du rôle}',",
-      "    isUnique: ${7:true}",
+      "    shortName: '${2:Court nom}',",
+      "    slug: '${3:slug_du_role}',",
+      "    description: '${4:Description du rôle}',",
+      "    team: '${5|village,loup,independant,multi|}',",
+      "    color: '${6:BLEU}',",
+      "    objectif: '${7:Objectif du rôle}',",
+      "    isUnique: ${8:true}",
       "  }",
       "})"
     ],
@@ -107,29 +146,167 @@
     ],
     "description": "Crée une association rôle-hook"
   },
-  "Find Role by Slug": {
-    "prefix": "findRole",
+  "API Route Handler": {
+    "prefix": "apiRoute",
     "body": [
-      "const ${1:role} = await prisma.role.findUnique({",
-      "  where: {",
-      "    slug: '${2:slug_du_role}'",
-      "  }${3:,",
-      "  include: {",
-      "    roleHooks: true",
-      "  }}",
-      "})"
-    ],
-    "description": "Trouve un rôle par son slug"
-  },
-  "Find GameHook by Slug": {
-    "prefix": "findHook",
-    "body": [
-      "const ${1:hook} = await prisma.gameHook.findUnique({",
-      "  where: {",
-      "    slug: '${2:slug_du_hook}'",
+      "import { NextRequest, NextResponse } from 'next/server'",
+      "import { prisma } from '@/lib/prisma'",
+      "",
+      "export async function GET(request: NextRequest) {",
+      "  try {",
+      "    $1",
+      "    return NextResponse.json({ data: $2 })",
+      "  } catch (error) {",
+      "    console.error('Error:', error)",
+      "    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })",
       "  }",
+      "}",
+      ""
+    ],
+    "description": "Crée un gestionnaire de route API Next.js"
+  },
+  "UI Component with Card": {
+    "prefix": "uicard",
+    "body": [
+      "import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'",
+      "import { Button } from '@/components/ui/button'",
+      "",
+      "interface ${1:ComponentName}Props {",
+      "  title: string",
+      "  description?: string",
+      "  $2",
+      "}",
+      "",
+      "export const ${1:ComponentName} = ({ title, description, $3 }: ${1:ComponentName}Props) => {",
+      "  return (",
+      "    <Card className=\"w-full\">",
+      "      <CardHeader>",
+      "        <CardTitle>{title}</CardTitle>",
+      "        {description && <CardDescription>{description}</CardDescription>}",
+      "      </CardHeader>",
+      "      <CardContent>",
+      "        $4",
+      "      </CardContent>",
+      "      <CardFooter>",
+      "        <Button>$5</Button>",
+      "      </CardFooter>",
+      "    </Card>",
+      "  )",
+      "}",
+      ""
+    ],
+    "description": "Crée un composant UI avec Card"
+  },
+  "Form Input": {
+    "prefix": "forminput",
+    "body": [
+      "import { Input } from '@/components/ui/input'",
+      "",
+      "<div className=\"mb-4\">",
+      "  <label htmlFor=\"${1:inputId}\" className=\"text-sm font-medium block mb-1\">${2:Label}</label>",
+      "  <Input",
+      "    id=\"${1:inputId}\"",
+      "    name=\"${3:name}\"",
+      "    placeholder=\"${4:Placeholder}\"",
+      "    value={${5:value}}",
+      "    onChange={${6:onChange}}",
+      "    className=\"w-full\"",
+      "  />",
+      "</div>"
+    ],
+    "description": "Ajoute un champ de formulaire Input"
+  },
+  "Try-Catch Block": {
+    "prefix": "trycatch",
+    "body": [
+      "try {",
+      "  $1",
+      "} catch (error) {",
+      "  console.error('${2:Operation} failed:', error)",
+      "  $3",
+      "}"
+    ],
+    "description": "Ajoute un bloc try-catch pour gérer les erreurs"
+  },
+  "Jest Test File": {
+    "prefix": "jtest",
+    "body": [
+      "import { ${1:functionToTest} } from '../${2:path}'",
+      "",
+      "describe('${3:Test Suite Description}', () => {",
+      "  test('${4:should do something}', () => {",
+      "    // Arrange",
+      "    $5",
+      "",
+      "    // Act",
+      "    $6",
+      "",
+      "    // Assert",
+      "    $7",
+      "  })",
       "})"
     ],
-    "description": "Trouve un hook de jeu par son slug"
+    "description": "Crée un fichier de test Jest"
+  },
+  "Page Metadata": {
+    "prefix": "meta",
+    "body": [
+      "export const metadata = {",
+      "  title: '${1:Titre de la page} | LouApp',",
+      "  description: '${2:Description de la page pour les moteurs de recherche}',",
+      "}"
+    ],
+    "description": "Définit les métadonnées d'une page Next.js"
+  },
+  "Error Handling Component": {
+    "prefix": "errorcomp",
+    "body": [
+      "interface ErrorMessageProps {",
+      "  error: string | null",
+      "  retry?: () => void",
+      "}",
+      "",
+      "export const ErrorMessage = ({ error, retry }: ErrorMessageProps) => {",
+      "  if (!error) return null",
+      "",
+      "  return (",
+      "    <div className=\"p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-red-900/20 dark:text-red-400\">",
+      "      <p>{error}</p>",
+      "      {retry && (",
+      "        <button",
+      "          onClick={retry}",
+      "          className=\"mt-2 text-sm font-medium underline\"",
+      "        >",
+      "          Réessayer",
+      "        </button>",
+      "      )}",
+      "    </div>",
+      "  )",
+      "}"
+    ],
+    "description": "Crée un composant pour afficher les messages d'erreur"
+  },
+  "Loader Component": {
+    "prefix": "loader",
+    "body": [
+      "export const Loader = ({ size = 'medium', fullPage = false }: { size?: 'small' | 'medium' | 'large', fullPage?: boolean }) => {",
+      "  const sizeClasses = {",
+      "    small: 'w-4 h-4',",
+      "    medium: 'w-8 h-8',",
+      "    large: 'w-12 h-12'",
+      "  }",
+      "",
+      "  const containerClasses = fullPage",
+      "    ? 'fixed inset-0 flex items-center justify-center bg-white/80 dark:bg-gray-900/80 z-50'",
+      "    : 'flex justify-center py-4'",
+      "",
+      "  return (",
+      "    <div className={containerClasses}>",
+      "      <div className={`animate-spin rounded-full border-2 border-gray-300 border-t-primary ${sizeClasses[size]}`}></div>",
+      "    </div>",
+      "  )",
+      "}"
+    ],
+    "description": "Crée un composant de chargement"
   }
 } 

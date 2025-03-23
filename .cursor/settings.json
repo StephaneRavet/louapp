@@ -8,13 +8,18 @@
   "projectContext": "Application d'aide au maître du jeu du loup",
   "reactPreferences": {
     "componentType": "functional",
-    "stateManagement": "local"
+    "stateManagement": "zustand"
   },
   "folderStructure": {
     "sourceCode": "/src",
     "components": "/src/components",
     "pages": "/src/app",
-    "database": "/prisma"
+    "database": "/prisma",
+    "types": "/src/types",
+    "utils": "/src/lib",
+    "tests": "/src/lib/__tests__",
+    "api": "/src/app/api",
+    "serverActions": "/src/app/actions"
   },
   "databasePreferences": {
     "orm": "prisma",
@@ -24,11 +29,74 @@
     "mainEntities": ["Role", "GameHook", "RoleHook"],
     "teamTypes": ["village", "loup", "independant", "multi"]
   },
+  "packageManager": {
+    "preferred": "pnpm",
+    "version": "10.6.5",
+    "neverUse": ["npm", "yarn"],
+    "defaultInstallCommand": "pnpm add",
+    "devDependencyFlag": "-D"
+  },
   "commands": {
-    "dev": "pnpm dev",
+    "dev": "pnpm dev --turbopack",
     "build": "pnpm build",
     "seed": "pnpm seed",
-    "prismaGenerate": "npx prisma generate",
-    "prismaStudio": "npx prisma studio"
+    "prismaGenerate": "pnpm generate",
+    "prismaStudio": "pnpm studio",
+    "migrate": "pnpm migrate",
+    "lint": "pnpm lint",
+    "test": "pnpm test"
+  },
+  "frameworks": {
+    "ui": {
+      "tailwindcss": "^4",
+      "radixUI": {
+        "checkbox": "^1.1.4",
+        "slot": "^1.1.2"
+      }
+    },
+    "backend": "next.js@15.2.3",
+    "database": "prisma@6.5.0",
+    "stateManagement": "zustand@5.0.3",
+    "testing": "jest@29.7.0"
+  },
+  "nextjs": {
+    "version": "15.2.3",
+    "appRouter": true,
+    "turbopack": true,
+    "typescript": true
+  },
+  "seo": {
+    "useMetadata": true,
+    "titleTemplate": "%s | LouApp",
+    "defaultDescription": "Application d'aide pour les maîtres du jeu de Loup-Garou",
+    "openGraph": true,
+    "twitter": false
+  },
+  "environment": {
+    "envFile": ".env",
+    "production": {
+      "database": "postgresql",
+      "host": "supabase"
+    },
+    "development": {
+      "database": "sqlite",
+      "host": "local"
+    }
+  },
+  "deployment": {
+    "target": "vercel",
+    "nodeVersion": "18.x",
+    "scaling": "serverless",
+    "regions": ["cdg1"]
+  },
+  "errorHandling": {
+    "server": {
+      "logToConsole": true,
+      "sanitizeErrors": true
+    },
+    "client": {
+      "useCustomComponents": true,
+      "retryOnFailure": true
+    }
   }
 } 
