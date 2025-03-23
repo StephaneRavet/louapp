@@ -9,21 +9,42 @@ import type { Role } from '@prisma/client'
 
 type GameSetupFormProps = {
   roles: Role[]
-} 
+}
 
 export function GameSetupForm({ roles }: GameSetupFormProps) {
-  const [players, setPlayers] = useState<Player[]>([''])
-  const [selectedRoles, setSelectedRoles] = useState<Record<number, number>>(
-    roles.reduce((acc, role) => ({ ...acc, [role.id]: 0 }), {})
-  )
+  const DEFAULT_PLAYERS: Player[] = Array.from({ length: 10 }, (_, i) => `joueur${i}`)
+  const [players, setPlayers] = useState<Player[]>(DEFAULT_PLAYERS)
+  
+  // Définition des rôles par défaut: 3 loups, le reste en villageois
+  const getDefaultRoles = (): Record<number, number> => {
+    const defaultRoles: Record<number, number> = roles.reduce((acc, role) => ({ ...acc, [role.id]: 0 }), {})
+    
+    // Trouver l'ID du rôle "Loup" et "Villageois"
+    const loupRole = roles.find(r => r.slug === 'le-loup' || r.name.includes('Loup'))
+    const villageoisRole = roles.find(r => r.slug === 'le-villageois' || r.name.includes('Villageois'))
+    
+    // Définir 3 loups
+    if (loupRole) {
+      defaultRoles[loupRole.id] = 3
+    }
+    
+    // Définir le reste en villageois (nombre de joueurs - 3 loups)
+    if (villageoisRole) {
+      defaultRoles[villageoisRole.id] = DEFAULT_PLAYERS.length - (loupRole ? 3 : 0)
+    }
+    
+    return defaultRoles
+  }
+  
+  const [selectedRoles, setSelectedRoles] = useState<Record<number, number>>(getDefaultRoles())
   const [lastAddedIndex, setLastAddedIndex] = useState<number>(0)
 
-  const totalRoles = useMemo(() => 
+  const totalRoles = useMemo(() =>
     Object.values(selectedRoles).reduce((sum, count) => sum + count, 0),
     [selectedRoles]
   )
 
-  const validPlayersCount = useMemo(() => 
+  const validPlayersCount = useMemo(() =>
     players.filter(p => p.trim()).length,
     [players]
   )
@@ -65,20 +86,20 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
   return (
     <>
       <div className="grid grid-cols-1 gap-6">
-        <PlayersList 
-          players={players} 
-          onAddPlayer={addPlayer} 
-          onRemovePlayer={removePlayer} 
-          onUpdatePlayerName={updatePlayerName} 
-          lastAddedIndex={lastAddedIndex} 
+        <PlayersList
+          players={players}
+          onAddPlayer={addPlayer}
+          onRemovePlayer={removePlayer}
+          onUpdatePlayerName={updatePlayerName}
+          lastAddedIndex={lastAddedIndex}
         />
-        
-        <RolesList 
-          roles={roles} 
-          selectedRoles={selectedRoles} 
-          onUpdateRoleCount={updateRoleCount} 
-          totalRoles={totalRoles} 
-          validPlayersCount={validPlayersCount} 
+
+        <RolesList
+          roles={roles}
+          selectedRoles={selectedRoles}
+          onUpdateRoleCount={updateRoleCount}
+          totalRoles={totalRoles}
+          validPlayersCount={validPlayersCount}
         />
       </div>
 
