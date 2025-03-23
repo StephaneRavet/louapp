@@ -1,4 +1,4 @@
-import { GameSetupForm } from '@/components/game-setup-form'
+import { GameSetupForm } from '@/app/components/game-setup-form'
 import { prisma } from '@/lib/prisma'
 import type { Role } from '@prisma/client'
 import { ThemeToggle } from '@/components/theme-toggle'
@@ -22,12 +22,12 @@ export default async function Home() {
   const roles = await getRoles()
 
   return (
-    <div className="container p-4 py-8 max-w-4xl mx-auto space-y-6">
+    <>
       <div className="flex items-center justify-between mb-6 md:mb-8">
         <h1 className="text-2xl md:text-3xl font-bold">Nouvelle partie de Loup</h1>
         <ThemeToggle />
       </div>
       <GameSetupForm roles={roles} />
-    </div>
+    </>
   )
 }

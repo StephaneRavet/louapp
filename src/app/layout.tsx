@@ -32,7 +32,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange={true}
         >
-          <div className="min-h-screen">
+          <div className="container p-4 py-8 max-w-4xl mx-auto space-y-6 min-h-screen">
             {children}
           </div>
         </ThemeProvider>
