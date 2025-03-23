@@ -76,7 +76,7 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
       }
 
       set({
-        selectedRoles: defaultRoles,
+        selectedRoles: {},//defaultRoles,
         error: null,
         loading: false
       })
@@ -90,24 +90,28 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
   },
 
   incRoleCount: (roleSlug: string) => {
+    const role = get().roles.find(r => r.slug === roleSlug);
+    
     set((state) => ({
       selectedRoles: { 
         ...state.selectedRoles, 
         [roleSlug]: {
-          ...state.selectedRoles[roleSlug],
-          count: state.selectedRoles[roleSlug].count + 1
+          role: role || state.selectedRoles[roleSlug]?.role,
+          count: (state.selectedRoles[roleSlug]?.count || 0) + 1
         }
       }
     }))
   },
 
   decRoleCount: (roleSlug: string) => {
+    const role = get().roles.find(r => r.slug === roleSlug);
+    
     set((state) => ({
       selectedRoles: { 
         ...state.selectedRoles, 
         [roleSlug]: {
-          ...state.selectedRoles[roleSlug],
-          count: Math.max(0, state.selectedRoles[roleSlug].count - 1)
+          role: role || state.selectedRoles[roleSlug]?.role,
+          count: Math.max(0, (state.selectedRoles[roleSlug]?.count || 0) - 1)
         }
       }
     }))

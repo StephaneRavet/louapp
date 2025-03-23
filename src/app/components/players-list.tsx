@@ -80,7 +80,7 @@ export function PlayersList() {
           <div key={index} className="flex items-center gap-3">
             <Input
               value={player}
-              onChange={e => updatePlayerName(index, e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => updatePlayerName(index, e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Nom du joueur"
               className="flex-1"
