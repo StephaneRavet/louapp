@@ -20,8 +20,14 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
     const defaultRoles: Record<number, number> = roles.reduce((acc, role) => ({ ...acc, [role.id]: 0 }), {})
     
     // Trouver l'ID du rôle "Loup" et "Villageois"
-    const loupRole = roles.find(r => r.slug === 'le-loup' || r.name.includes('Loup'))
-    const villageoisRole = roles.find(r => r.slug === 'le-villageois' || r.name.includes('Villageois'))
+    const loupRole = roles.find(r => 
+      r.slug === 'loup' || 
+      r.name.toLowerCase().includes('loup')
+    )
+    const villageoisRole = roles.find(r => 
+      r.slug === 'villageois' || 
+      r.name.toLowerCase().includes('villageois')
+    )
     
     // Définir 3 loups
     if (loupRole) {
