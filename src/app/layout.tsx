@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
+import { RolesLoadingProvider } from "@/app/providers/RolesLoadingProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +29,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem={false}
           disableTransitionOnChange={true}
         >
-          <div className="container p-4 py-8 max-w-4xl mx-auto space-y-6 min-h-screen">
-            {children}
-          </div>
+          <RolesLoadingProvider>
+            <div className="container p-4 py-8 max-w-4xl mx-auto space-y-6 min-h-screen">
+              {children}
+            </div>
+          </RolesLoadingProvider>
         </ThemeProvider>
       </body>
     </html>

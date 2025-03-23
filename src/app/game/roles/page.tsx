@@ -7,21 +7,15 @@ import { cn } from '@/lib/utils'
 
 function RolesAttributionPage() {
   const router = useRouter()
-  const { playerRoles, roles, randomRolesAttribution, getTotalRoles, getValidPlayersCount, players } = useGameStore()
-  const totalRoles = getTotalRoles()
-  const validPlayersCount = getValidPlayersCount()
+  const { playerRoles, randomRolesAttribution } = useGameStore()
 
   // Attribuer les rôles si ce n'est pas déjà fait
   useEffect(() => {
+    console.log('DEBUG RolesAttributionPage')
     if (playerRoles.length === 0) {
-      try {
-        console.log('DEBUG RolesAttributionPage')
-        randomRolesAttribution()
-      } catch (error) {
-        console.error('Erreur lors de l\'attribution des rôles:', error)
-      }
+      randomRolesAttribution()
     }
-  }, [randomRolesAttribution, playerRoles])
+  }, [])
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -30,15 +24,6 @@ function RolesAttributionPage() {
       {playerRoles.length === 0 ? (
         <div className="text-center">
           <p className="text-lg">Attribution des rôles en cours...</p>
-          <p className="text-sm text-gray-500 mt-4">
-            Informations de débogage:
-            <br />
-            Total des rôles: {totalRoles}
-            <br />
-            Joueurs valides: {validPlayersCount}
-            <br />
-            Nombre de joueurs: {players.length}
-          </p>
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
