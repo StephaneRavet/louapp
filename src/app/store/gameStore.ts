@@ -3,6 +3,7 @@
 import { create } from 'zustand'
 import type { Player } from '@/types/Player.type'
 import type { Role } from '@prisma/client'
+import { getRoles } from '@/app/actions/roleActions'
 
 interface GameState {
   // État
@@ -39,11 +40,13 @@ export const useGameStore = create<GameState>((set, get) => ({
   fetchRoles: async () => {
     try {
       set({ loading: true })
-      const response = await fetch('/api/roles')
-      if (!response.ok) {
-        throw new Error('Erreur lors de la récupération des rôles')
+      
+      // Utilisation de l'action serveur au lieu de fetch
+      const data = await getRoles()
+      
+      if (!data || data.length === 0) {
+        throw new Error('Aucun rôle n\'a été récupéré')
       }
-      const data = await response.json()
       
       // Mettre à jour les rôles
       set({ roles: data })
