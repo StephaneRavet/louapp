@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import type { Role } from '@prisma/client'
 import { Input } from '@/components/ui/input'
+import { useGame } from '@/app/hooks/useGame'
 import {
   Card,
   CardHeader,
@@ -10,21 +10,47 @@ import {
   CardContent,
 } from '@/components/ui/card'
 
-type RolesListProps = {
-  roles: Role[]
-  selectedRoles: Record<number, number>
-  onUpdateRoleCount: (roleId: number, count: number) => void
-  totalRoles: number
-  validPlayersCount: number
-}
+export function RolesList() {
+  const { 
+    roles,
+    selectedRoles, 
+    updateRoleCount, 
+    totalRoles, 
+    validPlayersCount,
+    loading,
+    error
+  } = useGame()
+  
+  if (loading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <span>Rôles</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-4">Chargement...</div>
+        </CardContent>
+      </Card>
+    )
+  }
 
-export function RolesList({
-  roles,
-  selectedRoles,
-  onUpdateRoleCount,
-  totalRoles,
-  validPlayersCount
-}: RolesListProps) {
+  if (error) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <span>Rôles</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-4 text-red-500">{error}</div>
+        </CardContent>
+      </Card>
+    )
+  }
+  
   return (
     <Card>
       <CardHeader>
@@ -63,8 +89,8 @@ export function RolesList({
                 type="number"
                 min="0"
                 max="99"
-                value={selectedRoles[role.id]}
-                onChange={e => onUpdateRoleCount(role.id, parseInt(e.target.value, 10) || 0)}
+                value={selectedRoles[role.id] ?? 0}
+                onChange={e => updateRoleCount(role.id, parseInt(e.target.value, 10) || 0)}
                 className="w-16"
               />
             </div>

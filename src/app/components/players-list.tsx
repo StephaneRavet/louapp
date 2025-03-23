@@ -5,23 +5,20 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { X, Plus } from 'lucide-react'
+import { useGame } from '@/app/hooks/useGame'
 import type { Player } from '@/types/Player.type'
 
-type PlayersListProps = {
-  players: Player[]
-  onAddPlayer: () => void
-  onRemovePlayer: (index: number) => void
-  onUpdatePlayerName: (index: number, name: string) => void
-  lastAddedIndex: number
-}
-
-export function PlayersList({
-  players,
-  onAddPlayer,
-  onRemovePlayer,
-  onUpdatePlayerName,
-  lastAddedIndex
-}: PlayersListProps) {
+export function PlayersList() {
+  const { 
+    players, 
+    lastAddedIndex, 
+    addPlayer, 
+    removePlayer, 
+    updatePlayerName,
+    loading,
+    error
+  } = useGame()
+  
   const inputRefs = useRef<Map<number, HTMLInputElement>>(new Map())
 
   // Focus le premier input au chargement du composant
@@ -43,8 +40,34 @@ export function PlayersList({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      onAddPlayer()
+      addPlayer()
     }
+  }
+
+  if (loading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Joueurs</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-4">Chargement...</div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Joueurs</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-4 text-red-500">{error}</div>
+        </CardContent>
+      </Card>
+    )
   }
 
   return (
@@ -57,7 +80,7 @@ export function PlayersList({
           <div key={index} className="flex items-center gap-3">
             <Input
               value={player}
-              onChange={e => onUpdatePlayerName(index, e.target.value)}
+              onChange={e => updatePlayerName(index, e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Nom du joueur"
               className="flex-1"
@@ -68,7 +91,7 @@ export function PlayersList({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => onRemovePlayer(index)}
+              onClick={() => removePlayer(index)}
               disabled={players.length === 1}
               className="p-0 h-9 w-9 rounded-full cursor-pointer"
             >
@@ -79,7 +102,7 @@ export function PlayersList({
         ))}
         <Button
           variant="outline"
-          onClick={onAddPlayer}
+          onClick={addPlayer}
           className="w-full flex items-center justify-center gap-1"
         >
           <Plus className="h-4 w-4" />
