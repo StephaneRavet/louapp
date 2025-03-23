@@ -1,12 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useGame } from '@/app/hooks/useGame'
+import { useGameStore } from '@/app/store/gameStore'
 import { useEffect } from 'react'
 
 function GamePage() {
   const router = useRouter()
-  const { totalRoles, validPlayersCount, selectedRoles, players } = useGame()
+  const { getTotalRoles, getValidPlayersCount, selectedRoles, players } = useGameStore()
+  const totalRoles = getTotalRoles()
+  const validPlayersCount = getValidPlayersCount()
   
   useEffect(() => {
     console.log('Valeurs de débogage:')

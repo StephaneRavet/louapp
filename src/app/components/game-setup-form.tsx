@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { PlayersList } from '@/app/components/players-list'
 import { RolesList } from '@/app/components/roles-list'
-import { useGame } from '@/app/hooks/useGame'
+import { useGameStore } from '@/app/store/gameStore'
 
 export function GameSetupForm() {
-  const { randomRolesAttribution, loading, error } = useGame()
+  const { randomRolesAttribution, loading, error } = useGameStore()
   const router = useRouter()
   
   if (loading) {

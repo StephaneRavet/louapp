@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { X, Plus } from 'lucide-react'
-import { useGame } from '@/app/hooks/useGame'
+import { useGameStore } from '@/app/store/gameStore'
 import type { Player } from '@/types/Player.type'
 
 export function PlayersList() {
@@ -17,7 +17,7 @@ export function PlayersList() {
     updatePlayerName,
     loading,
     error
-  } = useGame()
+  } = useGameStore()
   
   const inputRefs = useRef<Map<number, HTMLInputElement>>(new Map())
 

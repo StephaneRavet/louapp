@@ -2,39 +2,26 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useGame } from '@/app/hooks/useGame'
+import { useGameStore } from '@/app/store/gameStore'
 import { cn } from '@/lib/utils'
 
 function RolesAttributionPage() {
   const router = useRouter()
-  const { playerRoles, roles, randomRolesAttribution, totalRoles, validPlayersCount, players, selectedRoles } = useGame()
-
-  useEffect(() => {
-    console.log('DEBUG RolesAttributionPage montée')
-    console.log('playerRoles:', playerRoles)
-    console.log('roles:', roles)
-    console.log('totalRoles:', totalRoles)
-    console.log('validPlayersCount:', validPlayersCount)
-    console.log('players:', players)
-    console.log('selectedRoles:', selectedRoles)
-  }, [])
+  const { playerRoles, roles, randomRolesAttribution, getTotalRoles, getValidPlayersCount, players } = useGameStore()
+  const totalRoles = getTotalRoles()
+  const validPlayersCount = getValidPlayersCount()
 
   // Attribuer les rôles si ce n'est pas déjà fait
   useEffect(() => {
     if (playerRoles.length === 0) {
       try {
+        console.log('DEBUG RolesAttributionPage')
         randomRolesAttribution()
       } catch (error) {
         console.error('Erreur lors de l\'attribution des rôles:', error)
       }
     }
-  }, [randomRolesAttribution])
-
-  // Trouver le nom du rôle par son ID
-  const getRoleName = (roleId: number) => {
-    const role = roles.find(r => r.id === roleId)
-    return role ? role.name : 'Rôle inconnu'
-  }
+  }, [randomRolesAttribution, playerRoles])
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -58,12 +45,12 @@ function RolesAttributionPage() {
           {playerRoles.map((assignment, index) => (
             <div
               key={index}
-              className={cn(`rounded-lg shadow-md p-4 border border-gray-200 bg-${assignment.role.team}`)}
+              className={cn(`rounded-lg shadow-md p-4 border border-gray-200`)}
             >
               <h3 className="font-bold text-xl mb-2">{assignment.player}</h3>
               <div className="flex items-center">
                 <span className="text-gray-100">Rôle:</span>
-                <span className="ml-2 font-medium">{getRoleName(assignment.roleId)}</span>
+                <span className="ml-2 font-medium">{assignment.role}</span>
               </div>
             </div>
           ))}

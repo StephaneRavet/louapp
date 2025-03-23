@@ -1,7 +1,6 @@
 import type { Role } from '@prisma/client'
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
-import { getRoles } from '@/app/actions/roleActions'
 
 export interface RoleSlice {
   // État
@@ -31,8 +30,13 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
     try {
       set({ loading: true })
 
-      // Utilisation de l'action serveur
-      const data = await getRoles()
+      const response = await fetch('/api/roles')
+      
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status}`)
+      }
+      
+      const data = await response.json()
 
       if (!data || data.length === 0) {
         throw new Error('Aucun rôle n\'a été récupéré')

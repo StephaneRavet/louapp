@@ -17,4 +17,7 @@ export const useGameStore = create<GameState>()(
     }),
     { name: 'GameStore' } // Nom affiché dans les devtools
   )
-) 
+)
+
+// Initialisation des rôles dès l'importation du store
+useGameStore.getState().fetchRoles() 

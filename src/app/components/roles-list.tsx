@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useGame } from '@/app/hooks/useGame'
+import { useGameStore } from '@/app/store/gameStore'
 import {
   Card,
   CardHeader,
@@ -17,11 +17,14 @@ export function RolesList() {
     selectedRoles,
     incRoleCount,
     decRoleCount,
-    totalRoles,
-    validPlayersCount,
+    getTotalRoles,
+    getValidPlayersCount,
     loading,
     error
-  } = useGame()
+  } = useGameStore()
+
+  const totalRoles = getTotalRoles()
+  const validPlayersCount = getValidPlayersCount()
 
   if (loading) {
     return (

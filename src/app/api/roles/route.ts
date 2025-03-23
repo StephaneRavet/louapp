@@ -1,9 +1,8 @@
-'use server'
-
+import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import type { Role } from '@prisma/client'
 
-export async function getRoles(): Promise<Role[]> {
+export async function GET() {
   try {
     const roles = await prisma.$queryRaw<Role[]>`
       SELECT * FROM Role 
@@ -18,9 +17,9 @@ export async function getRoles(): Promise<Role[]> {
         id ASC
     `
 
-    return roles
+    return NextResponse.json(roles)
   } catch (error) {
     console.error('Erreur lors de la récupération des rôles:', error)
-    return []
+    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 } 
