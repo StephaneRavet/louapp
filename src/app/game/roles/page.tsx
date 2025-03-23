@@ -11,7 +11,6 @@ function RolesAttributionPage() {
 
   // Attribuer les rôles si ce n'est pas déjà fait
   useEffect(() => {
-    console.log('DEBUG RolesAttributionPage')
     if (playerRoles.length === 0) {
       randomRolesAttribution()
     }
@@ -19,7 +18,7 @@ function RolesAttributionPage() {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Attribution des Rôles</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center gothic">Attribution des Rôles</h1>
 
       {playerRoles.length === 0 ? (
         <div className="text-center">
@@ -30,13 +29,10 @@ function RolesAttributionPage() {
           {playerRoles.map((assignment, index) => (
             <div
               key={index}
-              className={cn(`rounded-lg shadow-md p-4 border border-gray-200`)}
+              className={cn(`text-center rounded-lg shadow-md p-4 border border-gray-200 bg-team-${assignment.role.team}`)}
             >
-              <h3 className="font-bold text-xl mb-2">{assignment.player}</h3>
-              <div className="flex items-center">
-                <span className="text-gray-100">Rôle:</span>
-                <span className="ml-2 font-medium">{assignment.role}</span>
-              </div>
+              <h3 className="text-2xl mb-1">{assignment.player}</h3>
+              <div className="text-muted-foreground text-xl">{assignment.role.shortName}</div>
             </div>
           ))}
         </div>

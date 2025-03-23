@@ -76,7 +76,7 @@ export function RolesList() {
           {roles.map(role => (
             <div key={role.slug} className={cn(`flex flex-row bg-team-${role.team} rounded p-2`)}>
               <div className="text-3xl font-bold w-6 text-center gothic">
-                {selectedRoles[role.slug] || null}
+                {selectedRoles[role.slug]?.count || null}
               </div>
               <div className="flex flex-1 flex-col ml-3">
                 <label className="text-sm font-medium">

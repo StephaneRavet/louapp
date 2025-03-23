@@ -5,7 +5,7 @@ import type { GameState } from '../types'
 export interface RoleSlice {
   // État
   roles: Role[]
-  selectedRoles: Record<string, number>
+  selectedRoles: Record<string, {role: Role, count: number}>
   loading: boolean
   error: string | null
 
@@ -13,6 +13,7 @@ export interface RoleSlice {
   fetchRoles: () => Promise<void>
   incRoleCount: (roleSlug: string) => void
   decRoleCount: (roleSlug: string) => void
+  getRole: (roleSlug: string) => Role | undefined
 
   // Sélecteurs
   getTotalRoles: () => number
@@ -46,8 +47,11 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
       set({ roles: data })
 
       // Initialiser les rôles par défaut
-      const defaultRoles: Record<string, number> = data.reduce(
-        (acc: Record<string, number>, role: Role) => ({ ...acc, [role.slug]: 0 }),
+      const defaultRoles: Record<string, {role: Role, count: number}> = data.reduce(
+        (acc: Record<string, {role: Role, count: number}>, role: Role) => ({ 
+          ...acc, 
+          [role.slug]: {role, count: 0}
+        }),
         {}
       )
 
@@ -63,12 +67,12 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
 
       // Définir 3 loups
       if (loupRole) {
-        defaultRoles[loupRole.slug] = 3
+        defaultRoles[loupRole.slug].count = 3
       }
 
       // Définir le reste en villageois (nombre de joueurs - 3 loups)
       if (villageoisRole) {
-        defaultRoles[villageoisRole.slug] = get().players.length - (loupRole ? 3 : 0)
+        defaultRoles[villageoisRole.slug].count = get().players.length - (loupRole ? 3 : 0)
       }
 
       set({
@@ -87,7 +91,13 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
 
   incRoleCount: (roleSlug: string) => {
     set((state) => ({
-      selectedRoles: { ...state.selectedRoles, [roleSlug]: state.selectedRoles[roleSlug] + 1 }
+      selectedRoles: { 
+        ...state.selectedRoles, 
+        [roleSlug]: {
+          ...state.selectedRoles[roleSlug],
+          count: state.selectedRoles[roleSlug].count + 1
+        }
+      }
     }))
   },
 
@@ -95,13 +105,20 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
     set((state) => ({
       selectedRoles: { 
         ...state.selectedRoles, 
-        [roleSlug]: Math.max(0, state.selectedRoles[roleSlug] - 1)
+        [roleSlug]: {
+          ...state.selectedRoles[roleSlug],
+          count: Math.max(0, state.selectedRoles[roleSlug].count - 1)
+        }
       }
     }))
   },
 
   // Sélecteurs
   getTotalRoles: () => {
-    return Object.values(get().selectedRoles).reduce((sum, count) => sum + count, 0)
+    return Object.values(get().selectedRoles).reduce((sum, item) => sum + item.count, 0)
+  },
+
+  getRole: (roleSlug: string) => {
+    return get().roles.find((r: Role) => r.slug === roleSlug)
   },
 }) 
