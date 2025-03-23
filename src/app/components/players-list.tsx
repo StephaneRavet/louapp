@@ -3,12 +3,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { X, Plus } from 'lucide-react'
 import type { Player } from '@/types/Player.type'
 
@@ -75,7 +70,7 @@ export function PlayersList({
               size="sm"
               onClick={() => onRemovePlayer(index)}
               disabled={players.length === 1}
-              className="p-0 h-9 w-9 rounded-full"
+              className="p-0 h-9 w-9 rounded-full cursor-pointer"
             >
               <X className="h-4 w-4" />
               <span className="sr-only">Supprimer</span>

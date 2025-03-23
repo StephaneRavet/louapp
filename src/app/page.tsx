@@ -1,7 +1,6 @@
-import { GameSetupForm } from '@/app/components/game-setup-form'
 import { prisma } from '@/lib/prisma'
+import HomeClient from '@/app/components/home-client'
 import type { Role } from '@prisma/client'
-import { ThemeToggle } from '@/components/theme-toggle'
 
 async function getRoles(): Promise<Role[]> {
   return await prisma.$queryRaw<Role[]>`
@@ -20,14 +19,5 @@ async function getRoles(): Promise<Role[]> {
 
 export default async function Home() {
   const roles = await getRoles()
-
-  return (
-    <>
-      <div className="flex items-center justify-between mb-6 md:mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold">Nouvelle partie de Loup</h1>
-        <ThemeToggle />
-      </div>
-      <GameSetupForm roles={roles} />
-    </>
-  )
+  return <HomeClient roles={roles} />
 }
