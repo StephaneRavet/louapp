@@ -72,7 +72,7 @@
       "    name: '${1:Nom du rôle}',",
       "    slug: '${2:slug_du_role}',",
       "    description: '${3:Description du rôle}',",
-      "    team: '${4|village,loups,independant,multi|}',",
+      "    team: '${4|village,loup,independant,multi|}',",
       "    color: '${5:BLEU}',",
       "    objectif: '${6:Objectif du rôle}',",
       "    isUnique: ${7:true}",

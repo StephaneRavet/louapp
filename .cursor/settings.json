@@ -22,7 +22,7 @@
     "schemaLocation": "/prisma/schema.prisma",
     "seedScript": "pnpm seed",
     "mainEntities": ["Role", "GameHook", "RoleHook"],
-    "teamTypes": ["village", "loups", "independant", "multi"]
+    "teamTypes": ["village", "loup", "independant", "multi"]
   },
   "commands": {
     "dev": "pnpm dev",

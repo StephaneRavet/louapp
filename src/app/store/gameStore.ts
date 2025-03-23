@@ -1,14 +1,20 @@
 'use client'
 
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 import type { GameState } from './types'
 import { createPlayerSlice } from './slices/playerSlice'
 import { createRoleSlice } from './slices/roleSlice'
 import { createGameSlice } from './slices/gameSlice'
 
-// Création du store avec tous les slices combinés
-export const useGameStore = create<GameState>()((...args) => ({
-  ...createPlayerSlice(...args),
-  ...createRoleSlice(...args),
-  ...createGameSlice(...args),
-})) 
+// Création du store avec tous les slices combinés et le middleware devtools
+export const useGameStore = create<GameState>()(
+  devtools(
+    (...args) => ({
+      ...createPlayerSlice(...args),
+      ...createRoleSlice(...args),
+      ...createGameSlice(...args),
+    }),
+    { name: 'GameStore' } // Nom affiché dans les devtools
+  )
+) 

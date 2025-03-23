@@ -32,7 +32,7 @@ function RolesAttributionPage() {
     } else {
       console.log('Les rôles sont déjà attribués')
     }
-  }, [playerRoles, randomRolesAttribution])
+  }, [randomRolesAttribution])
   
   // Temporairement désactivé pour le débogage
   /*
@@ -48,6 +48,25 @@ function RolesAttributionPage() {
   const getRoleName = (roleId: number) => {
     const role = roles.find(r => r.id === roleId)
     return role ? role.name : 'Rôle inconnu'
+  }
+  
+  // Obtenir la couleur de fond basée sur l'équipe du rôle
+  const getRoleColor = (roleId: number) => {
+    const role = roles.find(r => r.id === roleId)
+    if (!role) return 'bg-gray-100'
+    
+    switch (role.team) {
+      case 'loup':
+        return 'bg-role-loup text-white'
+      case 'village':
+        return 'bg-role-village text-white'
+      case 'multi':
+        return 'bg-role-multi text-white'
+      case 'independant':
+        return 'bg-role-independant text-white'
+      default:
+        return 'bg-gray-100'
+    }
   }
   
   return (
@@ -72,11 +91,11 @@ function RolesAttributionPage() {
           {playerRoles.map((assignment, index) => (
             <div 
               key={index}
-              className="bg-white rounded-lg shadow-md p-4 border border-gray-200"
+              className={`rounded-lg shadow-md p-4 border border-gray-200 ${getRoleColor(assignment.roleId)}`}
             >
               <h3 className="font-bold text-xl mb-2">{assignment.player}</h3>
               <div className="flex items-center">
-                <span className="text-gray-700">Rôle:</span>
+                <span className="text-gray-100">Rôle:</span>
                 <span className="ml-2 font-medium">{getRoleName(assignment.roleId)}</span>
               </div>
             </div>

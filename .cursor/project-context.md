@@ -26,7 +26,7 @@ Le modèle de données principal comprend trois entités :
 
 1. `Role` : Représente les rôles du jeu (Loup, Chasseur, etc.)
    - Attributs : nom, slug, description, équipe, couleur, objectif, etc.
-   - Les équipes sont définies par l'enum `TeamType` : village, loups, independant, multi
+   - Les équipes sont définies par l'enum `TeamType` : village, loup, independant, multi
 
 2. `GameHook` : Représente les étapes d'une partie (nuit, réveil, vote, etc.)
    - Attributs : nom, slug, index d'ordre d'exécution
