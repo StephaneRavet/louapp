@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -45,83 +45,83 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.4 0.26 293);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.4 0.26 293);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: hsla(0, 0%, 100%, 1);
+  --foreground: hsla(0, 0%, 14.5%, 1);
+  --card: hsla(0, 0%, 100%, 1);
+  --card-foreground: hsla(0, 0%, 14.5%, 1);
+  --popover: hsla(0, 0%, 100%, 1);
+  --popover-foreground: hsla(0, 0%, 14.5%, 1);
+  --primary: hsla(293, 80%, 40%, 1);
+  --primary-foreground: hsla(0, 0%, 98.5%, 1);
+  --secondary: hsla(0, 0%, 97%, 1);
+  --secondary-foreground: hsla(0, 0%, 20.5%, 1);
+  --muted: hsla(0, 0%, 97%, 1);
+  --muted-foreground: hsla(0, 0%, 55.6%, 1);
+  --accent: hsla(0, 0%, 97%, 1);
+  --accent-foreground: hsla(0, 0%, 20.5%, 1);
+  --destructive: hsla(27, 75%, 57.7%, 1);
+  --border: hsla(0, 0%, 92.2%, 1);
+  --input: hsla(0, 0%, 92.2%, 1);
+  --ring: hsla(0, 0%, 70.8%, 1);
+  --chart-1: hsla(41, 70%, 64.6%, 1);
+  --chart-2: hsla(185, 65%, 60%, 1);
+  --chart-3: hsla(227, 60%, 39.8%, 1);
+  --chart-4: hsla(84, 65%, 82.8%, 1);
+  --chart-5: hsla(70, 65%, 76.9%, 1);
+  --sidebar: hsla(0, 0%, 98.5%, 1);
+  --sidebar-foreground: hsla(0, 0%, 14.5%, 1);
+  --sidebar-primary: hsla(293, 80%, 40%, 1);
+  --sidebar-primary-foreground: hsla(0, 0%, 98.5%, 1);
+  --sidebar-accent: hsla(0, 0%, 97%, 1);
+  --sidebar-accent-foreground: hsla(0, 0%, 20.5%, 1);
+  --sidebar-border: hsla(0, 0%, 92.2%, 1);
+  --sidebar-ring: hsla(0, 0%, 70.8%, 1);
   
   /* Couleurs des rôles */
-  --role-loup: oklch(0.577 0.245 27.325); /* Rouge vibrant */
-  --role-village: oklch(0.5 0.28 265);     /* Bleu royal */
-  --role-multi: oklch(0.55 0.27 293);      /* Violet intense */
-  --role-independant: oklch(0.55 0.18 150); /* Vert émeraude */
+  --team-loup: 27; /* Rouge */
+  --team-village: 265; /* Bleu */
+  --team-multi: 293; /* Violet */
+  --team-independant: 150; /* Vert */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.5 0.28 293);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.5 0.28 293);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: hsla(0, 0%, 10%, 1);
+  --foreground: hsla(0, 0%, 98.5%, 1);
+  --card: hsla(0, 0%, 15%, 1);
+  --card-foreground: hsla(0, 0%, 98.5%, 1);
+  --popover: hsla(0, 0%, 20.5%, 1);
+  --popover-foreground: hsla(0, 0%, 98.5%, 1);
+  --primary: rgb(190, 0, 255);
+  --primary-foreground: hsla(0, 0%, 98.5%, 1);
+  --secondary: hsla(0, 0%, 26.9%, 1);
+  --secondary-foreground: hsla(0, 0%, 98.5%, 1);
+  --muted: hsla(0, 0%, 26.9%, 1);
+  --muted-foreground: hsla(0, 0%, 70.8%, 1);
+  --accent: hsla(0, 0%, 26.9%, 1);
+  --accent-foreground: hsla(0, 0%, 98.5%, 1);
+  --destructive: hsla(22, 70%, 70.4%, 1);
+  --border: hsla(0, 0%, 100%, 0.1);
+  --input: hsla(0, 0%, 100%, 0.15);
+  --ring: hsla(0, 0%, 55.6%, 1);
+  --chart-1: hsla(264, 75%, 48.8%, 1);
+  --chart-2: hsla(162, 60%, 69.6%, 1);
+  --chart-3: hsla(70, 65%, 76.9%, 1);
+  --chart-4: hsla(304, 75%, 62.7%, 1);
+  --chart-5: hsla(16, 75%, 64.5%, 1);
+  --sidebar: hsla(0, 0%, 20.5%, 1);
+  --sidebar-foreground: hsla(0, 0%, 98.5%, 1);
+  --sidebar-primary: hsla(293, 80%, 50%, 1);
+  --sidebar-primary-foreground: hsla(0, 0%, 98.5%, 1);
+  --sidebar-accent: hsla(0, 0%, 26.9%, 1);
+  --sidebar-accent-foreground: hsla(0, 0%, 98.5%, 1);
+  --sidebar-border: hsla(0, 0%, 100%, 0.1);
+  --sidebar-ring: hsla(0, 0%, 55.6%, 1);
   
   /* Couleurs des rôles - version sombre */
-  --role-loup: oklch(0.65 0.3 27.325);    /* Rouge plus vibrant */
-  --role-village: oklch(0.6 0.31 265);     /* Bleu plus lumineux */
-  --role-multi: oklch(0.65 0.32 293);      /* Violet plus lumineux */
-  --role-independant: oklch(0.6 0.25 150); /* Vert plus lumineux */
+  --team-loup: 0; /* Rouge bordeaux */
+  --team-village: 250; /* Bleu */
+  --team-multi: 293; /* Violet */
+  --team-independant: 110; /* Vert */
 }
 
 @layer base {
@@ -132,3 +132,40 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@layer utilities {
+  .bg-team-loup {
+    background-color: hsla(var(--team-loup), 65%, 10%, 1);
+  }
+  .bg-team-village {
+    background-color: hsla(var(--team-village), 65%, 10%, 1);
+  }
+  .bg-team-multi {
+    background-color: hsla(var(--team-multi), 65%, 10%, 1);
+  }
+  .bg-team-independant {
+    background-color: hsla(var(--team-independant), 65%, 10%, 1);
+  }
+  .border-team-loup {
+    border-color: hsla(var(--team-loup), 65%, 15%, 1);
+  }
+  .border-team-village {
+    border-color: hsla(var(--team-village), 65%, 15%, 1);
+  }
+  .border-team-multi {
+    border-color: hsla(var(--team-multi), 65%, 15%, 1);
+  }
+  .border-team-independant {
+    border-color: hsla(var(--team-independant), 65%, 15%, 1);
+  }
+}
+
+/* Font */
+.gothic {
+  font-family: "UnifrakturCook", cursive;
+  font-weight: 500;
+  font-style: normal;
+}
+
+

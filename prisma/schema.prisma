@@ -22,8 +22,8 @@ enum TeamType {
 
 model Role {
   id          Int         @id @default(autoincrement())
-  name        String
-  shortName   String
+  name        String      @unique
+  shortName   String      @unique
   slug        String      @unique
   description String
   team        TeamType

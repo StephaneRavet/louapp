@@ -1,10 +1,11 @@
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
 import type { Player } from '@/types/Player.type'
+import { log } from 'console';
 
 // Type pour l'association rôle-joueur
 export type PlayerRole = {
-  roleId: number;
+  role: string;
   player: Player;
 }
 
@@ -31,10 +32,12 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
       
       // Créer la liste des rôles à attribuer basée sur selectedRoles
       const rolesToAssign: number[] = []
-      Object.entries(selectedRoles).forEach(([roleId, count]) => {
-        for (let i = 0; i < count; i++) {
-          rolesToAssign.push(parseInt(roleId))
-        }
+      Object.entries(selectedRoles).forEach(([role, count]) => {
+        console.log('role:', role)
+        console.log('count:', count)
+        // for (let i = 0; i < count; i++) {
+        //   rolesToAssign.push(role)
+        // }
       })
       
       // Mélanger les rôles
@@ -44,7 +47,7 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
       const newPlayerRoles: PlayerRole[] = []
       for (let i = 0; i < Math.min(shuffledPlayers.length, shuffledRoles.length); i++) {
         newPlayerRoles.push({
-          roleId: shuffledRoles[i],
+          role: shuffledRoles[i],
           player: shuffledPlayers[i]
         })
       }

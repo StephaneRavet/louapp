@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { Input } from '@/components/ui/input'
 import { useGame } from '@/app/hooks/useGame'
 import {
   Card,
@@ -10,12 +9,14 @@ import {
   CardContent,
 } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 export function RolesList() {
   const {
     roles,
     selectedRoles,
-    updateRoleCount,
+    incRoleCount,
+    decRoleCount,
     totalRoles,
     validPlayersCount,
     loading,
@@ -68,17 +69,12 @@ export function RolesList() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <div className="space-y-2">
           {roles.map(role => (
-            <div key={role.id} className={cn('flex flex-row', 'bg-' + role.team)}>
-              <Input
-                type="number"
-                min="0"
-                max="99"
-                value={selectedRoles[role.id] ?? 0}
-                onChange={e => updateRoleCount(role.id, parseInt(e.target.value, 10) || 0)}
-                className="w-16"
-              />
+            <div key={role.slug} className={cn(`flex flex-row bg-team-${role.team} rounded p-2`)}>
+              <div className="text-3xl font-bold w-6 text-center gothic">
+                {selectedRoles[role.slug] || null}
+              </div>
               <div className="flex flex-1 flex-col ml-3">
                 <label className="text-sm font-medium">
                   {role.name}
@@ -86,6 +82,10 @@ export function RolesList() {
                 <span className="text-xs text-muted-foreground">
                   {role.description}
                 </span>
+              </div>
+              <div className="flex items-center space-x-1 ml-3">
+                <Button variant="outline" onClick={() => decRoleCount(role.slug)}>-</Button>
+                <Button variant="outline" onClick={() => incRoleCount(role.slug)}>+</Button>
               </div>
             </div>
           ))}
