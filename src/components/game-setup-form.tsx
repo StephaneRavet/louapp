@@ -1,46 +1,30 @@
 'use client'
 
 import React, { useState, useRef, useEffect, useMemo } from 'react'
+import type { Role } from '@prisma/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
-  CardFooter
 } from '@/components/ui/card'
 import { X, Plus } from 'lucide-react'
 
-interface Player {
-  id: string
-  name: string
-}
+type Player = string
 
-interface Role {
-  id: number
-  name: string
-  slug: string
-  description: string
-  team: string
-  color: string | null
-  isUnique: boolean
-}
-
-interface GameSetupFormProps {
+type GameSetupFormProps = {
   roles: Role[]
 }
 
 export function GameSetupForm({ roles }: GameSetupFormProps) {
-  const [players, setPlayers] = useState<Player[]>([
-    { id: '1', name: '' }
-  ])
+  const [players, setPlayers] = useState<Player[]>([''])
   const [selectedRoles, setSelectedRoles] = useState<Record<number, number>>(
     roles.reduce((acc, role) => ({ ...acc, [role.id]: 0 }), {})
   )
-  const [lastAddedId, setLastAddedId] = useState<string>('1')
-  const inputRefs = useRef<Map<string, HTMLInputElement>>(new Map())
+  const [lastAddedIndex, setLastAddedIndex] = useState<number>(0)
+  const inputRefs = useRef<Map<number, HTMLInputElement>>(new Map())
 
   const totalRoles = useMemo(() => 
     Object.values(selectedRoles).reduce((sum, count) => sum + count, 0),
@@ -48,13 +32,13 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
   )
 
   const validPlayersCount = useMemo(() => 
-    players.filter(p => p.name.trim()).length,
+    players.filter(p => p.trim()).length,
     [players]
   )
 
   // Focus le premier input au chargement du composant
   useEffect(() => {
-    const firstInput = inputRefs.current.get('1')
+    const firstInput = inputRefs.current.get(0)
     if (firstInput) {
       firstInput.focus()
     }
@@ -62,31 +46,30 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
 
   // Focus le dernier input ajouté
   useEffect(() => {
-    const inputToFocus = inputRefs.current.get(lastAddedId)
+    const inputToFocus = inputRefs.current.get(lastAddedIndex)
     if (inputToFocus) {
       inputToFocus.focus()
     }
-  }, [lastAddedId])
+  }, [lastAddedIndex])
 
   const addPlayer = () => {
     const lastPlayer = players[players.length - 1]
-    if (!lastPlayer.name.trim()) return
+    if (!lastPlayer.trim()) return
 
-    const newId = String(Date.now())
-    setPlayers([...players, { id: newId, name: '' }])
-    setLastAddedId(newId)
+    setPlayers([...players, ''])
+    setLastAddedIndex(players.length)
   }
 
-  const removePlayer = (id: string) => {
+  const removePlayer = (index: number) => {
     if (players.length > 1) {
-      setPlayers(players.filter(player => player.id !== id))
+      setPlayers(players.filter((_, i) => i !== index))
     }
   }
 
-  const updatePlayerName = (id: string, name: string) => {
+  const updatePlayerName = (index: number, name: string) => {
     setPlayers(
-      players.map(player =>
-        player.id === id ? { ...player, name } : player
+      players.map((player, i) =>
+        i === index ? name : player
       )
     )
   }
@@ -131,22 +114,22 @@ export function GameSetupForm({ roles }: GameSetupFormProps) {
             <CardTitle>Joueurs</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {players.map(player => (
-              <div key={player.id} className="flex items-center gap-3">
+            {players.map((player, index) => (
+              <div key={index} className="flex items-center gap-3">
                 <Input
-                  value={player.name}
-                  onChange={e => updatePlayerName(player.id, e.target.value)}
+                  value={player}
+                  onChange={e => updatePlayerName(index, e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Nom du joueur"
                   className="flex-1"
                   ref={el => {
-                    if (el) inputRefs.current.set(player.id, el)
+                    if (el) inputRefs.current.set(index, el)
                   }}
                 />
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => removePlayer(player.id)}
+                  onClick={() => removePlayer(index)}
                   disabled={players.length === 1}
                   className="p-0 h-9 w-9 rounded-full"
                 >

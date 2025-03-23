@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "npx prisma db push && npx ts-node --project prisma/tsconfig.json prisma/seed.ts"
+    "seed": "pnpx prisma db push && pnpx ts-node --project prisma/tsconfig.json prisma/seed.ts",
+    "studio": "pnpx prisma studio",
+    "migrate": "pnpx prisma migrate dev",
+    "generate": "pnpx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",

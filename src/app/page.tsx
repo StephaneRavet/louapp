@@ -1,6 +1,6 @@
 import { GameSetupForm } from '@/components/game-setup-form'
 import { prisma } from '@/lib/prisma'
-import { Role } from '@prisma/client'
+import type { Role } from '@prisma/client'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 async function getRoles(): Promise<Role[]> {
