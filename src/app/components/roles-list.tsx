@@ -9,18 +9,19 @@ import {
   CardTitle,
   CardContent,
 } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 export function RolesList() {
-  const { 
+  const {
     roles,
-    selectedRoles, 
-    updateRoleCount, 
-    totalRoles, 
+    selectedRoles,
+    updateRoleCount,
+    totalRoles,
     validPlayersCount,
     loading,
     error
   } = useGame()
-  
+
   if (loading) {
     return (
       <Card>
@@ -50,41 +51,26 @@ export function RolesList() {
       </Card>
     )
   }
-  
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
+        <CardTitle className="flex">
           <span>Rôles</span>
-          <span className={`text-sm font-normal mr-6 ${
-            totalRoles < validPlayersCount
-              ? 'text-yellow-500'
-              : totalRoles === validPlayersCount
-                ? 'text-green-500'
-                : 'text-red-500'
-          }`}>
-            {totalRoles}/{validPlayersCount}
+          <span className={`text-sm font-normal ml-3 ${totalRoles < validPlayersCount
+            ? 'text-yellow-500'
+            : totalRoles === validPlayersCount
+              ? 'text-primary'
+              : 'text-red-500'
+            }`}>
+            {totalRoles} rôles pour {validPlayersCount} joueurs
           </span>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {roles.map(role => (
-            <div key={role.id} className="flex items-center">
-              <div className="flex items-center flex-1">
-                <label
-                  className="text-sm font-medium flex items-center cursor-pointer flex-1"
-                >
-                  <span
-                    className="inline-block w-3 h-3 rounded-full"
-                    style={{ backgroundColor: role.color || '#9CA3AF' }}
-                  />
-                  {role.name}
-                  <span className="text-xs text-muted-foreground ml-1">
-                    ({role.team})
-                  </span>
-                </label>
-              </div>
+            <div key={role.id} className={cn('flex flex-row', 'bg-' + role.team)}>
               <Input
                 type="number"
                 min="0"
@@ -93,6 +79,14 @@ export function RolesList() {
                 onChange={e => updateRoleCount(role.id, parseInt(e.target.value, 10) || 0)}
                 className="w-16"
               />
+              <div className="flex flex-1 flex-col ml-3">
+                <label className="text-sm font-medium">
+                  {role.name}
+                </label>
+                <span className="text-xs text-muted-foreground">
+                  {role.description}
+                </span>
+              </div>
             </div>
           ))}
         </div>

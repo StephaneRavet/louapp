@@ -33,7 +33,7 @@ export function GameSetupForm() {
 
       <div className="flex justify-end">
         <Button onClick={handleAttributeRoles} variant="default" className="w-full">
-          Attribuer les rôles
+          Attribuer aléatoirement les rôles
         </Button>
       </div>
     </>

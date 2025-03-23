@@ -18,7 +18,7 @@ export interface PlayerSlice {
 
 export const createPlayerSlice: StateCreator<GameState, [], [], PlayerSlice> = (set, get) => ({
   // État initial
-  players: Array.from({ length: 10 }, (_, i) => `joueur${i}`),
+  players: Array.from({ length: 8 }, (_, i) => `joueur${i}`),
   lastAddedIndex: 0,
   
   // Actions

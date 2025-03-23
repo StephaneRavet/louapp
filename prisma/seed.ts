@@ -31,6 +31,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: false,
+      shortName: "Villageois",
     },
     {
       name: "Le Loup",
@@ -39,6 +40,7 @@ async function main() {
       team: TeamType.loup,
       color: "ROUGE",
       isUnique: false,
+      shortName: "Loup",
     },
     {
       name: "Le Boulet",
@@ -47,6 +49,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: true,
+      shortName: "Boulet",
     },
 
     // Rôles simples (niveau 2)
@@ -57,6 +60,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: true,
+      shortName: "Juge",
     },
     {
       name: "Le Contagieux",
@@ -65,6 +69,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: true,
+      shortName: "Contagieux",
     },
     {
       name: "Le Régent",
@@ -73,6 +78,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: true,
+      shortName: "Régent",
     },
 
     // Rôles moyens (niveau 3)
@@ -83,6 +89,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: true,
+      shortName: "Serveur",
     },
     {
       name: "Le Corbeau",
@@ -91,6 +98,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: true,
+      shortName: "Corbeau",
     },
     {
       name: "Le Protecteur",
@@ -99,6 +107,7 @@ async function main() {
       team: TeamType.village,
       color: "BLEU",
       isUnique: true,
+      shortName: "Protecteur",
     },
     {
       name: "L'Espion",
@@ -413,6 +422,7 @@ async function main() {
       team: TeamType.village,
       color: 'BLEU',
       objectif: 'Éliminer tous les loups',
+      shortName: 'Chasseur',
     },
     create: {
       name: 'Le Chasseur',
@@ -422,6 +432,7 @@ async function main() {
       color: 'BLEU',
       objectif: 'Éliminer tous les loups',
       isUnique: true,
+      shortName: 'Chasseur',
     },
   });
 
