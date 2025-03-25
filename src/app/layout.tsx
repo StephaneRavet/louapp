@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { RolesLoadingProvider } from "@/app/providers/RolesLoadingProvider"
-import { DevToolbar } from "@/app/components/DevToolbar"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="container p-4 py-8 max-w-4xl mx-auto space-y-6 min-h-screen">
               {children}
             </div>
-            <DevToolbar />
           </RolesLoadingProvider>
         </ThemeProvider>
       </body>
