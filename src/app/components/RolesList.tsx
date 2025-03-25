@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useGameStore } from '@/app/store/gameStore'
+import { PlayersRolesCheck } from './PlayersRolesCheck'
 import {
   Card,
   CardHeader,
@@ -45,14 +46,7 @@ export function RolesList() {
       <CardHeader>
         <CardTitle className="flex">
           <span>Rôles</span>
-          <span className={`text-sm font-normal ml-3 ${totalRoles < validPlayersCount
-            ? 'text-yellow-500'
-            : totalRoles === validPlayersCount
-              ? 'text-primary'
-              : 'text-red-500'
-            }`}>
-            {totalRoles} rôles pour {validPlayersCount} joueurs
-          </span>
+          <PlayersRolesCheck />
         </CardTitle>
       </CardHeader>
       <CardContent>

@@ -1,5 +1,5 @@
-import { GameSetupForm } from '@/app/components/game-setup-form'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { GameSetupForm } from '@/app/components/GameSetupForm'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 export default function Home() {
   return (

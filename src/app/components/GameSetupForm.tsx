@@ -3,8 +3,8 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { PlayersList } from '@/app/components/players-list'
-import { RolesList } from '@/app/components/roles-list'
+import { PlayersList } from '@/app/components/PlayersList'
+import { RolesList } from '@/app/components/RolesList'
 import { useGameStore } from '@/app/store/gameStore'
 
 export function GameSetupForm() {
@@ -27,10 +27,12 @@ export function GameSetupForm() {
         <RolesList />
       </div>
 
-      <div className="flex justify-end">
-        <Button onClick={handleAttributeRoles} variant="default" className="w-full">
-          Attribuer aléatoirement les rôles
-        </Button>
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border">
+        <div className="container max-w-2xl mx-auto">
+          <Button onClick={handleAttributeRoles} variant="default" className="w-full">
+            Attribuer aléatoirement les rôles
+          </Button>
+        </div>
       </div>
     </>
   )
