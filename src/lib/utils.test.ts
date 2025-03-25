@@ -1,4 +1,4 @@
-import { shuffle } from '../utils';
+import { shuffle } from './utils';
 
 describe('fonction shuffle', () => {
   test('deux appels consécutifs doivent produire des résultats différents', () => {
