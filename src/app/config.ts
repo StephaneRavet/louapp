@@ -15,4 +15,12 @@ export const FEATURES = {
   
   // Nombre de loups à présélectionner (les autres seront des villageois)
   DEFAULT_WEREWOLVES_COUNT: 3,
+}
+
+// Ordre de tri des équipes pour l'affichage des rôles
+export const TEAM_SORT_ORDER = {
+  'loup': 0,
+  'village': 1,
+  'independant': 2,
+  'multi': 3
 } 
