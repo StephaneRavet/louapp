@@ -36,23 +36,7 @@ function GamePage() {
           <p>Rôles sélectionnés: {totalRoles}</p>
           <p>Joueurs valides: {validPlayersCount}</p>
           <p>Nombre de joueurs: {players.length}</p>
-          <p>Le bouton est forcé à actif pour test</p>
         </div>
-      
-        <button
-          onClick={handleAttributeRoles}
-          disabled={isAttributionDisabled}
-          className="px-6 py-3 rounded-md text-white font-medium transition bg-blue-600 hover:bg-blue-700"
-        >
-          Attribuer les rôles
-        </button>
-        
-        <p className="text-sm text-gray-500">
-          Normalement, le bouton serait 
-          {(totalRoles === 0 || validPlayersCount === 0 || totalRoles !== validPlayersCount) 
-            ? ' désactivé' 
-            : ' actif'}
-        </p>
         
         <p className="text-red-500 text-sm">
           {totalRoles === 0 
