@@ -1,6 +1,7 @@
 import type { Player } from '@/types/Player.type'
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
+import { FEATURES } from '@/app/config'
 
 export interface PlayerSlice {
   // État
@@ -18,8 +19,8 @@ export interface PlayerSlice {
 
 export const createPlayerSlice: StateCreator<GameState, [], [], PlayerSlice> = (set, get) => ({
   // État initial
-  players: Array.from({ length: 10 }, (_, i) => `Joueur ${i+1}`),
-  lastAddedIndex: 9,
+  players: FEATURES.AUTO_INIT ? Array.from({ length: FEATURES.DEFAULT_PLAYERS_COUNT }, (_, i) => `Joueur ${i+1}`) : [],
+  lastAddedIndex: FEATURES.AUTO_INIT ? FEATURES.DEFAULT_PLAYERS_COUNT - 1 : -1,
   
   // Actions
   addPlayer: () => {

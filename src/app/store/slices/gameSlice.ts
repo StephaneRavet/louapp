@@ -13,7 +13,6 @@ export type PlayerRole = {
 export interface GameSlice {
   // État
   playerRoles: PlayerRole[];
-  isRolesReady: boolean;
   isPlayersAndRolesEqual: boolean;
 
   // Actions
@@ -25,21 +24,18 @@ export interface GameSlice {
 
 export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set, get) => ({
   playerRoles: [],
-  isRolesReady: false,
   isPlayersAndRolesEqual: false,
 
   ensureRolesLoaded: async () => {
-    const { roles, loading, fetchRoles } = get()
+    const { roles, loading, fetchRoles, isRolesReady } = get()
 
     // Si les rôles sont déjà chargés, on retourne immédiatement
-    if (roles.length > 0 && !loading) {
-      set({ isRolesReady: true })
+    if (isRolesReady) {
       return
     }
 
     // Sinon, on attend que les rôles soient chargés
     await fetchRoles()
-    set({ isRolesReady: true })
   },
 
   randomRolesAttribution: () => {

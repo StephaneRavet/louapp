@@ -1,6 +1,7 @@
 import type { Role } from '@prisma/client'
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
+import { FEATURES } from '@/app/config'
 
 export interface RoleSlice {
   // État
@@ -8,12 +9,15 @@ export interface RoleSlice {
   selectedRoles: Record<string, {role: Role, count: number}>
   loading: boolean
   error: string | null
+  useDefaultRoles: boolean
+  isRolesReady: boolean
 
   // Actions
   fetchRoles: () => Promise<void>
   incRoleCount: (roleSlug: string) => void
   decRoleCount: (roleSlug: string) => void
   getRole: (roleSlug: string) => Role | undefined
+  toggleDefaultRoles: () => void
 
   // Sélecteurs
   getTotalSelectedRoles: () => number
@@ -25,6 +29,8 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
   selectedRoles: {},
   loading: true,
   error: null,
+  useDefaultRoles: FEATURES.AUTO_INIT,
+  isRolesReady: false,
 
   // Actions
   fetchRoles: async () => {
@@ -65,21 +71,35 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
         r.name.toLowerCase().includes('villageois')
       )
 
-      // Définir 3 loups
-      if (loupRole) {
-        defaultRoles[loupRole.slug].count = 3
-      }
+      // Si on utilise les rôles par défaut
+      if (get().useDefaultRoles) {
+        // Définir le nombre de loups selon la config
+        if (loupRole) {
+          defaultRoles[loupRole.slug].count = FEATURES.DEFAULT_WEREWOLVES_COUNT
+        }
 
-      // Définir le reste en villageois (nombre de joueurs - 3 loups)
-      if (villageoisRole) {
-        defaultRoles[villageoisRole.slug].count = get().players.length - (loupRole ? 3 : 0)
-      }
+        // Définir le reste en villageois selon la config
+        if (villageoisRole) {
+          defaultRoles[villageoisRole.slug].count = FEATURES.DEFAULT_ROLES_COUNT - (loupRole ? FEATURES.DEFAULT_WEREWOLVES_COUNT : 0)
+        }
 
-      set({
-        selectedRoles: {},//defaultRoles,
-        error: null,
-        loading: false
-      })
+        set({
+          selectedRoles: defaultRoles,
+          error: null,
+          loading: false,
+          isRolesReady: true
+        })
+      } else {
+        set({
+          selectedRoles: {},
+          error: null,
+          loading: false,
+          isRolesReady: true
+        })
+      }
+      
+      // Met à jour l'équilibre entre joueurs et rôles
+      get().updatePlayersAndRolesEqual()
     } catch (err) {
       console.error('Erreur:', err)
       set({
@@ -87,6 +107,11 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
         loading: false
       })
     }
+  },
+
+  toggleDefaultRoles: () => {
+    set((state) => ({ useDefaultRoles: !state.useDefaultRoles }))
+    get().fetchRoles() // Recharger les rôles avec le nouveau paramètre
   },
 
   incRoleCount: (roleSlug: string) => {
