@@ -9,18 +9,18 @@ import { useGameStore } from '@/app/store/gameStore'
 import { PlayersRolesCheck } from '@/app/components/PlayersRolesCheck'
 
 export function GameSetupForm() {
-  const { randomRolesAttribution, error } = useGameStore()
+  const { randomRolesAttribution, error, isPlayersAndRolesEqual } = useGameStore()
   const router = useRouter()
-  
+
   if (error) {
     return <div className="text-center py-8 text-red-500">Erreur: {error}</div>
   }
-  
+
   const handleAttributeRoles = () => {
     randomRolesAttribution()
     router.push('/game/roles')
   }
-  
+
   return (
     <>
       <div className="grid grid-cols-1 gap-6">
@@ -31,7 +31,7 @@ export function GameSetupForm() {
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border">
         <div className="container max-w-2xl mx-auto flex items-center justify-between">
           <PlayersRolesCheck />
-          <Button onClick={handleAttributeRoles} variant="default">
+          <Button onClick={handleAttributeRoles} variant="default" disabled={!isPlayersAndRolesEqual}>
             Attribuer aléatoirement les rôles
           </Button>
         </div>

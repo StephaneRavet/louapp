@@ -16,7 +16,7 @@ export interface RoleSlice {
   getRole: (roleSlug: string) => Role | undefined
 
   // Sélecteurs
-  getTotalRoles: () => number
+  getTotalSelectedRoles: () => number
 }
 
 export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set, get) => ({
@@ -101,6 +101,7 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
         }
       }
     }))
+    get().updatePlayersAndRolesEqual()
   },
 
   decRoleCount: (roleSlug: string) => {
@@ -115,10 +116,11 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
         }
       }
     }))
+    get().updatePlayersAndRolesEqual()
   },
 
   // Sélecteurs
-  getTotalRoles: () => {
+  getTotalSelectedRoles: () => {
     return Object.values(get().selectedRoles).reduce((sum, item) => sum + item.count, 0)
   },
 

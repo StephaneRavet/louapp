@@ -6,8 +6,8 @@ import { useEffect } from 'react'
 
 function GamePage() {
   const router = useRouter()
-  const { getTotalRoles, getValidPlayersCount, selectedRoles, players } = useGameStore()
-  const totalRoles = getTotalRoles()
+  const { getTotalSelectedRoles, getValidPlayersCount, selectedRoles, players } = useGameStore()
+  const totalRoles = getTotalSelectedRoles()
   const validPlayersCount = getValidPlayersCount()
   
   useEffect(() => {

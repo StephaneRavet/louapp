@@ -14,16 +14,19 @@ export interface GameSlice {
   // État
   playerRoles: PlayerRole[];
   isRolesReady: boolean;
+  isPlayersAndRolesEqual: boolean;
 
   // Actions
   startGame: () => void,
   randomRolesAttribution: () => void,
   ensureRolesLoaded: () => Promise<void>,
+  updatePlayersAndRolesEqual: () => void,
 }
 
 export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set, get) => ({
   playerRoles: [],
   isRolesReady: false,
+  isPlayersAndRolesEqual: false,
 
   ensureRolesLoaded: async () => {
     const { roles, loading, fetchRoles } = get()
@@ -40,7 +43,7 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
   },
 
   randomRolesAttribution: () => {
-    const { players, selectedRoles, playerRoles, getRole } = get()
+    const { players, selectedRoles, playerRoles } = get()
 
     if (playerRoles.length === 0 && players.length > 0) {
       // Copier les joueurs pour les mélanger
@@ -70,7 +73,11 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
     }
   },
   startGame: () => {
-    const { players, selectedRoles } = get()
+    // const { players, selectedRoles } = get()
   },
 
+  updatePlayersAndRolesEqual: () => {
+    const { getTotalSelectedRoles, getValidPlayersCount } = get()
+    set({ isPlayersAndRolesEqual: getTotalSelectedRoles() === getValidPlayersCount() })
+  },
 }) 

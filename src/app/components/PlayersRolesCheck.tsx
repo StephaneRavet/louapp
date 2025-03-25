@@ -4,11 +4,11 @@ import { useGameStore } from '@/app/store/gameStore';
 export function PlayersRolesCheck() {
 
   const {
-    getTotalRoles,
+    getTotalSelectedRoles,
     getValidPlayersCount,
   } = useGameStore()
 
-  const totalRoles = getTotalRoles()
+  const totalRoles = getTotalSelectedRoles()
   const validPlayersCount = getValidPlayersCount()
 
   return (
