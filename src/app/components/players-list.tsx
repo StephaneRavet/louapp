@@ -15,7 +15,6 @@ export function PlayersList() {
     addPlayer, 
     removePlayer, 
     updatePlayerName,
-    loading,
     error
   } = useGameStore()
   
@@ -42,19 +41,6 @@ export function PlayersList() {
       e.preventDefault()
       addPlayer()
     }
-  }
-
-  if (loading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Joueurs</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-4">Chargement...</div>
-        </CardContent>
-      </Card>
-    )
   }
 
   if (error) {

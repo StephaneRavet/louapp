@@ -19,27 +19,11 @@ export function RolesList() {
     decRoleCount,
     getTotalRoles,
     getValidPlayersCount,
-    loading,
     error
   } = useGameStore()
 
   const totalRoles = getTotalRoles()
   const validPlayersCount = getValidPlayersCount()
-
-  if (loading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span>Rôles</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-4">Chargement...</div>
-        </CardContent>
-      </Card>
-    )
-  }
 
   if (error) {
     return (

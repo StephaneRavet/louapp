@@ -8,13 +8,9 @@ import { RolesList } from '@/app/components/roles-list'
 import { useGameStore } from '@/app/store/gameStore'
 
 export function GameSetupForm() {
-  const { randomRolesAttribution, loading, error } = useGameStore()
+  const { randomRolesAttribution, error } = useGameStore()
   const router = useRouter()
   
-  if (loading) {
-    return <div className="text-center py-8">Chargement de la partie...</div>
-  }
-
   if (error) {
     return <div className="text-center py-8 text-red-500">Erreur: {error}</div>
   }
