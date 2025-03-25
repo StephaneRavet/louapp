@@ -18,13 +18,9 @@ export function RolesList() {
     selectedRoles,
     incRoleCount,
     decRoleCount,
-    getTotalRoles,
-    getValidPlayersCount,
     error
   } = useGameStore()
 
-  const totalRoles = getTotalRoles()
-  const validPlayersCount = getValidPlayersCount()
 
   if (error) {
     return (
@@ -44,10 +40,7 @@ export function RolesList() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex">
-          <span>Rôles</span>
-          <PlayersRolesCheck />
-        </CardTitle>
+        <CardTitle className="flex">Rôles</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">

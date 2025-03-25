@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { PlayersList } from '@/app/components/PlayersList'
 import { RolesList } from '@/app/components/RolesList'
 import { useGameStore } from '@/app/store/gameStore'
+import { PlayersRolesCheck } from '@/app/components/PlayersRolesCheck'
 
 export function GameSetupForm() {
   const { randomRolesAttribution, error } = useGameStore()
@@ -28,8 +29,9 @@ export function GameSetupForm() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border">
-        <div className="container max-w-2xl mx-auto">
-          <Button onClick={handleAttributeRoles} variant="default" className="w-full">
+        <div className="container max-w-2xl mx-auto flex items-center justify-between">
+          <PlayersRolesCheck />
+          <Button onClick={handleAttributeRoles} variant="default">
             Attribuer aléatoirement les rôles
           </Button>
         </div>
