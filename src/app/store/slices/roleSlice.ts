@@ -71,6 +71,10 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
         r.name.toLowerCase().includes('villageois')
       )
 
+      // Trouver les rôles indépendants et multi-équipes
+      const independantRoles = data.filter((r: Role) => r.team === 'independant')
+      const multiRoles = data.filter((r: Role) => r.team === 'multi')
+
       // Si on utilise les rôles par défaut
       if (get().useDefaultRoles) {
         // Définir le nombre de loups selon la config
@@ -80,7 +84,26 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
 
         // Définir le reste en villageois selon la config
         if (villageoisRole) {
-          defaultRoles[villageoisRole.slug].count = FEATURES.DEFAULT_ROLES_COUNT - (loupRole ? FEATURES.DEFAULT_WEREWOLVES_COUNT : 0)
+          defaultRoles[villageoisRole.slug].count = FEATURES.DEFAULT_ROLES_COUNT - 
+            (loupRole ? FEATURES.DEFAULT_WEREWOLVES_COUNT : 0) - 
+            FEATURES.DEFAULT_INDEPENDANT_COUNT - 
+            FEATURES.DEFAULT_MULTI_COUNT
+        }
+
+        // Ajouter les rôles indépendants
+        if (independantRoles.length > 0) {
+          const selectedIndependant = independantRoles.slice(0, FEATURES.DEFAULT_INDEPENDANT_COUNT)
+          selectedIndependant.forEach((role: Role) => {
+            defaultRoles[role.slug].count = 1
+          })
+        }
+
+        // Ajouter les rôles multi-équipes
+        if (multiRoles.length > 0) {
+          const selectedMulti = multiRoles.slice(0, FEATURES.DEFAULT_MULTI_COUNT)
+          selectedMulti.forEach((role: Role) => {
+            defaultRoles[role.slug].count = 1
+          })
         }
 
         set({
