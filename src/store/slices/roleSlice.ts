@@ -1,7 +1,7 @@
 import type { Role } from '@prisma/client'
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
-import { FEATURES } from '@/app/config'
+import { FEATURES } from '@/config/config'
 
 export interface RoleSlice {
   // État

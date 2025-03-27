@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useGameStore } from '@/app/store/gameStore'
+import { useGameStore } from '@/store/gameStore'
 import { useEffect } from 'react'
 
 function GamePage() {

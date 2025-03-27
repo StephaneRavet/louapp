@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { rolesData, rolesArray } from '../src/data/rolesData';
+import { rolesData, rolesArray } from '../data/rolesData';
 
 const prisma = new PrismaClient();
 

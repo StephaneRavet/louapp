@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import type { Role } from '@prisma/client'
-import { TEAM_SORT_ORDER } from '@/app/config'
+import { TEAM_SORT_ORDER } from '@/config/config'
 
 export async function GET() {
   try {

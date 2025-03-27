@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useGameStore } from '@/app/store/gameStore'
-import { TEAM_SORT_ORDER } from '@/app/config'
+import { useGameStore } from '@/store/gameStore'
+import { TEAM_SORT_ORDER } from '@/config/config'
 import { Button } from '@/components/ui/button'
-import { StickyFooter } from '@/app/components/StickyFooter'
+import { StickyFooter } from '@/app/(routes)/components/StickyFooter'
 
 function RolesAttributionPage() {
   const router = useRouter()

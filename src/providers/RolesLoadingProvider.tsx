@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, Suspense } from 'react'
-import { useGameStore } from '@/app/store/gameStore'
+import { useGameStore } from '@/store/gameStore'
 import { Loader } from '@/components/ui/loader'
 
 const LoaderWrapper = () => (

@@ -1,6 +1,6 @@
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
-import type { Player } from '@/types/Player.type'
+import type { Player } from '../../../types/Player.type'
 import { Role } from '@prisma/client'
 import { shuffle } from '@/lib/utils'
 

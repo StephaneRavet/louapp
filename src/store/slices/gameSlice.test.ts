@@ -1,7 +1,7 @@
-import { createGameSlice } from '@/app/store/slices/gameSlice'
+import { createGameSlice } from '@/store/slices/gameSlice'
 import type { StoreApi } from 'zustand'
-import type { GameState } from '@/app/store/types'
-import { mockRoles } from '@/data/rolesData'
+import type { GameState } from '@/store/types'
+import { mockRoles } from '../../../data/rolesData'
 
 // Mocker la fonction shuffle pour avoir un comportement déterministe
 jest.mock('@/lib/utils', () => ({

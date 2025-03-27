@@ -1,5 +1,5 @@
 'use client'
-import { useGameStore } from '@/app/store/gameStore';
+import { useGameStore } from '@/store/gameStore';
 
 export function PlayersRolesCheck() {
 

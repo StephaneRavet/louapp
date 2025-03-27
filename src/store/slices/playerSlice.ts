@@ -1,7 +1,7 @@
-import type { Player } from '@/types/Player.type'
+import type { Player } from '../../../types/Player.type'
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
-import { FEATURES } from '@/app/config'
+import { FEATURES } from '@/config/config'
 
 export interface PlayerSlice {
   // État

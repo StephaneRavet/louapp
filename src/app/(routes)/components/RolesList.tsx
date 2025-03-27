@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useGameStore } from '@/app/store/gameStore'
+import { useGameStore } from '@/store/gameStore'
 import {
   Card,
   CardHeader,
