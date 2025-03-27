@@ -1,6 +1,6 @@
 import type { Role } from '@prisma/client'
 import type { StateCreator } from 'zustand'
-import type { GameState } from '../types'
+import type { AppState } from '@/store/index'
 import { FEATURES } from '@/config/config'
 import { shuffle } from '@/lib/utils';
 import { PlayerRole } from '@/store/slices/gameSlice';
@@ -30,7 +30,7 @@ export interface RoleSlice {
   getTotalSelectedRoles: () => number
 }
 
-export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set, get) => ({
+export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, get) => ({
   // État initial
   roles: [],
   selectedRoles: {},

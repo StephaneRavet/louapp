@@ -1,13 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useGameStore } from '@/store/gameStore'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@/components/ui/card'
+import { useAppStore } from '@/store/index'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
@@ -17,7 +11,7 @@ export function RolesList() {
     selectedRoles,
     incRoleCount,
     decRoleCount,
-  } = useGameStore()
+  } = useAppStore()
 
   return (
     <>

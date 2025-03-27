@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, Suspense } from 'react'
-import { useGameStore } from '@/store/gameStore'
+import { useAppStore } from '@/store/index'
 import { Loader } from '@/components/ui/loader'
 
 const LoaderWrapper = () => (
@@ -14,7 +14,7 @@ const LoaderWrapper = () => (
 )
 
 export function RolesLoadingProvider({ children }: { children: React.ReactNode }) {
-  const { isRolesReady, ensureRolesLoaded } = useGameStore()
+  const { isRolesReady, ensureRolesLoaded } = useAppStore()
   const [isInitialized, setIsInitialized] = useState(false)
 
   useEffect(() => {

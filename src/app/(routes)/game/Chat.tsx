@@ -1,9 +1,7 @@
-import { useState } from 'react'
-import { useGameStore } from '@/store/gameStore'
+import { useAppStore } from '@/store/index'
 export function Chat() {
-  const [message, setMessage] = useState('')
 
-  const { game } = useGameStore()
+  const { game } = useAppStore()
 
   return (
     <div>

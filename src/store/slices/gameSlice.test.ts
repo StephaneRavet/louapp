@@ -1,7 +1,7 @@
 import { createGameSlice } from '@/store/slices/gameSlice'
 import type { StoreApi } from 'zustand'
-import type { GameState } from '@/store/types'
-import { mockRoles } from '../../../data/rolesData'
+import { mockRoles } from '@/data/rolesData'
+import type { AppState } from '@/store/index'
 
 // Mocker la fonction shuffle pour avoir un comportement déterministe
 jest.mock('@/lib/utils', () => ({
@@ -53,12 +53,12 @@ const createMockState = (players = mockPlayers) => ({
 })
 
 // Mock du StoreApi
-const createMockStore = (initialState: GameState): StoreApi<GameState> => {
+const createMockStore = (initialState: AppState): StoreApi<AppState> => {
   let state = { ...initialState }
   return {
     setState: (partial, replace) => {
       const newState = replace 
-        ? (typeof partial === 'function' ? partial(state) : partial) as GameState 
+        ? (typeof partial === 'function' ? partial(state) : partial) as AppState 
         : { ...state, ...(typeof partial === 'function' ? partial(state) : partial) }
       
       // Mise à jour de l'état interne du store

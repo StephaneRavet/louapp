@@ -1,7 +1,7 @@
-import { useGameStore } from '@/store/gameStore'
+import { useAppStore } from '@/store/index'
 
 export function PlayerRolesGrid() {
-  const { playerRoles } = useGameStore()
+  const { playerRoles } = useAppStore()
   return <>
     {playerRoles.length === 0 ? (
       <div className="text-center">Attribution des rôles en cours...</div>

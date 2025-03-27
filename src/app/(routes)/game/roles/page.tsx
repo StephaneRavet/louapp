@@ -2,14 +2,14 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useGameStore } from '@/store/gameStore'
+import { useAppStore } from '@/store/index'
 import { Button } from '@/components/ui/button'
 import { StickyFooter } from '@/app/(routes)/StickyFooter'
 import { PlayerRolesGrid } from '@/app/(routes)/game/roles/PlayerRolesGrid'
 
 function RolesAttributionPage() {
   const router = useRouter()
-  const { playerRoles, randomRolesAttribution } = useGameStore()
+  const { playerRoles, randomRolesAttribution } = useAppStore()
 
   // Attribuer les rôles si ce n'est pas déjà fait
   useEffect(() => {

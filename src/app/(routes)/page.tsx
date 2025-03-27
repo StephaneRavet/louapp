@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { PlayersList } from '@/app/(routes)/PlayersList'
 import { RolesList } from '@/app/(routes)/RolesList'
-import { useGameStore } from '@/store/gameStore'
+import { useAppStore } from '@/store/index'
 import { PlayersRolesCheck } from '@/app/(routes)/PlayersRolesCheck'
 import { StickyFooter } from '@/app/(routes)/StickyFooter'
 // import { ThemeToggle } from '@/components/ThemeToggle'
 
 export default function Home() {
-  const { isPlayersAndRolesEqual } = useGameStore()
+  const { isPlayersAndRolesEqual } = useAppStore()
   const router = useRouter()
 
   const handleAttributeRoles = () => {

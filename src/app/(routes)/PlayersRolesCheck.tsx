@@ -1,12 +1,12 @@
 'use client'
-import { useGameStore } from '@/store/gameStore';
+import { useAppStore } from '@/store/index';
 
 export function PlayersRolesCheck() {
 
   const {
     getTotalSelectedRoles,
     getValidPlayersCount,
-  } = useGameStore()
+  } = useAppStore()
 
   const totalRoles = getTotalSelectedRoles()
   const validPlayersCount = getValidPlayersCount()

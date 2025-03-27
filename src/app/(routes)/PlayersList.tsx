@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { X, Plus } from 'lucide-react'
-import { useGameStore } from '@/store/gameStore'
+import { useAppStore } from '@/store/index'
 
 export function PlayersList() {
   const { 
@@ -13,7 +13,7 @@ export function PlayersList() {
     addPlayer, 
     removePlayer, 
     updatePlayerName,
-  } = useGameStore()
+  } = useAppStore()
   
   const inputRefs = useRef<Map<number, HTMLInputElement>>(new Map())
 

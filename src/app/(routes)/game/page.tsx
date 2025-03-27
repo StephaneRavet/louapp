@@ -1,6 +1,6 @@
 'use client'
 
-import { useGameStore } from '@/store/gameStore'
+import { useAppStore } from '@/store/index'
 import { useEffect } from 'react'
 import { StickyFooter } from '../StickyFooter'
 import { Button } from '@/components/ui/button'
@@ -8,7 +8,7 @@ import { PlayerRolesGrid } from '@/app/(routes)/game/PlayerRolesGrid'
 import { Chat } from '@/app/(routes)/game/Chat'
 
 function GamePage() {
-  const { playerRoles, randomRolesAttribution, startGame, nextGameStep } = useGameStore()
+  const { playerRoles, randomRolesAttribution, startGame, nextGameStep } = useAppStore()
 
   useEffect(() => {
     if (playerRoles.length === 0) randomRolesAttribution()
