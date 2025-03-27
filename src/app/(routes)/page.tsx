@@ -3,11 +3,11 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { PlayersList } from '@/app/(routes)/components/PlayersList'
-import { RolesList } from '@/app/(routes)/components/RolesList'
+import { PlayersList } from '@/app/(routes)/PlayersList'
+import { RolesList } from '@/app/(routes)/RolesList'
 import { useGameStore } from '@/store/gameStore'
-import { PlayersRolesCheck } from '@/app/(routes)/components/PlayersRolesCheck'
-import { StickyFooter } from '@/app/(routes)/components/StickyFooter'
+import { PlayersRolesCheck } from '@/app/(routes)/PlayersRolesCheck'
+import { StickyFooter } from '@/app/(routes)/StickyFooter'
 // import { ThemeToggle } from '@/components/ThemeToggle'
 
 export default function Home() {

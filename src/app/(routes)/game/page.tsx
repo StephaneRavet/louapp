@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation'
 import { useGameStore } from '@/store/gameStore'
 import { useEffect } from 'react'
-import { StickyFooter } from '../components/StickyFooter'
+import { StickyFooter } from '../StickyFooter'
 import { Button } from '@/components/ui/button'
-import { PlayerRolesGrid } from '@/app/(routes)/game/components/PlayerRolesGrid'
-import { Chat } from '@/app/(routes)/game/roles/components/Chat'
+import { PlayerRolesGrid } from '@/app/(routes)/game/PlayerRolesGrid'
+import { Chat } from '@/app/(routes)/game/roles/Chat'
 
 function GamePage() {
   const router = useRouter()

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { X, Plus } from 'lucide-react'
 import { useGameStore } from '@/store/gameStore'
-import type { Player } from '../../../../types/Player.type'
+import type { Player } from '../../../types/Player.type'
 
 export function PlayersList() {
   const { 

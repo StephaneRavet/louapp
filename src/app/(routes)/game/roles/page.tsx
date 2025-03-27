@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useGameStore } from '@/store/gameStore'
 import { Button } from '@/components/ui/button'
-import { StickyFooter } from '@/app/(routes)/components/StickyFooter'
-import { PlayerRolesGrid } from '@/app/(routes)/game/roles/components/PlayerRolesGrid'
+import { StickyFooter } from '@/app/(routes)/StickyFooter'
+import { PlayerRolesGrid } from '@/app/(routes)/game/roles/PlayerRolesGrid'
 
 function RolesAttributionPage() {
   const router = useRouter()
