@@ -1,7 +1,13 @@
 import { useAppStore } from '@/store/index'
+import { useEffect, useRef } from 'react'
 
 export function Chat() {
   const { game } = useAppStore()
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [game.messages])
 
   return (
     <div className='flex flex-col text-sm w-full'>
@@ -9,6 +15,7 @@ export function Chat() {
         {game.messages.map((message, index) => (
           <div key={index}>{message.content}</div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
     </div>
   )

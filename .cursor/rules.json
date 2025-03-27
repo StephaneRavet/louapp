@@ -106,7 +106,7 @@
   "seo": {
     "includeMetadata": true,
     "titleFormat": "%s | LouApp",
-    "defaultDescription": "Application d'aide pour les maîtres du jeu de Loup-Garou",
+    "defaultDescription": "Application d'aide pour les maîtres du jeu du Loup",
     "includeOpenGraph": true
   },
   "deployment": {
