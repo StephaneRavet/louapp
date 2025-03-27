@@ -29,7 +29,7 @@ export function Loader({
         <div 
           className={`border-primary border-solid rounded-full animate-spin mx-auto mb-4 ${sizeClasses[size]}`}
         />
-        {title && <h2 className="text-4xl gothic">{title}</h2>}
+        {title && <h2 className="text-4xl font-title">{title}</h2>}
         {description && <p className="text-muted-foreground">{description}</p>}
       </div>
     </div>
