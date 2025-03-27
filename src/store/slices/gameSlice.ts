@@ -11,10 +11,15 @@ export type PlayerRole = {
   role: Role;
 }
 
+export type Game = {
+  currentStep: number
+}
+
 export interface GameSlice {
   // État
-  playerRoles: PlayerRole[];
-  isPlayersAndRolesEqual: boolean;
+  playerRoles: PlayerRole[]
+  isPlayersAndRolesEqual: boolean
+  game: Game;
 
   // Actions
   startGame: () => void,
@@ -26,6 +31,9 @@ export interface GameSlice {
 export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set, get) => ({
   playerRoles: [],
   isPlayersAndRolesEqual: false,
+  game: {
+    currentStep: 0
+  },
 
   ensureRolesLoaded: async () => {
     const { roles, loading, fetchRoles, isRolesReady } = get()
@@ -44,7 +52,7 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
 
     // Filtrer les joueurs pour enlever les chaînes vides
     const validPlayers = players.filter(player => player.trim() !== '')
-    
+
     // Copier les joueurs pour les mélanger
     const shuffledPlayers = shuffle([...validPlayers])
 
@@ -57,37 +65,17 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
       }
     })
 
-    // Limiter le nombre de joueurs ou de rôles selon le cas:
-    // 1. Si plus de joueurs que de rôles, on limite le nombre de joueurs
-    // 2. Si plus de rôles que de joueurs, on limite le nombre de rôles
-    const limitedPlayers = shuffledPlayers.length > rolesToAssign.length
-      ? shuffledPlayers.slice(0, rolesToAssign.length)
-      : shuffledPlayers
-
     // Créer les associations rôle-joueur
     const newPlayerRoles: PlayerRole[] = []
-    const shuffledRoles = shuffle(rolesToAssign)
-    for (let i = 0; i < Math.min(limitedPlayers.length, shuffledRoles.length); i++) {
+    for (let i = 0; i < rolesToAssign.length; i++) {
       newPlayerRoles.push({
-        role: shuffledRoles[i],
-        player: limitedPlayers[i]
+        role: rolesToAssign[i],
+        player: shuffledPlayers[i]
       })
     }
 
-    // Trier les rôles selon l'ordre défini dans la configuration
-    const sortedPlayerRoles = [...newPlayerRoles].sort((a, b) => {
-      const teamOrderA = TEAM_SORT_ORDER[a.role.team] ?? Object.keys(TEAM_SORT_ORDER).length;
-      const teamOrderB = TEAM_SORT_ORDER[b.role.team] ?? Object.keys(TEAM_SORT_ORDER).length;
-
-      if (teamOrderA !== teamOrderB) {
-        return teamOrderA - teamOrderB;
-      }
-
-      return a.role.name.localeCompare(b.role.name);
-    });
-
     // Mettre à jour l'état
-    set((state) => ({ ...state, playerRoles: sortedPlayerRoles }))
+    set((state) => ({ ...state, playerRoles: newPlayerRoles }))
   },
   startGame: () => {
     // const { players, selectedRoles } = get()
