@@ -3,6 +3,7 @@ import type { GameState } from '../types'
 import type { Player } from '../../../types/Player.type'
 import { Role } from '@prisma/client'
 import { shuffle } from '@/lib/utils'
+import { TEAM_SORT_ORDER } from '@/config/config'
 
 // Type pour l'association rôle-joueur
 export type PlayerRole = {
@@ -73,8 +74,20 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
       })
     }
 
+    // Trier les rôles selon l'ordre défini dans la configuration
+    const sortedPlayerRoles = [...newPlayerRoles].sort((a, b) => {
+      const teamOrderA = TEAM_SORT_ORDER[a.role.team] ?? Object.keys(TEAM_SORT_ORDER).length;
+      const teamOrderB = TEAM_SORT_ORDER[b.role.team] ?? Object.keys(TEAM_SORT_ORDER).length;
+
+      if (teamOrderA !== teamOrderB) {
+        return teamOrderA - teamOrderB;
+      }
+
+      return a.role.name.localeCompare(b.role.name);
+    });
+
     // Mettre à jour l'état
-    set((state) => ({ ...state, playerRoles: newPlayerRoles }))
+    set((state) => ({ ...state, playerRoles: sortedPlayerRoles }))
   },
   startGame: () => {
     // const { players, selectedRoles } = get()

@@ -5,6 +5,8 @@ import { useGameStore } from '@/store/gameStore'
 import { useEffect } from 'react'
 import { StickyFooter } from '../components/StickyFooter'
 import { Button } from '@/components/ui/button'
+import { PlayerRolesGrid } from '@/app/(routes)/game/components/PlayerRolesGrid'
+import { Chat } from '@/app/(routes)/game/roles/components/Chat'
 
 function GamePage() {
   const router = useRouter()
@@ -21,20 +23,21 @@ function GamePage() {
     console.log('isAttributionDisabled:', totalRoles === 0 || validPlayersCount === 0 || totalRoles !== validPlayersCount)
   }, [totalRoles, validPlayersCount, selectedRoles, players])
   
-  const handleAttributeRoles = () => {
+  const nextStep = () => {
     console.log('Clic sur Attribuer les rôles')
     router.push('/game/roles')
   }
-  
-  // Condition temporairement désactivée pour déboguer
-  const isAttributionDisabled = false // totalRoles === 0 || validPlayersCount === 0 || totalRoles !== validPlayersCount
-  
+    
   return (
-    <>
+    <div className="flex flex-col h-[calc(100vh-4rem)]">
+      <PlayerRolesGrid />
+      <div className="flex-1 flex justify-center mt-5 pt-1 border-t border-primary/50">
+        <Chat/>
+      </div>
       <StickyFooter className="flex justify-end">
-        <Button onClick={handleAttributeRoles}>Attribuer les rôles</Button>
+        <Button onClick={nextStep}>Continuer</Button>
       </StickyFooter>
-    </>
+    </div>
   )
 }
 
