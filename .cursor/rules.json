@@ -62,7 +62,7 @@
           "isUnique": true
         }
       },
-      "GameHook": {
+      "GameStep": {
         "requiredFields": ["name", "slug", "orderIndex"]
       },
       "RoleHook": {

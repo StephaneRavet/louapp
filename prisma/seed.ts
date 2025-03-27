@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Création des hooks de jeu de base
-  const gameHooks = [
+  const gameSteps = [
     { name: '🎬 Début de partie', slug: 'debut_partie', sentence:'La nuit tombe sur le village. Les villageois s’endorment paisiblement… mais dans l’ombre, les loups se réveillent.', orderIndex: 0 },
     { name: '🌙 Début de la nuit', slug: 'debut_nuit', sentence: 'Loups, réveillez-vous. Cherchez-vous du regard et désignez ensemble une victime.', orderIndex: 1 },
     { name: '🌙 Fin de la nuit', slug: 'fin_nuit', sentence: 'C’est noté. Loups-garous, rendormez-vous.', orderIndex: 2 },
@@ -16,8 +16,8 @@ async function main() {
     { name: '🏁 Fin de partie', slug: 'fin_partie', sentence:'La partie est terminée. Les {gagnants} ont gagné. Les {perdants} ont été éliminés.', orderIndex: 7 },
   ];
 
-  for (const hook of gameHooks) {
-    await prisma.gameHook.upsert({
+  for (const hook of gameSteps) {
+    await prisma.gameStep.upsert({
       where: { slug: hook.slug },
       update: hook,
       create: hook,
@@ -43,7 +43,7 @@ async function main() {
       where: { 
         roleId_hookId: {
           roleId: chasseur.id,
-          hookId: (await prisma.gameHook.findUnique({ where: { slug: 'elimination' }}))!.id
+          hookId: (await prisma.gameStep.findUnique({ where: { slug: 'elimination' }}))!.id
         }
       },
       update: {
@@ -51,7 +51,7 @@ async function main() {
       },
       create: {
         roleId: chasseur.id,
-        hookId: (await prisma.gameHook.findUnique({ where: { slug: 'elimination' }}))!.id,
+        hookId: (await prisma.gameStep.findUnique({ where: { slug: 'elimination' }}))!.id,
         action: 'Le Chasseur élimine immédiatement un autre joueur de son choix.',
       },
     });

@@ -26,7 +26,7 @@
     "provider": "sqlite",
     "schemaLocation": "/prisma/schema.prisma",
     "seedScript": "pnpm seed",
-    "mainEntities": ["Role", "GameHook", "RoleHook"],
+    "mainEntities": ["Role", "GameStep", "RoleHook"],
     "teamTypes": ["village", "loup", "independant", "multi"]
   },
   "packageManager": {

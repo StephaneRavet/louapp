@@ -8,7 +8,7 @@ import { PlayerRolesGrid } from '@/app/(routes)/game/PlayerRolesGrid'
 import { Chat } from '@/app/(routes)/game/Chat'
 
 function GamePage() {
-  const { playerRoles, randomRolesAttribution, startGame, nextStep } = useGameStore()
+  const { playerRoles, randomRolesAttribution, startGame, nextGameStep } = useGameStore()
 
   useEffect(() => {
     if (playerRoles.length === 0) randomRolesAttribution()
@@ -16,7 +16,7 @@ function GamePage() {
   }, [])
 
   const continueGame = () => {
-    nextStep()
+    nextGameStep()
   }
 
   return (

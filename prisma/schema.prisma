@@ -35,7 +35,7 @@ model Role {
   roleHooks   RoleHook[]
 }
 
-model GameHook {
+model GameStep {
   id          Int         @id @default(autoincrement())
   name        String
   slug        String      @unique
@@ -52,7 +52,7 @@ model RoleHook {
   hookId    Int
   action    String
   role      Role      @relation(fields: [roleId], references: [id])
-  hook      GameHook  @relation(fields: [hookId], references: [id])
+  hook      GameStep  @relation(fields: [hookId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 

@@ -120,7 +120,7 @@
     ],
     "description": "Crée un nouveau rôle"
   },
-  "GameHook Create": {
+  "GameStep Create": {
     "prefix": "hookCreate",
     "body": [
       "await prisma.gameHook.create({",

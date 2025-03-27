@@ -18,7 +18,7 @@ export interface GameSlice {
 
   // Actions
   startGame: () => void,
-  nextStep: () => void,
+  nextGameStep: () => void,
 }
 
 export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set, get) => ({
@@ -28,7 +28,7 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
   startGame: () => {
     set((state) => ({ ...state, game: { currentStep: 1 } }))
   },
-  nextStep: () => {
+  nextGameStep: () => {
     set((state) => ({ ...state, game: { currentStep: state.game.currentStep + 1 } }))
   },
 }) 
