@@ -1,9 +1,9 @@
-import { useAppStore } from '@/store/index'
-
-export async function queryAPI<T>(url: string): Promise<T | undefined> {
-  const { setError } = useAppStore()
+export async function queryAPI<T>(
+  url: string,
+  setError: (error: unknown) => void
+): Promise<T> {
   try {
-    const response = await fetch(url)
+    const response = await fetch(`/api/${url}`)
     if (!response.ok) {
       throw new Error(`Erreur HTTP ${response.status}: ${response.statusText}`)
     }
@@ -14,6 +14,6 @@ export async function queryAPI<T>(url: string): Promise<T | undefined> {
     return data
   } catch (err: unknown) {
     setError(err)
-    return undefined
+    throw err
   }
 }

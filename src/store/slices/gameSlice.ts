@@ -2,6 +2,8 @@ import type { StateCreator } from 'zustand'
 import type { Player } from '@/types/Player.type'
 import type { Role, GameStep } from '@prisma/client'
 import type { AppState } from '@/store/index'
+import { queryAPI } from '@/lib/queryAPI'
+
 export type PlayerRole = {
   player: Player;
   role: Role;
@@ -31,25 +33,17 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
     set((state: GameSlice) => ({ ...state, game: { currentStep: 1 } }))
   },
   nextGameStep: () => {
-    set((state: AppState) => ({ ...state, game: { currentStep: state.game.currentStep + 1 } }))
+    set((state: AppState) => {
+      const currentStep = state.game.currentStep === state.steps.length ? 1 : state.game.currentStep + 1
+      return {
+        ...state,
+        game: { currentStep }
+      }
+    })
   },
   getGameStep: async () => {
-    try {
-      const response = await fetch('/api/gameSteps')
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`)
-      }
-      const data = await response.json()
-      if (!data || data.length === 0) {
-        throw new Error('Aucun rôle n\'a été récupéré')
-      }
-      set({ steps: data })
-    } catch (err) {
-      console.error('Erreur:', err)
-      set({
-        error: 'Impossible de charger les steps',
-        loading: false
-      })
-    }
+    const { setError } = get()
+    const steps = await queryAPI<GameStep[]>('gameSteps', setError)
+    set({ steps })
   },
 })

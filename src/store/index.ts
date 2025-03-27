@@ -27,5 +27,6 @@ export const useAppStore = create<AppState>()(
   )
 )
 
-// Initialisation des rôles dès l'importation du store
+// Initialisation des data dès l'importation du store
 useAppStore.getState().fetchRoles() 
+useAppStore.getState().getGameStep() 
