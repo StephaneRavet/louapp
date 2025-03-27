@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation'
 import { useGameStore } from '@/store/gameStore'
 import { useEffect } from 'react'
+import { StickyFooter } from '../components/StickyFooter'
+import { Button } from '@/components/ui/button'
 
 function GamePage() {
   const router = useRouter()
@@ -28,27 +30,11 @@ function GamePage() {
   const isAttributionDisabled = false // totalRoles === 0 || validPlayersCount === 0 || totalRoles !== validPlayersCount
   
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Gestion de la partie</h1>
-      
-      <div className="flex flex-col items-center space-y-4">
-        <div className="text-center mb-4">
-          <p>Rôles sélectionnés: {totalRoles}</p>
-          <p>Joueurs valides: {validPlayersCount}</p>
-          <p>Nombre de joueurs: {players.length}</p>
-        </div>
-        
-        <p className="text-red-500 text-sm">
-          {totalRoles === 0 
-            ? "Aucun rôle n'a été sélectionné" 
-            : validPlayersCount === 0 
-              ? "Aucun joueur valide" 
-              : totalRoles !== validPlayersCount 
-                ? "Le nombre de rôles doit être égal au nombre de joueurs"
-                : ""}
-        </p>
-      </div>
-    </div>
+    <>
+      <StickyFooter className="flex justify-end">
+        <Button onClick={handleAttributeRoles}>Attribuer les rôles</Button>
+      </StickyFooter>
+    </>
   )
 }
 

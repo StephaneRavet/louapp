@@ -45,7 +45,7 @@
 :root {
   --radius: 0.625rem;
   --background: #3C3B3F;
-  /* --background-gradient: linear-gradient(to right, #605C3C, #3C3B3F); */
+  /* --bg-gradient: linear-gradient(to right, #605C3C, #3C3B3F); */
   --foreground: hsla(0, 0%, 98.5%, 1);
   --card: hsla(0, 0%, 100%, 1);
   --card-foreground: hsla(0, 0%, 14.5%, 1);
@@ -86,7 +86,7 @@
 
 .dark {
   --background: #3C3B3F;
-  --background-gradient: linear-gradient(to right, #393516, #1a142a);
+  --bg-gradient: linear-gradient(to right, #393516, #1a142a);
   --foreground: hsla(0, 0%, 98.5%, 1);
   --card: hsla(0, 0%, 15%, 1);
   --card-foreground: hsla(0, 0%, 98.5%, 1);
@@ -133,12 +133,15 @@
   body {
     @apply bg-background text-foreground;
     background: var(--background);  /* fallback */
-    background: var(--background-gradient);
+    background: var(--bg-gradient);
   }
 }
 
 
 @layer utilities {
+  .bg-gradient {
+    background: var(--bg-gradient);
+  }
   .bg-primary-gradient {
     background: var(--primary-gradient);
   }
