@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { useGameStore } from '@/app/store/gameStore'
-import { PlayersRolesCheck } from './PlayersRolesCheck'
 import {
   Card,
   CardHeader,

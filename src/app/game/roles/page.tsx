@@ -3,9 +3,9 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useGameStore } from '@/app/store/gameStore'
-import { cn } from '@/lib/utils'
 import { TEAM_SORT_ORDER } from '@/app/config'
 import { Button } from '@/components/ui/button'
+import { StickyFooter } from '@/app/components/StickyFooter'
 
 function RolesAttributionPage() {
   const router = useRouter()
@@ -32,7 +32,7 @@ function RolesAttributionPage() {
   });
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <>
       <h1 className="text-4xl font-bold mb-6 text-center" style={{ fontFamily: "UnifrakturCook, cursive" }}>
         Attribution des Rôles
       </h1>
@@ -42,7 +42,7 @@ function RolesAttributionPage() {
           <p className="text-lg">Attribution des rôles en cours...</p>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-2 grid-cols-2 lg:grid-cols-3">
           {sortedPlayerRoles.map((assignment, index) => (
             <div
               key={index}
@@ -57,7 +57,7 @@ function RolesAttributionPage() {
         </div>
       )}
 
-      <div className="mt-6 flex justify-between gap-4">
+      <StickyFooter>
         <Button
           onClick={() => randomRolesAttribution()}
           variant="secondary"
@@ -73,8 +73,8 @@ function RolesAttributionPage() {
         >
           Jouer
         </Button>
-      </div>
-    </div>
+      </StickyFooter>
+    </>
   )
 }
 
