@@ -2,15 +2,19 @@ import type { Role } from '@prisma/client'
 import type { StateCreator } from 'zustand'
 import type { GameState } from '../types'
 import { FEATURES } from '@/config/config'
+import { shuffle } from '@/lib/utils';
+import { PlayerRole } from '@/store/slices/gameSlice';
 
 export interface RoleSlice {
   // État
   roles: Role[]
-  selectedRoles: Record<string, {role: Role, count: number}>
+  selectedRoles: Record<string, { role: Role, count: number }>
   loading: boolean
   error: string | null
   useDefaultRoles: boolean
   isRolesReady: boolean
+  playerRoles: PlayerRole[]
+  isPlayersAndRolesEqual: boolean
 
   // Actions
   fetchRoles: () => Promise<void>
@@ -18,6 +22,9 @@ export interface RoleSlice {
   decRoleCount: (roleSlug: string) => void
   getRole: (roleSlug: string) => Role | undefined
   toggleDefaultRoles: () => void
+  ensureRolesLoaded: () => Promise<void>
+  randomRolesAttribution: () => void
+  updatePlayersAndRolesEqual: () => void
 
   // Sélecteurs
   getTotalSelectedRoles: () => number
@@ -31,6 +38,8 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
   error: null,
   useDefaultRoles: FEATURES.AUTO_INIT,
   isRolesReady: false,
+  playerRoles: [],
+  isPlayersAndRolesEqual: false,
 
   // Actions
   fetchRoles: async () => {
@@ -38,11 +47,11 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
       set({ loading: true })
 
       const response = await fetch('/api/roles')
-      
+
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`)
       }
-      
+
       const data = await response.json()
 
       if (!data || data.length === 0) {
@@ -53,10 +62,10 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
       set({ roles: data })
 
       // Initialiser les rôles par défaut
-      const defaultRoles: Record<string, {role: Role, count: number}> = data.reduce(
-        (acc: Record<string, {role: Role, count: number}>, role: Role) => ({ 
-          ...acc, 
-          [role.slug]: {role, count: 0}
+      const defaultRoles: Record<string, { role: Role, count: number }> = data.reduce(
+        (acc: Record<string, { role: Role, count: number }>, role: Role) => ({
+          ...acc,
+          [role.slug]: { role, count: 0 }
         }),
         {}
       )
@@ -84,9 +93,9 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
 
         // Définir le reste en villageois selon la config
         if (villageoisRole) {
-          defaultRoles[villageoisRole.slug].count = FEATURES.DEFAULT_ROLES_COUNT - 
-            (loupRole ? FEATURES.DEFAULT_WEREWOLVES_COUNT : 0) - 
-            FEATURES.DEFAULT_INDEPENDANT_COUNT - 
+          defaultRoles[villageoisRole.slug].count = FEATURES.DEFAULT_ROLES_COUNT -
+            (loupRole ? FEATURES.DEFAULT_WEREWOLVES_COUNT : 0) -
+            FEATURES.DEFAULT_INDEPENDANT_COUNT -
             FEATURES.DEFAULT_MULTI_COUNT
         }
 
@@ -120,7 +129,7 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
           isRolesReady: true
         })
       }
-      
+
       // Met à jour l'équilibre entre joueurs et rôles
       get().updatePlayersAndRolesEqual()
     } catch (err) {
@@ -139,10 +148,10 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
 
   incRoleCount: (roleSlug: string) => {
     const role = get().roles.find(r => r.slug === roleSlug);
-    
+
     set((state) => ({
-      selectedRoles: { 
-        ...state.selectedRoles, 
+      selectedRoles: {
+        ...state.selectedRoles,
         [roleSlug]: {
           role: role || state.selectedRoles[roleSlug]?.role,
           count: (state.selectedRoles[roleSlug]?.count || 0) + 1
@@ -154,10 +163,10 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
 
   decRoleCount: (roleSlug: string) => {
     const role = get().roles.find(r => r.slug === roleSlug);
-    
+
     set((state) => ({
-      selectedRoles: { 
-        ...state.selectedRoles, 
+      selectedRoles: {
+        ...state.selectedRoles,
         [roleSlug]: {
           role: role || state.selectedRoles[roleSlug]?.role,
           count: Math.max(0, (state.selectedRoles[roleSlug]?.count || 0) - 1)
@@ -174,5 +183,49 @@ export const createRoleSlice: StateCreator<GameState, [], [], RoleSlice> = (set,
 
   getRole: (roleSlug: string) => {
     return get().roles.find((r: Role) => r.slug === roleSlug)
+  },
+
+  ensureRolesLoaded: async () => {
+    const { fetchRoles, isRolesReady } = get()
+    // Si les rôles sont déjà chargés, on retourne immédiatement
+    if (isRolesReady) return
+    // Sinon, on attend que les rôles soient chargés
+    await fetchRoles()
+  },
+
+  randomRolesAttribution: () => {
+    const { players, selectedRoles } = get()
+
+    // Filtrer les joueurs pour enlever les chaînes vides
+    const validPlayers = players.filter(player => player.trim() !== '')
+
+    // Copier les joueurs pour les mélanger
+    const shuffledPlayers = shuffle([...validPlayers])
+
+    // Créer la liste des rôles à attribuer basée sur selectedRoles
+    const rolesToAssign: Role[] = []
+    Object.entries(selectedRoles).forEach(([slug, roleData]) => {
+      const { role, count } = roleData
+      for (let i = 0; i < count; i++) {
+        rolesToAssign.push(role)
+      }
+    })
+
+    // Créer les associations rôle-joueur
+    const newPlayerRoles: PlayerRole[] = []
+    for (let i = 0; i < rolesToAssign.length; i++) {
+      newPlayerRoles.push({
+        role: rolesToAssign[i],
+        player: shuffledPlayers[i]
+      })
+    }
+
+    // Mettre à jour l'état
+    set((state) => ({ ...state, playerRoles: newPlayerRoles }))
+  },
+
+  updatePlayersAndRolesEqual: () => {
+    const { getTotalSelectedRoles, getValidPlayersCount } = get()
+    set({ isPlayersAndRolesEqual: getTotalSelectedRoles() === getValidPlayersCount() })
   },
 }) 
