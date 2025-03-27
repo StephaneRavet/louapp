@@ -8,12 +8,17 @@ import { PlayerRolesGrid } from '@/app/(routes)/game/PlayerRolesGrid'
 import { Chat } from '@/app/(routes)/game/Chat'
 
 function GamePage() {
-  const {  } = useGameStore()
+  const { playerRoles, randomRolesAttribution, startGame, nextStep } = useGameStore()
   
   useEffect(() => {
+    if (playerRoles.length === 0) {
+      randomRolesAttribution()
+    }
+    startGame()
   }, [])
   
-  const nextStep = () => {
+  const continueGame = () => {
+    nextStep()
   }
     
   return (
@@ -23,7 +28,7 @@ function GamePage() {
         <Chat/>
       </div>
       <StickyFooter className="flex justify-end">
-        <Button onClick={nextStep}>Continuer</Button>
+        <Button onClick={continueGame}>Continuer</Button>
       </StickyFooter>
     </div>
   )

@@ -11,15 +11,10 @@ import { StickyFooter } from '@/app/(routes)/StickyFooter'
 // import { ThemeToggle } from '@/components/ThemeToggle'
 
 export default function Home() {
-  const { randomRolesAttribution, error, isPlayersAndRolesEqual } = useGameStore()
+  const { isPlayersAndRolesEqual } = useGameStore()
   const router = useRouter()
 
-  if (error) {
-    return <div className="text-center py-8 text-red-500">Erreur: {error}</div>
-  }
-
   const handleAttributeRoles = () => {
-    randomRolesAttribution()
     router.push('/game/roles')
   }
 

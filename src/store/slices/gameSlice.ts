@@ -3,9 +3,7 @@ import type { GameState } from '../types'
 import type { Player } from '../../../types/Player.type'
 import { Role } from '@prisma/client'
 import { shuffle } from '@/lib/utils'
-import { TEAM_SORT_ORDER } from '@/config/config'
 
-// Type pour l'association rôle-joueur
 export type PlayerRole = {
   player: Player;
   role: Role;
@@ -23,6 +21,7 @@ export interface GameSlice {
 
   // Actions
   startGame: () => void,
+  nextStep: () => void,
   randomRolesAttribution: () => void,
   ensureRolesLoaded: () => Promise<void>,
   updatePlayersAndRolesEqual: () => void,
@@ -78,7 +77,10 @@ export const createGameSlice: StateCreator<GameState, [], [], GameSlice> = (set,
     set((state) => ({ ...state, playerRoles: newPlayerRoles }))
   },
   startGame: () => {
-    // const { players, selectedRoles } = get()
+    set((state) => ({ ...state, game: { currentStep: 1 } }))
+  },
+  nextStep: () => {
+    set((state) => ({ ...state, game: { currentStep: state.game.currentStep + 1 } }))
   },
 
   updatePlayersAndRolesEqual: () => {
