@@ -57,11 +57,8 @@ export function PlayersList() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Joueurs</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <>
+      <div className="space-y-4">
         {players.map((player, index) => (
           <div key={index} className="flex items-center gap-3">
             <Input
@@ -94,7 +91,7 @@ export function PlayersList() {
           <Plus className="h-4 w-4" />
           Ajouter un joueur
         </Button>
-      </CardContent>
-    </Card>
+      </div>
+    </>
   )
 } 

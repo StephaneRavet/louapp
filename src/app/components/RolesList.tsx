@@ -37,11 +37,8 @@ export function RolesList() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex">Rôles</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <>
+        <div className="text-3xl gothic">Sélectionnez des rôles :</div>
         <div className="space-y-2">
           {roles.map(role => (
             <div key={role.slug} className={cn(`flex flex-row card-role-${role.team} rounded p-2`)}>
@@ -63,7 +60,6 @@ export function RolesList() {
             </div>
           ))}
         </div>
-      </CardContent>
-    </Card>
+    </>
   )
 } 
