@@ -41,6 +41,7 @@ export default function Home() {
           onClick={handleAttributeRoles}
           variant="default"
           disabled={!isPlayersAndRolesEqual}
+          className="font-action"
         >
           Attribuer rôles aléatoires
         </Button>
