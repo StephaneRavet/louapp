@@ -45,8 +45,9 @@
 
 :root {
   --radius: 0.625rem;
-  --background: hsla(0, 0%, 100%, 1);
-  --foreground: hsla(0, 0%, 14.5%, 1);
+  --background: #3C3B3F;
+  /* --background-gradient: linear-gradient(to right, #605C3C, #3C3B3F); */
+  --foreground: hsla(0, 0%, 98.5%, 1);
   --card: hsla(0, 0%, 100%, 1);
   --card-foreground: hsla(0, 0%, 14.5%, 1);
   --popover: hsla(0, 0%, 100%, 1);
@@ -85,7 +86,8 @@
 }
 
 .dark {
-  --background: hsla(0, 0%, 10%, 1);
+  --background: #3C3B3F;
+  --background-gradient: linear-gradient(to right, #393516, #1a142a);
   --foreground: hsla(0, 0%, 98.5%, 1);
   --card: hsla(0, 0%, 15%, 1);
   --card-foreground: hsla(0, 0%, 98.5%, 1);
@@ -93,6 +95,7 @@
   --popover-foreground: hsla(0, 0%, 98.5%, 1);
   --primary: rgb(190, 0, 255);
   --primary-foreground: hsla(0, 0%, 98.5%, 1);
+  --primary-gradient: linear-gradient(to right, #DA22FF 0%, #9733EE  100%);  
   --secondary: hsla(0, 0%, 26.9%, 1);
   --secondary-foreground: hsla(0, 0%, 98.5%, 1);
   --muted: hsla(0, 0%, 26.9%, 1);
@@ -130,11 +133,16 @@
   }
   body {
     @apply bg-background text-foreground;
+    background: var(--background);  /* fallback */
+    background: var(--background-gradient);
   }
 }
 
 
 @layer utilities {
+  .bg-primary-gradient {
+    background: var(--primary-gradient);
+  }
   .bg-team-loup {
     background-color: hsla(var(--team-loup), 65%, 10%, 1);
   }
@@ -146,6 +154,18 @@
   }
   .bg-team-independant {
     background-color: hsla(var(--team-independant), 65%, 10%, 1);
+  }
+  .bg-team-loup-gradient {
+    background: linear-gradient(45deg, hsla(var(--team-loup), 100%, 10%, 1), hsla(var(--team-loup), 100%, 35%, 0.8));
+  }
+  .bg-team-village-gradient {
+    background: linear-gradient(45deg, hsla(var(--team-village), 65%, 10%, 1), hsla(var(--team-village), 65%, 35%, 0.8));
+  }
+  .bg-team-multi-gradient {
+    background: linear-gradient(45deg, hsla(var(--team-multi), 65%, 10%, 1), hsla(var(--team-multi), 65%, 35%, 0.8));
+  }
+  .bg-team-independant-gradient {
+    background: linear-gradient(45deg, hsla(var(--team-independant), 65%, 10%, 1), hsla(var(--team-independant), 65%, 35%, 0.8));
   }
   .border-team-loup {
     border-color: hsla(var(--team-loup), 65%, 15%, 1);
@@ -159,6 +179,43 @@
   .border-team-independant {
     border-color: hsla(var(--team-independant), 65%, 15%, 1);
   }
+
+  /* Nouveaux styles pour les cartes de rôles */
+  .card-role {
+    @apply text-center rounded-lg p-4 relative overflow-hidden;
+  }
+
+  .card-role-loup {
+    background: linear-gradient(to bottom right, rgb(152, 0, 0) 0%, #000 40%);
+  }
+
+  .card-role-village {
+    background: linear-gradient(to bottom right,#013bdc 0%, #000 40%);
+  }
+
+  .card-role-independant {
+    background: linear-gradient(to bottom right, #00ac7e 0%, #000 40%);
+  }
+
+  .card-role-multi {
+    background: linear-gradient(to bottom right, #75007b 0%, #000 40%);
+  }
+
+  .card-role-content {
+    @apply relative z-10;
+  }
+
+  .card-role-title {
+    @apply text-2xl mb-2 font-bold text-white/95 tracking-wider;
+    @apply drop-shadow-[0_2px_3px_rgba(0,0,0,0.8)];
+    font-family: "UnifrakturCook", cursive;
+  }
+
+  .card-role-subtitle {
+    @apply text-xl text-white/80;
+    @apply drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)];
+    font-family: "UnifrakturCook", cursive;
+  }
 }
 
 /* Font */
@@ -166,6 +223,22 @@
   font-family: "UnifrakturCook", cursive;
   font-weight: 500;
   font-style: normal;
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s linear infinite;
 }
 
 
