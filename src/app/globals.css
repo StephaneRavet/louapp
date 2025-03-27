@@ -95,7 +95,7 @@
   --popover-foreground: hsla(0, 0%, 98.5%, 1);
   --primary: rgb(190, 0, 255);
   --primary-foreground: hsla(0, 0%, 98.5%, 1);
-  --primary-gradient: linear-gradient(to right, #DA22FF 0%, #9733EE  100%);  
+  --primary-gradient: linear-gradient(to right, #978500, #19005e);  
   --secondary: hsla(0, 0%, 26.9%, 1);
   --secondary-foreground: hsla(0, 0%, 98.5%, 1);
   --muted: hsla(0, 0%, 26.9%, 1);

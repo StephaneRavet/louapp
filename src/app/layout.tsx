@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange={true}
         >
           <RolesLoadingProvider>
-            <div className="container p-3 py-8 max-w-4xl mx-auto space-y-3 min-h-screen mb-8">
+            <div className="container p-3 py-8 max-w-4xl mx-auto space-y-3">
               {children}
             </div>
           </RolesLoadingProvider>
