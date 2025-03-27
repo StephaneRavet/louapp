@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+@import "./fonts.css";
 @import "tailwindcss";
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -93,7 +92,7 @@
   --card-foreground: hsla(0, 0%, 98.5%, 1);
   --popover: hsla(0, 0%, 20.5%, 1);
   --popover-foreground: hsla(0, 0%, 98.5%, 1);
-  --primary: rgb(190, 0, 255);
+  --primary: rgb(255, 202, 43);
   --primary-foreground: hsla(0, 0%, 98.5%, 1);
   --primary-gradient: linear-gradient(to right, #978500, #19005e);  
   --secondary: hsla(0, 0%, 26.9%, 1);
@@ -216,13 +215,6 @@
     @apply drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)];
     font-family: "UnifrakturCook", cursive;
   }
-}
-
-/* Font */
-.gothic {
-  font-family: "UnifrakturCook", cursive;
-  font-weight: 500;
-  font-style: normal;
 }
 
 @keyframes gradient-x {

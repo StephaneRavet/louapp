@@ -33,7 +33,7 @@ function RolesAttributionPage() {
 
   return (
     <>
-      <h1 className="text-4xl font-bold mb-6 text-center" style={{ fontFamily: "UnifrakturCook, cursive" }}>
+      <h1 className="text-4xl font-bold mb-6 text-center font-title">
         Attribution des Rôles
       </h1>
 
@@ -46,11 +46,15 @@ function RolesAttributionPage() {
           {sortedPlayerRoles.map((assignment, index) => (
             <div
               key={index}
-              className={`card-role card-role-${assignment.role.team}`}
+              className={`text-center rounded-lg p-4 relative overflow-hidden card-role-${assignment.role.team}`}
             >
-              <div className="card-role-content">
-                <h3 className="card-role-title">{assignment.player}</h3>
-                <div className="card-role-subtitle">{assignment.role.shortName}</div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white tracking-wider font-accent">
+                  {assignment.player}
+                </h3>
+                <div className="text-xl text-white/50 font-mystery">
+                  {assignment.role.shortName}
+                </div>
               </div>
             </div>
           ))}

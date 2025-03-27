@@ -12,12 +12,8 @@ export function PlayersRolesCheck() {
   const validPlayersCount = getValidPlayersCount()
 
   return (
-    <span className={`text-sm font-normal ml-3 ${totalRoles < validPlayersCount
-        ? 'text-yellow-500'
-        : totalRoles === validPlayersCount
-          ? 'text-primary'
-          : 'text-red-500'
-      }`}>
+    <span className={`text-primary font-normal text-sm`}>
+      {totalRoles === validPlayersCount ? '👍' : '❌'}
       {totalRoles} rôles pour {validPlayersCount} joueurs
     </span>
   )
