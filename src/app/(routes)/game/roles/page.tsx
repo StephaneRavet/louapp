@@ -19,7 +19,7 @@ function RolesAttributionPage() {
   }, [])
 
   return (
-    <>
+    <div className="m-1 mt-2 mb-8">
       <h1 className="text-4xl font-bold mb-6 text-center font-title">
         Attribution des Rôles
       </h1>
@@ -43,7 +43,7 @@ function RolesAttributionPage() {
           Jouer
         </Button>
       </StickyFooter>
-    </>
+    </div>
   )
 }
 

@@ -3,10 +3,8 @@
 import React, { useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { X, Plus } from 'lucide-react'
 import { useGameStore } from '@/store/gameStore'
-import type { Player } from '../../../types/Player.type'
 
 export function PlayersList() {
   const { 
@@ -15,7 +13,6 @@ export function PlayersList() {
     addPlayer, 
     removePlayer, 
     updatePlayerName,
-    error
   } = useGameStore()
   
   const inputRefs = useRef<Map<number, HTMLInputElement>>(new Map())
@@ -43,22 +40,9 @@ export function PlayersList() {
     }
   }
 
-  if (error) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Joueurs</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-4 text-red-500">{error}</div>
-        </CardContent>
-      </Card>
-    )
-  }
-
   return (
     <>
-      <div className="space-y-4">
+      <div className="space-y-2">
         {players.map((player, index) => (
           <div key={index} className="flex items-center gap-3">
             <Input

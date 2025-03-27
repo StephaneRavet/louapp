@@ -17,28 +17,11 @@ export function RolesList() {
     selectedRoles,
     incRoleCount,
     decRoleCount,
-    error
   } = useGameStore()
-
-
-  if (error) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span>Rôles</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-4 text-red-500">{error}</div>
-        </CardContent>
-      </Card>
-    )
-  }
 
   return (
     <>
-      <div className="text-3xl font-title">Sélectionnez des rôles :</div>
+      <div className="text-3xl font-title -mb-3">Sélectionnez des rôles :</div>
       <div className="space-y-2 pb-7">
         {roles.map(role => (
           <div key={role.slug} className={cn(`flex flex-row card-role-${role.team} rounded p-2`)}>

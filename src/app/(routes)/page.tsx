@@ -24,7 +24,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="m-2 mb-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-4xl font-title">Nouvelle partie de Loup</h1>
         {/* <ThemeToggle /> */}
@@ -46,6 +46,6 @@ export default function Home() {
           Attribuer rôles aléatoires
         </Button>
       </StickyFooter>
-    </>
+    </div>
   )
 }
