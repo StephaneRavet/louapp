@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "pnpx prisma db push && pnpx ts-node --project prisma/tsconfig.json prisma/seed.ts",
-    "studio": "pnpx prisma studio",
-    "migrate": "pnpx prisma migrate dev",
-    "generate": "pnpx prisma generate",
+    "db:seed": "pnpx prisma db push && pnpx ts-node --project prisma/tsconfig.json prisma/seed.ts",
+    "db:studio": "pnpx prisma studio",
+    "db:reset": "pnpx prisma migrate reset --force",
+    "db:migrate": "pnpx prisma migrate dev",
+    "db:generate": "pnpx prisma generate",
     "test": "jest"
   },
   "dependencies": {

@@ -175,14 +175,14 @@ export const rolesData: Record<string, RoleData> = {
     shortName: "Chasseur",
   },
   sorciere: {
-    name: "La Sorcière",
-    slug: "sorciere",
+    name: "La Médecin",
+    slug: "medecin",
     description: "Peut sauver ou tuer un joueur",
     team: TeamType.village,
     color: "VIOLET",
     objectif: "Utiliser ses potions au bon moment",
     isUnique: true,
-    shortName: "Sorcière",
+    shortName: "Médecin",
   },
   boulanger: {
     name: "Le Boulanger",
