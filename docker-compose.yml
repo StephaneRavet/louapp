@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  louap:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:./prisma/dev.db
+      - NEXT_PUBLIC_API_URL=https://louap.webcraft-formation.fr
+    volumes:
+      - ./prisma:/app/prisma
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.louap.rule=Host(`louap.webcraft-formation.fr`)"
+      - "traefik.http.routers.louap.entrypoints=websecure"
+      - "traefik.http.routers.louap.tls=true"
+      - "traefik.http.services.louap.loadbalancer.server.port=3000" 

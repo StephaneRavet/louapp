@@ -19,5 +19,6 @@ jobs:
           script: |
             cd ~/infra/apps/louap
             git pull origin main
+            cp .env.production .env
             docker compose build
             docker compose up -d

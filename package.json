@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:seed": "pnpx prisma migrate reset --force && pnpx prisma db push && pnpx ts-node --project prisma/tsconfig.json prisma/seed.ts",
@@ -12,7 +12,12 @@
     "db:reset": "pnpx prisma migrate reset --force",
     "db:migrate": "pnpx prisma migrate dev",
     "db:generate": "pnpx prisma generate",
-    "test": "jest"
+    "test": "jest",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "docker:shell": "docker compose exec louap sh"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",

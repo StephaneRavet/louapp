@@ -10,6 +10,10 @@
 !.yarn/releases
 !.yarn/versions
 
+# pnpm
+.pnpm-store/
+.pnpm-debug.log
+
 # testing
 /coverage
 
@@ -39,3 +43,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# database
+/prisma/dev.db
+/prisma/dev.db-journal
+
+# docker
+.docker/
+docker-compose.override.yml
