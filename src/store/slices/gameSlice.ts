@@ -2,8 +2,8 @@ import type { StateCreator } from 'zustand'
 import type { Player } from '@/types/Player.type'
 import type { Role, GameStep } from '@prisma/client'
 import type { AppState } from '@/store/index'
-import { queryAPI } from '@/lib/queryAPI'
 import { shuffle } from '@/lib/utils'
+import { fetchGameSteps } from '@/lib/queryAPI'
 
 export type PlayerRole = {
   player: Player;
@@ -60,7 +60,7 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
 
   getGameSteps: async () => {
     const { setError } = get()
-    const steps = await queryAPI<GameStep[]>('gameSteps', setError)
+    const steps = await fetchGameSteps(setError)
     set({ steps, gameStepsLoaded: true })
   },
 

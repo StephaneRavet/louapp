@@ -4,7 +4,7 @@ import type { AppState } from '@/store/index'
 import { FEATURES } from '@/config/config'
 import { shuffle } from '@/lib/utils';
 import { PlayerRole } from '@/store/slices/gameSlice';
-import { queryAPI } from '@/lib/queryAPI';
+import { fetchRoles } from '@/lib/queryAPI';
 
 export interface RoleSlice {
   // État
@@ -40,7 +40,7 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
   // Actions
   fetchRoles: async () => {
     const { setError } = get()
-    const data = await queryAPI<Role[]>('roles', setError)
+    const data = await fetchRoles(setError)
     set({ roles: data, rolesLoaded: true })
 
     // Initialiser les rôles par défaut
