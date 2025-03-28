@@ -19,11 +19,6 @@ else
     cp .env.production .env
 fi
 
-# Vérifier si la base de données existe
-if [ ! -f prisma/dev.db ]; then
-    echo "⚠️  Warning: Base de données non trouvée. Elle sera créée au premier démarrage."
-fi
-
 # Construire et démarrer les conteneurs
 echo "🏗️  Construction des conteneurs..."
 docker compose build
