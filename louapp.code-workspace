@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "name": "louapp",
+      "path": "."
+    },
+    {
+      "name": "infra-vps",
+      "path": "../infra-vps"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true
+    }
+  }
+} 

@@ -13,6 +13,8 @@ services:
       - ./prisma:/app/prisma
       - louap_data:/app/data
     restart: unless-stopped
+    networks:
+      - web
     deploy:
       resources:
         limits:
@@ -25,7 +27,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.louap.rule=Host(`louap.webcraft-formation.fr`)"
       - "traefik.http.routers.louap.entrypoints=websecure"
-      - "traefik.http.routers.louap.tls=true"
+      - "traefik.http.routers.louap.tls.certresolver=letsencrypt"
       - "traefik.http.services.louap.loadbalancer.server.port=3000"
       - "traefik.http.middlewares.louap-headers.headers.sslRedirect=true"
       - "traefik.http.middlewares.louap-headers.headers.stsSeconds=31536000"
@@ -53,6 +55,12 @@ services:
         done
       '
     restart: unless-stopped
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
 
 volumes:
   louap_data:
