@@ -14,22 +14,12 @@ function GamePage() {
   useEffect(() => {
     if (playerRoles.length === 0) randomRolesAttribution()
     startGame()
-    // updateButtonCaption(0)
   }, [])
 
   const updateButtonCaption = (stepId?: number) => {
     stepId = stepId ?? game.currentStep
-    console.log('updateButtonCaption', stepId)
-    const step = steps.find(step => step.id === stepId + 1)
-    console.log('step', step)
-    switch (step?.slug) {
-      case 'debut_partie': { setButtonCaption('Commencer la partie'); break }
-      case 'debat': { setButtonCaption('Débattre'); break }
-      case 'vote': { setButtonCaption('Voter'); break }
-      case 'elimination': { setButtonCaption('Dire un dernier mot'); break }
-      case 'fin_partie': { setButtonCaption('Recommencer'); break }
-      default: { setButtonCaption(step?.slug ?? ''); break }
-    }
+    const step = steps.find(step => step.id === stepId + 2)
+    if (step) setButtonCaption(step.name); else setButtonCaption('')
   }
 
   useEffect(updateButtonCaption, [game.currentStep])

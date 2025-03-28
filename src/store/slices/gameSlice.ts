@@ -12,6 +12,7 @@ export type PlayerRole = {
 
 export type Message = {
   content: string
+  type: 'title' | 'speech'
 }
 
 export type Game = {
@@ -47,12 +48,13 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
   },
   nextGameStep: () => {
     set((state: GameSlice) => {
+      console.log('nextGameStep', state.game.currentStep)
       const currentStep = state.game.currentStep + 1 === state.steps.length ? 0 : state.game.currentStep + 1
       const message1 = state.steps[currentStep].name
       const message2 = state.steps[currentStep].sentence
       return {
         ...state,
-        game: { currentStep, messages: [...state.game.messages, { content: message1 }, { content: message2 }] }
+        game: { currentStep, messages: [...state.game.messages, { content: message1, type: 'title' }, { content: message2, type: 'speech' }] }
       }
     })
   },
