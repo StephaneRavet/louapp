@@ -4,7 +4,6 @@ import type { Role, GameStep } from '@prisma/client'
 import type { AppState } from '@/store/index'
 import { queryAPI } from '@/lib/queryAPI'
 import { shuffle } from '@/lib/utils'
-import { createSlice, createAction } from '@reduxjs/toolkit'
 
 export type PlayerRole = {
   player: Player;
@@ -22,16 +21,13 @@ export type Game = {
 }
 
 export interface GameSlice {
-  // État
   steps: GameStep[]
   game: Game
   gameStepsLoaded: boolean
   playerRoles: PlayerRole[]
-
-  // Actions
   startGame: () => void
   nextGameStep: () => void
-  getGameSteps: () => void
+  getGameSteps: () => Promise<void>
   randomRolesAttribution: () => void
 }
 
@@ -47,34 +43,33 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
   startGame: () => {
     set({ game: { currentStep: -1, messages: [] } })
   },
+
   nextGameStep: () => {
-    set((state: GameSlice) => {
-      console.log('nextGameStep', state.game.currentStep)
+    set((state) => {
       const currentStep = state.game.currentStep + 1 === state.steps.length ? 0 : state.game.currentStep + 1
       const message1 = state.steps[currentStep].name
       const message2 = state.steps[currentStep].sentence
       return {
-        ...state,
-        game: { currentStep, messages: [...state.game.messages, { content: message1, type: 'title' }, { content: message2, type: 'speech' }] }
+        game: { 
+          currentStep, 
+          messages: [...state.game.messages, { content: message1, type: 'title' }, { content: message2, type: 'speech' }] 
+        }
       }
     })
   },
+
   getGameSteps: async () => {
     const { setError } = get()
     const steps = await queryAPI<GameStep[]>('gameSteps', setError)
-    set({ steps })
-    set({ gameStepsLoaded: true })
+    set({ steps, gameStepsLoaded: true })
   },
+
   randomRolesAttribution: () => {
     const { players, selectedRoles } = get()
 
-    // Filtrer les joueurs pour enlever les chaînes vides
     const validPlayers = players.filter(player => player.trim() !== '')
-
-    // Copier les joueurs pour les mélanger
     const shuffledPlayers = shuffle([...validPlayers])
 
-    // Créer la liste des rôles à attribuer basée sur selectedRoles
     const rolesToAssign: Role[] = []
     Object.entries(selectedRoles).forEach(([, roleData]) => {
       const { role, count } = roleData
@@ -83,7 +78,6 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
       }
     })
 
-    // Créer les associations rôle-joueur
     const newPlayerRoles: PlayerRole[] = []
     for (let i = 0; i < rolesToAssign.length; i++) {
       newPlayerRoles.push({
@@ -92,22 +86,6 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
       })
     }
 
-    // Mettre à jour l'état
-    set((state) => ({ ...state, playerRoles: newPlayerRoles }))
+    set({ playerRoles: newPlayerRoles })
   }
-})
-
-export const randomRolesAttribution = createAction<string[]>('game/randomRolesAttribution')
-
-export const gameSlice = createSlice({
-  name: 'game',
-  initialState: createGameSlice,
-  reducers: {
-    // ... existing code ...
-  },
-  extraReducers: (builder) => {
-    builder.addCase(randomRolesAttribution, (state, action) => {
-      state.playerRoles = action.payload
-    })
-  },
 })
