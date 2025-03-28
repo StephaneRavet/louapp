@@ -1,24 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Le jeu du Loup
 
-## Getting Started
+Application d'aide pour les maîtres du jeu du Loup. Cette application permet de gérer facilement les rôles, les phases de jeu et les actions des joueurs.
 
-First, run the development server:
+## Pour commencer
+
+Lancez le serveur de développement :
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir le résultat.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies utilisées
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 15
+- Prisma
+- TailwindCSS
+- shadcn/ui
+- TypeScript
+
+## Scripts disponibles
+
+- `pnpm dev` : Lance le serveur de développement
+- `pnpm build` : Construit l'application pour la production
+- `pnpm start` : Lance l'application en production
+- `pnpm lint` : Vérifie le code avec ESLint
+- `pnpm test` : Lance les tests
+- `pnpm db:seed` : Initialise la base de données avec les données de test
+- `pnpm db:studio` : Lance Prisma Studio pour visualiser la base de données
+
+## Structure du projet
+
+- `/src/app` : Pages et routes de l'application
+- `/src/components` : Composants React réutilisables
+- `/src/lib` : Utilitaires et configurations
+- `/prisma` : Schéma et migrations de la base de données
+- `/public` : Fichiers statiques
 
 ## Learn More
 
