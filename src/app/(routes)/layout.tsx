@@ -14,6 +14,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport = {
+  themeColor: '#384FAF',
+}
+
 export const metadata: Metadata = {
   title: "Le jeu du Loup",
   description: "Application d'aide pour les maîtres du jeu du Loup",
@@ -22,7 +26,6 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: '/site.webmanifest',
-  themeColor: '#000000',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -31,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#384FAF" />
         <meta name="description" content="Lou Application" />
 
         <link rel="manifest" href="/site.webmanifest" />
@@ -44,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-title" content="Lou" />
 
         {/* Meta tags pour Windows */}
-        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileColor" content="#384FAF" />
         <meta name="msapplication-tap-highlight" content="no" />
       </head>
       <body>
