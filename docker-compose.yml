@@ -14,7 +14,9 @@ services:
       - louap_data:/app/data
     restart: unless-stopped
     networks:
-      - web
+      web:
+        aliases:
+          - louap
     deploy:
       resources:
         limits:
@@ -45,6 +47,7 @@ services:
 networks:
   web:
     external: true
+    name: web
 
 volumes:
   louap_data: 
