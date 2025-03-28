@@ -34,8 +34,6 @@ const createMockState = (players = mockPlayers) => ({
     chasseur: { role: mockRoles.find(r => r.slug === 'chasseur')!, count: 1 },
     sorciere: { role: mockRoles.find(r => r.slug === 'sorciere')!, count: 1 }
   },
-  loading: false,
-  error: null,
   fetchRoles: async () => {},
   incRoleCount: () => {},
   decRoleCount: () => {},
@@ -44,12 +42,10 @@ const createMockState = (players = mockPlayers) => ({
 
   // GameSlice
   playerRoles: [],
-  isRolesReady: true,
   isPlayersAndRolesEqual: true,
   startGame: () => {},
   randomRolesAttribution: () => {},
-  ensureRolesLoaded: async () => {},
-  updatePlayersAndRolesEqual: () => {}
+  updateIsPlayersAndRolesEqual: () => {}
 })
 
 // Mock du StoreApi

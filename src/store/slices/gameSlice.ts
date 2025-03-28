@@ -23,11 +23,12 @@ export interface GameSlice {
   // État
   steps: GameStep[]
   game: Game
+  gameStepsLoaded: boolean
 
   // Actions
   startGame: () => void
   nextGameStep: () => void
-  getGameStep: () => void
+  getGameSteps: () => void
 }
 
 export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, get) => ({
@@ -36,6 +37,8 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
     currentStep: 0,
     messages: []
   },
+  gameStepsLoaded: false,
+
   startGame: () => {
     set({ game: { currentStep: -1, messages: [] } })
   },
@@ -50,9 +53,10 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
       }
     })
   },
-  getGameStep: async () => {
+  getGameSteps: async () => {
     const { setError } = get()
     const steps = await queryAPI<GameStep[]>('gameSteps', setError)
     set({ steps })
+    set({ gameStepsLoaded: true })
   },
 })

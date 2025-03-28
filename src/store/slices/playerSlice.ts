@@ -32,14 +32,14 @@ export const createPlayerSlice: StateCreator<AppState, [], [], PlayerSlice> = (s
       players: [...players, ''],
       lastAddedIndex: players.length
     })
-    get().updatePlayersAndRolesEqual()
+    get().updateIsPlayersAndRolesEqual()
   },
   
   removePlayer: (index) => {
     const { players } = get()
     if (players.length > 1) {
       set({ players: players.filter((_, i) => i !== index) })
-      get().updatePlayersAndRolesEqual()
+      get().updateIsPlayersAndRolesEqual()
     }
   },
   
@@ -48,7 +48,7 @@ export const createPlayerSlice: StateCreator<AppState, [], [], PlayerSlice> = (s
     set({
       players: players.map((player, i) => i === index ? name : player)
     })
-    get().updatePlayersAndRolesEqual()
+    get().updateIsPlayersAndRolesEqual()
   },
   
   // Sélecteurs

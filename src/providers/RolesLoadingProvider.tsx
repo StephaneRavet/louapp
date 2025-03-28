@@ -14,21 +14,14 @@ const LoaderWrapper = () => (
 )
 
 export function RolesLoadingProvider({ children }: { children: React.ReactNode }) {
-  const { isRolesReady, ensureRolesLoaded } = useAppStore()
+  const { rolesLoaded, gameStepsLoaded } = useAppStore()
   const [isInitialized, setIsInitialized] = useState(false)
 
   useEffect(() => {
-    async function loadRoles() {
-      if (!isRolesReady) {
-        await ensureRolesLoaded()
-      }
-      setIsInitialized(true)
-    }
+    if (rolesLoaded && gameStepsLoaded) setIsInitialized(true)
+  }, [rolesLoaded, gameStepsLoaded])
 
-    loadRoles()
-  }, [isRolesReady, ensureRolesLoaded])
-
-  if (!isInitialized || !isRolesReady) {
+  if (!isInitialized) {
     return <LoaderWrapper />
   }
 
