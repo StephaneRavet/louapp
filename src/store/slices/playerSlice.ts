@@ -19,7 +19,7 @@ export type PlayerSlice = {
 
 export const createPlayerSlice: StateCreator<AppState, [], [], PlayerSlice> = (set, get) => ({
   // État initial
-  players: FEATURES.AUTO_INIT ? Array.from({ length: FEATURES.DEFAULT_PLAYERS_COUNT }, (_, i) => `Joueur ${i+1}`) : [],
+  players: FEATURES.AUTO_INIT ? Array.from({ length: FEATURES.DEFAULT_PLAYERS_COUNT }, (_, i) => `Joueur ${i+1}`) : [''],
   lastAddedIndex: FEATURES.AUTO_INIT ? FEATURES.DEFAULT_PLAYERS_COUNT - 1 : -1,
   
   // Actions
