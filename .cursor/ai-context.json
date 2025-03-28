@@ -1,0 +1,110 @@
+{
+  "projectType": "nextjs-game-assistant",
+  "language": "français",
+  "codeStyle": {
+    "indent": 2,
+    "quotes": "single",
+    "semicolons": false,
+    "maxLineLength": 80
+  },
+  "architecture": {
+    "pattern": "feature-sliced",
+    "stateManagement": "zustand",
+    "apiStyle": "route.ts",
+    "databaseAccess": "prisma"
+  },
+  "conventions": {
+    "naming": {
+      "components": "PascalCase",
+      "functions": "camelCase",
+      "variables": "camelCase",
+      "types": "PascalCase",
+      "files": "kebab-case"
+    },
+    "imports": {
+      "order": ["react", "next", "external", "internal", "relative"],
+      "grouping": true
+    }
+  },
+  "bestPractices": {
+    "react": {
+      "useFunctionalComponents": true,
+      "useHooks": true,
+      "avoidClassComponents": true,
+      "preferDestructuring": true
+    },
+    "typescript": {
+      "strictMode": true,
+      "noImplicitAny": true,
+      "useTypeImports": true
+    },
+    "nextjs": {
+      "useAppRouter": true,
+      "useServerActions": true,
+      "useTurbopack": true
+    }
+  },
+  "commonPatterns": {
+    "apiResponse": {
+      "success": true,
+      "data": null,
+      "error": null
+    },
+    "errorHandling": {
+      "server": "console.error",
+      "client": "error state"
+    },
+    "stateManagement": {
+      "storePattern": "createSlice",
+      "actionPattern": "setState"
+    }
+  },
+  "fileTemplates": {
+    "component": {
+      "imports": ["react", "types"],
+      "structure": ["types", "component", "export"]
+    },
+    "api": {
+      "imports": ["next", "types"],
+      "structure": ["types", "handler", "export"]
+    },
+    "store": {
+      "imports": ["zustand", "types"],
+      "structure": ["types", "store", "export"]
+    }
+  },
+  "dependencies": {
+    "core": {
+      "next": "15.2.3",
+      "react": "19.0.0",
+      "typescript": "5.0.0",
+      "prisma": "6.5.0",
+      "zustand": "5.0.3"
+    },
+    "ui": {
+      "tailwindcss": "4.0.0",
+      "radix-ui": {
+        "checkbox": "1.1.4",
+        "slot": "1.1.2"
+      }
+    }
+  },
+  "development": {
+    "packageManager": "pnpm@10.6.5",
+    "commands": {
+      "dev": "pnpm dev --turbopack",
+      "build": "pnpm build",
+      "test": "pnpm test",
+      "lint": "pnpm lint"
+    }
+  },
+  "deployment": {
+    "target": "docker",
+    "environment": {
+      "production": {
+        "database": "sqlite",
+        "apiUrl": "https://louap.webcraft-formation.fr"
+      }
+    }
+  }
+} 
