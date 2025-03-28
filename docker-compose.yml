@@ -13,10 +13,49 @@ services:
       - NEXT_PUBLIC_API_URL=https://louap.webcraft-formation.fr
     volumes:
       - ./prisma:/app/prisma
+      - louap_data:/app/data
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.louap.rule=Host(`louap.webcraft-formation.fr`)"
       - "traefik.http.routers.louap.entrypoints=websecure"
       - "traefik.http.routers.louap.tls=true"
-      - "traefik.http.services.louap.loadbalancer.server.port=3000" 
+      - "traefik.http.services.louap.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.louap-headers.headers.sslRedirect=true"
+      - "traefik.http.middlewares.louap-headers.headers.stsSeconds=31536000"
+      - "traefik.http.middlewares.louap-headers.headers.browserXssFilter=true"
+      - "traefik.http.middlewares.louap-headers.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.louap-headers.headers.forceSTSHeader=true"
+      - "traefik.http.routers.louap.middlewares=louap-headers"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  backup:
+    image: alpine
+    volumes:
+      - ./prisma:/prisma
+      - louap_backup:/backup
+    command: |
+      sh -c '
+        while true; do
+          tar -czf /backup/db-$$(date +%Y%m%d-%H%M%S).tar.gz /prisma/dev.db;
+          sleep 86400;
+        done
+      '
+    restart: unless-stopped
+
+volumes:
+  louap_data:
+  louap_backup: 
