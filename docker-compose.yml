@@ -42,26 +42,9 @@ services:
       retries: 3
       start_period: 40s
 
-  backup:
-    image: alpine
-    volumes:
-      - ./prisma:/prisma
-      - louap_backup:/backup
-    command: |
-      sh -c '
-        while true; do
-          tar -czf /backup/db-$$(date +%Y%m%d-%H%M%S).tar.gz /prisma/dev.db;
-          sleep 86400;
-        done
-      '
-    restart: unless-stopped
-    networks:
-      - web
-
 networks:
   web:
     external: true
 
 volumes:
-  louap_data:
-  louap_backup: 
+  louap_data: 
