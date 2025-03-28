@@ -21,14 +21,6 @@ jobs:
             git pull origin main
             cp .env.production .env
             
-            # Sauvegarder la base de données avant le déploiement
-            if [ -f prisma/dev.db ]; then
-              tar -czf backup-$$(date +%Y%m%d-%H%M%S).tar.gz prisma/dev.db
-            fi
-            
             # Construire et démarrer les conteneurs
             docker compose build
             docker compose up -d
-            
-            # Nettoyer les anciennes sauvegardes (garder les 7 derniers jours)
-            find . -name "backup-*.tar.gz" -mtime +7 -delete
