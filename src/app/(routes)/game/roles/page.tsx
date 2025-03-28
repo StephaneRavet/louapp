@@ -16,7 +16,7 @@ function RolesAttributionPage() {
     if (playerRoles.length === 0) {
       randomRolesAttribution()
     }
-  }, [])
+  }, [playerRoles.length, randomRolesAttribution])
 
   return (
     <div className="m-1 mt-2 mb-8">

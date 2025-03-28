@@ -4,10 +4,12 @@ import { createMockRole } from '@/data/rolesData'
 import { TeamType } from '@prisma/client'
 import type { AppState } from '@/store/index'
 import type { GameStep } from '@prisma/client'
+import { configureStore } from '@reduxjs/toolkit'
+import gameReducer from './gameSlice'
 
 // Mocker la fonction shuffle pour avoir un comportement déterministe
 jest.mock('@/lib/utils', () => ({
-  shuffle: (array: any[]) => [...array], // Retourne une copie sans mélanger
+  shuffle: <T>(array: T[]) => [...array], // Retourne une copie sans mélanger
 }))
 
 // Mock des données de test
@@ -76,7 +78,7 @@ const createMockState = (players = mockPlayers): AppState => ({
 
 // Mock du StoreApi
 const createMockStore = (initialState: AppState): StoreApi<AppState> => {
-  let state = { ...initialState }
+  const state = { ...initialState }
   return {
     setState: (partial, replace) => {
       const newState = replace 
@@ -95,6 +97,16 @@ const createMockStore = (initialState: AppState): StoreApi<AppState> => {
 }
 
 describe('gameSlice', () => {
+  let store: ReturnType<typeof configureStore>
+
+  beforeEach(() => {
+    store = configureStore({
+      reducer: {
+        game: gameReducer,
+      },
+    })
+  })
+
   describe('startGame', () => {
     test('initialise le jeu avec le bon état', () => {
       const mockState = createMockState()
@@ -251,5 +263,14 @@ describe('gameSlice', () => {
       expect(updatedState.steps).toHaveLength(2)
       expect(updatedState.gameStepsLoaded).toBe(true)
     })
+  })
+
+  it('should handle randomRolesAttribution', () => {
+    const initialState = store.getState().game
+    const result = gameReducer(initialState, {
+      type: 'game/randomRolesAttribution',
+      payload: ['player1', 'player2'],
+    })
+    expect(result.playerRoles).toHaveLength(2)
   })
 }) 

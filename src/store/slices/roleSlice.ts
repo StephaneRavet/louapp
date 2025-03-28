@@ -161,7 +161,7 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
 
     // Créer la liste des rôles à attribuer basée sur selectedRoles
     const rolesToAssign: Role[] = []
-    Object.entries(selectedRoles).forEach(([slug, roleData]) => {
+    Object.entries(selectedRoles).forEach(([, roleData]) => {
       const { role, count } = roleData
       for (let i = 0; i < count; i++) {
         rolesToAssign.push(role)

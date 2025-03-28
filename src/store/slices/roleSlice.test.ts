@@ -6,7 +6,7 @@ import type { AppState } from '@/store/index'
 
 // Mocker la fonction shuffle pour avoir un comportement déterministe
 jest.mock('@/lib/utils', () => ({
-  shuffle: (array: any[]) => [...array], // Retourne une copie sans mélanger
+  shuffle: <T>(array: T[]) => [...array], // Retourne une copie sans mélanger
 }))
 
 // Mock des données de test
@@ -75,7 +75,7 @@ const createMockState = (players = mockPlayers) => ({
 
 // Mock du StoreApi
 const createMockStore = (initialState: AppState): StoreApi<AppState> => {
-  let state = { ...initialState }
+  const state = { ...initialState }
   return {
     setState: (partial, replace) => {
       const newState = replace 

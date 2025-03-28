@@ -14,7 +14,7 @@ function GamePage() {
   useEffect(() => {
     if (playerRoles.length === 0) randomRolesAttribution()
     startGame()
-  }, [])
+  }, [playerRoles.length, randomRolesAttribution, startGame])
 
   const updateButtonCaption = (stepId?: number) => {
     stepId = stepId ?? game.currentStep
@@ -22,7 +22,7 @@ function GamePage() {
     if (step) setButtonCaption(step.name); else setButtonCaption('')
   }
 
-  useEffect(updateButtonCaption, [game.currentStep])
+  useEffect(updateButtonCaption, [game.currentStep, steps])
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">

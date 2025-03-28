@@ -4,6 +4,7 @@ import type { Role, GameStep } from '@prisma/client'
 import type { AppState } from '@/store/index'
 import { queryAPI } from '@/lib/queryAPI'
 import { shuffle } from '@/lib/utils'
+import { createSlice, createAction } from '@reduxjs/toolkit'
 
 export type PlayerRole = {
   player: Player;
@@ -75,7 +76,7 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
 
     // Créer la liste des rôles à attribuer basée sur selectedRoles
     const rolesToAssign: Role[] = []
-    Object.entries(selectedRoles).forEach(([slug, roleData]) => {
+    Object.entries(selectedRoles).forEach(([, roleData]) => {
       const { role, count } = roleData
       for (let i = 0; i < count; i++) {
         rolesToAssign.push(role)
@@ -94,4 +95,19 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
     // Mettre à jour l'état
     set((state) => ({ ...state, playerRoles: newPlayerRoles }))
   }
+})
+
+export const randomRolesAttribution = createAction<string[]>('game/randomRolesAttribution')
+
+export const gameSlice = createSlice({
+  name: 'game',
+  initialState: createGameSlice,
+  reducers: {
+    // ... existing code ...
+  },
+  extraReducers: (builder) => {
+    builder.addCase(randomRolesAttribution, (state, action) => {
+      state.playerRoles = action.payload
+    })
+  },
 })
