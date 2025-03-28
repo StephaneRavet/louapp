@@ -3,6 +3,7 @@ import type { Player } from '@/types/Player.type'
 import type { Role, GameStep } from '@prisma/client'
 import type { AppState } from '@/store/index'
 import { queryAPI } from '@/lib/queryAPI'
+import { shuffle } from '@/lib/utils'
 
 export type PlayerRole = {
   player: Player;
@@ -18,17 +19,18 @@ export type Game = {
   messages: Message[]
 }
 
-
 export interface GameSlice {
   // État
   steps: GameStep[]
   game: Game
   gameStepsLoaded: boolean
+  playerRoles: PlayerRole[]
 
   // Actions
   startGame: () => void
   nextGameStep: () => void
   getGameSteps: () => void
+  randomRolesAttribution: () => void
 }
 
 export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, get) => ({
@@ -38,6 +40,7 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
     messages: []
   },
   gameStepsLoaded: false,
+  playerRoles: [],
 
   startGame: () => {
     set({ game: { currentStep: -1, messages: [] } })
@@ -59,4 +62,34 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
     set({ steps })
     set({ gameStepsLoaded: true })
   },
+  randomRolesAttribution: () => {
+    const { players, selectedRoles } = get()
+
+    // Filtrer les joueurs pour enlever les chaînes vides
+    const validPlayers = players.filter(player => player.trim() !== '')
+
+    // Copier les joueurs pour les mélanger
+    const shuffledPlayers = shuffle([...validPlayers])
+
+    // Créer la liste des rôles à attribuer basée sur selectedRoles
+    const rolesToAssign: Role[] = []
+    Object.entries(selectedRoles).forEach(([slug, roleData]) => {
+      const { role, count } = roleData
+      for (let i = 0; i < count; i++) {
+        rolesToAssign.push(role)
+      }
+    })
+
+    // Créer les associations rôle-joueur
+    const newPlayerRoles: PlayerRole[] = []
+    for (let i = 0; i < rolesToAssign.length; i++) {
+      newPlayerRoles.push({
+        role: rolesToAssign[i],
+        player: shuffledPlayers[i]
+      })
+    }
+
+    // Mettre à jour l'état
+    set((state) => ({ ...state, playerRoles: newPlayerRoles }))
+  }
 })
