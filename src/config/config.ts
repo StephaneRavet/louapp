@@ -6,6 +6,7 @@
 export const FEATURES = {
   // Activer/désactiver l'initialisation automatique des joueurs et rôles
   AUTO_INIT: process.env.NODE_ENV === 'development',
+  // AUTO_INIT: false,
   
   // Nombre de joueurs à créer par défaut
   DEFAULT_PLAYERS_COUNT: 10,

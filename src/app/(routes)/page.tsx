@@ -11,7 +11,7 @@ import { StickyFooter } from '@/app/(routes)/StickyFooter'
 // import { ThemeToggle } from '@/components/ThemeToggle'
 
 export default function Home() {
-  const { isPlayersAndRolesEqual } = useAppStore()
+  const { isPlayersAndRolesEqual, getValidPlayersCount } = useAppStore()
   const router = useRouter()
 
   const handleAttributeRoles = () => {
@@ -35,7 +35,7 @@ export default function Home() {
         <Button
           onClick={handleAttributeRoles}
           variant="default"
-          disabled={!isPlayersAndRolesEqual}
+          disabled={!isPlayersAndRolesEqual || !getValidPlayersCount()}
           className="font-action"
         >
           Attribuer rôles aléatoires
