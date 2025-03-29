@@ -9,12 +9,14 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   adjustFontFallback: true,
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   adjustFontFallback: true,
+  preload: true,
 });
 
 const unifrakturCook = UnifrakturCook({
@@ -22,6 +24,7 @@ const unifrakturCook = UnifrakturCook({
   subsets: ["latin"],
   variable: "--font-unifraktur-cook",
   adjustFontFallback: true,
+  preload: true,
 });
 
 const medievalSharp = MedievalSharp({
@@ -29,12 +32,14 @@ const medievalSharp = MedievalSharp({
   subsets: ["latin"],
   variable: "--font-medieval-sharp",
   adjustFontFallback: true,
+  preload: true,
 });
 
 const cinzel = Cinzel({
   subsets: ["latin"],
   variable: "--font-cinzel",
   adjustFontFallback: true,
+  preload: true,
 });
 
 const gloock = Gloock({
@@ -42,6 +47,7 @@ const gloock = Gloock({
   subsets: ["latin"],
   variable: "--font-gloock",
   adjustFontFallback: true,
+  preload: true,
 });
 
 const germaniaOne = Germania_One({
@@ -49,6 +55,7 @@ const germaniaOne = Germania_One({
   subsets: ["latin"],
   variable: "--font-germania-one",
   adjustFontFallback: true,
+  preload: true,
 });
 
 const eagleLake = Eagle_Lake({
@@ -56,6 +63,7 @@ const eagleLake = Eagle_Lake({
   subsets: ["latin"],
   variable: "--font-eagle-lake",
   adjustFontFallback: true,
+  preload: true,
 });
 
 export const viewport = {
