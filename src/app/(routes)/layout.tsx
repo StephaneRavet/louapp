@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { UnifrakturCook, MedievalSharp, Cinzel, Gloock, Germania_One, Eagle_Lake } from "next/font/google";
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { RolesLoadingProvider } from "@/providers/RolesLoadingProvider"
@@ -7,11 +8,54 @@ import { RolesLoadingProvider } from "@/providers/RolesLoadingProvider"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  adjustFontFallback: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  adjustFontFallback: true,
+});
+
+const unifrakturCook = UnifrakturCook({
+  weight: "700",
+  subsets: ["latin"],
+  variable: "--font-unifraktur-cook",
+  adjustFontFallback: true,
+});
+
+const medievalSharp = MedievalSharp({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-medieval-sharp",
+  adjustFontFallback: true,
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+  adjustFontFallback: true,
+});
+
+const gloock = Gloock({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-gloock",
+  adjustFontFallback: true,
+});
+
+const germaniaOne = Germania_One({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-germania-one",
+  adjustFontFallback: true,
+});
+
+const eagleLake = Eagle_Lake({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-eagle-lake",
+  adjustFontFallback: true,
 });
 
 export const viewport = {
@@ -30,7 +74,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="fr" suppressHydrationWarning className={`
+      ${geistSans.variable} 
+      ${geistMono.variable}
+      ${unifrakturCook.variable}
+      ${medievalSharp.variable}
+      ${cinzel.variable}
+      ${gloock.variable}
+      ${germaniaOne.variable}
+      ${eagleLake.variable}
+    `}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
