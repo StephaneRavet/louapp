@@ -1,36 +1,23 @@
 .font-gothic1 {
   font-family: var(--font-unifraktur-cook);
-  font-weight: 700;
-  font-style: normal;
 }
 
 .font-gothic2 {
   font-family: var(--font-medieval-sharp);
-  font-weight: 400;
-  font-style: normal;
 }
 
 .font-accent {
   font-family: var(--font-cinzel);
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
 }
 
 .font-readable {
   font-family: var(--font-gloock);
-  font-weight: 400;
-  font-style: normal;
 }
 
 .font-title {
   font-family: var(--font-germania-one);
-  font-weight: 400;
-  font-style: normal;
 }
 
 .font-mystery {
   font-family: var(--font-eagle-lake);
-  font-weight: 400;
-  font-style: normal;
 }
