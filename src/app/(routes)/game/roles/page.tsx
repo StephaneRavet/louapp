@@ -36,7 +36,7 @@ function RolesAttributionPage() {
         </Button>
 
         <Button
-          onClick={() => router.push('/game')}
+          onClick={() => router.push('/game/play')}
           variant="default"
           className="flex-1"
         >

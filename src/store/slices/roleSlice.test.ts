@@ -1,7 +1,7 @@
 import { createRoleSlice } from '@/store/slices/roleSlice'
 import type { StoreApi } from 'zustand'
 import { create } from 'zustand'
-import { createMockRole } from '@/data/rolesData'
+import { createMockRole, rolesData } from '@/data/rolesData';
 import { TeamType } from '@prisma/client'
 import type { AppState } from '@/store/index'
 
@@ -19,20 +19,20 @@ const mockPlayers = [
 
 // Création des rôles mockés
 const mockRoles = [
-  createMockRole({ name: 'Le Loup', shortName: 'Loup', slug: 'loup', description: 'Un loup', team: TeamType.loup, color: 'ROUGE', isUnique: false }, 1),
-  createMockRole({ name: 'Le Villageois', shortName: 'Villageois', slug: 'villageois', description: 'Un villageois', team: TeamType.village, color: 'BLEU', isUnique: false }, 2),
-  createMockRole({ name: 'Le Médecin', shortName: 'Médecin', slug: 'medecin', description: 'Un médecin', team: TeamType.village, color: 'BLEU', isUnique: true }, 3),
-  createMockRole({ name: 'Le Chasseur', shortName: 'Chasseur', slug: 'chasseur', description: 'Un chasseur', team: TeamType.village, color: 'BLEU', isUnique: true }, 4),
-  createMockRole({ name: 'Le Boulet', shortName: 'Boulet', slug: 'boulet', description: 'Un boulet', team: TeamType.village, color: 'BLEU', isUnique: true }, 5)
+  createMockRole(rolesData.loup, 1),
+  createMockRole(rolesData.villageois, 2),
+  createMockRole(rolesData.medecin, 3),
+  createMockRole(rolesData.chasseur, 4),
+  createMockRole(rolesData.boulet, 5)
 ]
 
 // Mock du state initial
 const createMockState = (players = mockPlayers): AppState => ({
   // PlayerSlice
   players,
-  addPlayer: () => {},
-  removePlayer: () => {},
-  updatePlayerName: () => {},
+  addPlayer: () => { },
+  removePlayer: () => { },
+  updatePlayerName: () => { },
   getValidPlayersCount: () => players.length,
 
   // RoleSlice
@@ -46,16 +46,16 @@ const createMockState = (players = mockPlayers): AppState => ({
     chasseur: { role: mockRoles[3], count: 1 },
     boulet: { role: mockRoles[4], count: 1 }
   },
-  fetchRoles: async () => {},
-  incRoleCount: () => {},
-  decRoleCount: () => {},
+  fetchRoles: async () => { },
+  incRoleCount: () => { },
+  decRoleCount: () => { },
   getRole: (slug: string) => mockRoles.find(r => r.slug === slug),
   getTotalSelectedRoles: () => 10,
   playerRoles: [],
   isPlayersAndRolesEqual: true,
-  randomRolesAttribution: () => {},
-  updateIsPlayersAndRolesEqual: () => {},
-  toggleDefaultRoles: () => {},
+  randomRolesAttribution: () => { },
+  updateIsPlayersAndRolesEqual: () => { },
+  toggleDefaultRoles: () => { },
 
   // GameSlice
   steps: [],
@@ -64,13 +64,13 @@ const createMockState = (players = mockPlayers): AppState => ({
     messages: []
   },
   gameStepsLoaded: false,
-  nextGameStep: () => {},
+  nextGameStep: () => { },
   getGameSteps: async () => Promise.resolve(),
-  startGame: () => {},
+  startGame: () => { },
 
   // AppSlice
   error: null,
-  setError: () => {}
+  setError: () => { }
 })
 
 describe('roleSlice', () => {
@@ -98,7 +98,7 @@ describe('roleSlice', () => {
       const medecinCount = state.playerRoles.filter(pr => pr.role.slug === 'medecin').length
       const chasseurCount = state.playerRoles.filter(pr => pr.role.slug === 'chasseur').length
       const bouletCount = state.playerRoles.filter(pr => pr.role.slug === 'boulet').length
-      
+
       expect(loupCount).toBe(2)
       expect(villageoisCount).toBe(5)
       expect(medecinCount).toBe(1)
@@ -109,13 +109,13 @@ describe('roleSlice', () => {
     it('gère le cas où il y a plus de joueurs que de rôles', () => {
       const extraPlayers = [...mockPlayers, 'Joueur 11', 'Joueur 12']
       store.setState({ players: extraPlayers })
-      
+
       const roleSlice = createRoleSlice(store.setState, store.getState, store)
       roleSlice.randomRolesAttribution()
 
       const state = store.getState()
       expect(state.playerRoles).toHaveLength(10)
-      
+
       const playerNames = state.playerRoles.map(pr => pr.player)
       playerNames.forEach(name => {
         expect(extraPlayers).toContain(name)

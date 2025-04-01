@@ -27,6 +27,7 @@
       "@/store/*": ["./src/store/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/app/*": ["./src/app/*"],
+      "@/types/*": ["./src/types/*"],
       "@/data/*": ["./data/*"],
       "@/*": ["./*"]
     }

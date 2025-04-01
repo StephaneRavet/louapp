@@ -1,10 +1,10 @@
 import { createGameSlice } from '@/store/slices/gameSlice'
 import type { StoreApi } from 'zustand'
 import { createMockRole } from '@/data/rolesData'
-import { TeamType } from '@prisma/client'
 import type { AppState } from '@/store/index'
 import type { GameStep } from '@prisma/client'
 import { create } from 'zustand'
+import { rolesData } from '@/data/rolesData'
 
 // Mocker la fonction shuffle pour avoir un comportement déterministe
 jest.mock('@/lib/utils', () => ({
@@ -14,9 +14,9 @@ jest.mock('@/lib/utils', () => ({
 // Mock des données
 const mockPlayers = ['Alice', 'Bob', 'Charlie']
 const mockRoles = [
-  createMockRole({ name: 'Le Loup', shortName: 'Loup', slug: 'loup', description: 'Un loup', team: TeamType.loup, color: 'ROUGE', isUnique: false }, 1),
-  createMockRole({ name: 'Le Villageois', shortName: 'Villageois', slug: 'villageois', description: 'Un villageois', team: TeamType.village, color: 'BLEU', isUnique: false }, 2),
-  createMockRole({ name: 'Le Médecin', shortName: 'Médecin', slug: 'medecin', description: 'Un médecin', team: TeamType.village, color: 'BLEU', isUnique: true }, 3),
+  createMockRole(rolesData.loup, 1),
+  createMockRole(rolesData.villageois, 2),
+  createMockRole(rolesData.medecin, 3),
 ]
 
 // Mock du state initial

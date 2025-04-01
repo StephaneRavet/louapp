@@ -1,0 +1,207 @@
+{
+  "name": "LouApp Agent",
+  "description": "Agent spécialisé pour le développement de LouApp",
+  "instructions": [
+    "Tu es un agent spécialisé dans le développement de LouApp, une application de gestion de ligue de pétanque.",
+    "Tu dois suivre les règles de développement définies dans le fichier RULES.md",
+    "Tu dois utiliser les composants shadcn/ui pour l'interface utilisateur",
+    "Tu dois suivre les conventions de nommage et de structure du projet",
+    "Tu dois documenter les changements et les nouvelles fonctionnalités",
+    "Tu dois gérer les erreurs et les cas limites",
+    "Tu dois optimiser les performances et la maintenabilité du code"
+  ],
+  "tools": [
+    {
+      "name": "codebase_search",
+      "description": "Recherche dans le code source",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "La requête de recherche"
+          },
+          "target_directories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Les répertoires cibles"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "read_file",
+      "description": "Lecture d'un fichier",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "relative_workspace_path": {
+            "type": "string",
+            "description": "Le chemin du fichier"
+          },
+          "should_read_entire_file": {
+            "type": "boolean",
+            "description": "Si le fichier doit être lu en entier"
+          },
+          "start_line_one_indexed": {
+            "type": "integer",
+            "description": "La ligne de début"
+          },
+          "end_line_one_indexed_inclusive": {
+            "type": "integer",
+            "description": "La ligne de fin"
+          }
+        },
+        "required": ["relative_workspace_path", "should_read_entire_file", "start_line_one_indexed", "end_line_one_indexed_inclusive"]
+      }
+    },
+    {
+      "name": "edit_file",
+      "description": "Modification d'un fichier",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "target_file": {
+            "type": "string",
+            "description": "Le fichier à modifier"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Les instructions de modification"
+          },
+          "code_edit": {
+            "type": "string",
+            "description": "Le code à insérer"
+          }
+        },
+        "required": ["target_file", "instructions", "code_edit"]
+      }
+    },
+    {
+      "name": "run_terminal_cmd",
+      "description": "Exécution d'une commande terminal",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "La commande à exécuter"
+          },
+          "is_background": {
+            "type": "boolean",
+            "description": "Si la commande doit être exécutée en arrière-plan"
+          },
+          "require_user_approval": {
+            "type": "boolean",
+            "description": "Si l'approbation de l'utilisateur est requise"
+          }
+        },
+        "required": ["command", "is_background", "require_user_approval"]
+      }
+    }
+  ],
+  "components": {
+    "shadcn": {
+      "installed": [
+        "button",
+        "card",
+        "form",
+        "input",
+        "select",
+        "switch",
+        "data-table",
+        "badge",
+        "dropdown-menu",
+        "table"
+      ],
+      "location": "src/components/ui/",
+      "installation_command": "pnpm dlx shadcn@latest add [component-name]",
+      "structure": {
+        "description": "Chaque composant a son propre fichier (ex: button.tsx)",
+        "styling": "Utilise Tailwind CSS pour le style",
+        "props": "Utilise TypeScript pour le typage des props",
+        "accessibility": "Implémente les bonnes pratiques d'accessibilité"
+      }
+    },
+    "custom": {
+      "location": "src/components/",
+      "structure": {
+        "ui": "Composants shadcn/ui",
+        "roles": "Composants spécifiques aux rôles",
+        "teams": "Composants spécifiques aux équipes",
+        "ThemeProvider": "Gestion du thème de l'application",
+        "ThemeToggle": "Bouton de basculement du thème"
+      }
+    }
+  },
+  "project_structure": {
+    "src": {
+      "app": {
+        "description": "Pages et routes de l'application",
+        "structure": {
+          "(routes)": {
+            "crud": "Pages de gestion des données",
+            "game": "Pages liées au jeu",
+            "layout.tsx": "Layout principal de l'application",
+            "page.tsx": "Page d'accueil"
+          },
+          "api": "Routes API de l'application"
+        }
+      },
+      "components": {
+        "ui": "Composants shadcn/ui",
+        "roles": "Composants spécifiques aux rôles",
+        "teams": "Composants spécifiques aux équipes"
+      },
+      "data": "Données et configurations",
+      "types": "Types TypeScript",
+      "config": "Configurations de l'application",
+      "lib": "Utilitaires et configurations",
+      "store": "État global de l'application",
+      "providers": "Providers React",
+      "styles": "Styles globaux",
+      "prisma": "Schéma et migrations de la base de données"
+    }
+  },
+  "features": {
+    "theming": {
+      "description": "Support du thème clair/sombre",
+      "components": ["ThemeProvider", "ThemeToggle"]
+    },
+    "crud": {
+      "description": "Opérations CRUD sur les données",
+      "routes": ["/crud/roles", "/crud/teams"]
+    },
+    "game": {
+      "description": "Fonctionnalités liées au jeu",
+      "routes": ["/game"]
+    }
+  },
+  "conventions": {
+    "naming": {
+      "components": "PascalCase",
+      "files": "kebab-case",
+      "functions": "camelCase",
+      "variables": "camelCase"
+    },
+    "imports": {
+      "order": [
+        "React",
+        "Next.js",
+        "Bibliothèques externes",
+        "Composants internes",
+        "Styles"
+      ],
+      "aliases": {
+        "@/*": "src/*"
+      }
+    },
+    "routing": {
+      "description": "Utilisation du système de routage App Router de Next.js",
+      "groups": "Utilisation des groupes de routes avec (routes)"
+    }
+  }
+} 

@@ -1,40 +1,46 @@
 'use client'
 
-import { useAppStore } from '@/store/index'
-import { useEffect, useState } from 'react'
-import { StickyFooter } from '../StickyFooter'
+import React from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { PlayerRolesGrid } from '@/app/(routes)/game/PlayerRolesGrid'
-import { Chat } from '@/app/(routes)/game/Chat'
+import { PlayersList } from '@/app/(routes)/game/PlayersList'
+import { RolesList } from '@/app/(routes)/game/RolesList'
+import { useAppStore } from '@/store/index'
+import { PlayersRolesCheck } from '@/app/(routes)/game/PlayersRolesCheck'
+import { StickyFooter } from '@/app/(routes)/StickyFooter'
+// import { ThemeToggle } from '@/components/ThemeToggle'
 
-function GamePage() {
-  const { playerRoles, randomRolesAttribution, startGame, nextGameStep, game, steps } = useAppStore()
-  const [buttonCaption, setButtonCaption] = useState('')
+export default function Home() {
+  const { isPlayersAndRolesEqual, getValidPlayersCount } = useAppStore()
+  const router = useRouter()
 
-  useEffect(() => {
-    if (playerRoles.length === 0) randomRolesAttribution()
-    startGame()
-  }, [playerRoles.length, randomRolesAttribution, startGame])
-
-  const updateButtonCaption = (stepId?: number) => {
-    stepId = stepId ?? game.currentStep
-    const step = steps.find(step => step.id === stepId + 2)
-    if (step) setButtonCaption(step.name); else setButtonCaption('')
+  const handleAttributeRoles = () => {
+    router.push('/game/roles')
   }
 
-  useEffect(updateButtonCaption, [game.currentStep, steps])
-
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)]">
-      <PlayerRolesGrid />
-      <div className="flex-1 flex justify-center p-1 border-t border-primary/50">
-        <Chat />
+    <div className="m-2 mb-8">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-4xl font-title">Nouvelle partie de Loup</h1>
+        {/* <ThemeToggle /> */}
       </div>
-      <StickyFooter className="flex justify-end">
-        <Button onClick={nextGameStep}>{buttonCaption}</Button>
+
+      <div className="grid grid-cols-1 gap-6">
+        <PlayersList />
+        <RolesList />
+      </div>
+
+      <StickyFooter>
+        <PlayersRolesCheck />
+        <Button
+          onClick={handleAttributeRoles}
+          variant="default"
+          disabled={!isPlayersAndRolesEqual || !getValidPlayersCount()}
+          className="font-action"
+        >
+          Attribuer rôles aléatoires
+        </Button>
       </StickyFooter>
     </div>
   )
 }
-
-export default GamePage
