@@ -113,7 +113,6 @@
       "    description: '${4:Description du rôle}',",
       "    team: '${5|village,loup,independant,multi|}',",
       "    color: '${6:BLEU}',",
-      "    objectif: '${7:Objectif du rôle}',",
       "    isUnique: ${8:true}",
       "  }",
       "})"

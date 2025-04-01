@@ -27,9 +27,9 @@ model Role {
   slug        String      @unique
   description String
   team        TeamType
-  color       String?
-  objectif    String?
+  color       String
   isUnique    Boolean     @default(true)
+  level       Int         @default(1)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   roleHooks   RoleHook[]

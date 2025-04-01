@@ -64,7 +64,7 @@ importers:
         specifier: ^29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^20
+        specifier: ^20.17.25
         version: 20.17.25
       '@types/react':
         specifier: ^19
@@ -91,7 +91,7 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.17.25)(typescript@5.8.2)
       typescript:
-        specifier: ^5
+        specifier: ^5.8.2
         version: 5.8.2
 
 packages:
