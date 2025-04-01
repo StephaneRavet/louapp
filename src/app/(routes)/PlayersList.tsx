@@ -43,30 +43,24 @@ export function PlayersList() {
   return (
     <>
       <div className="space-y-2">
-        {players.map((player, index) => (
-          <div key={index} className="flex items-center gap-3">
-            <Input
-              value={player}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => updatePlayerName(index, e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Nom du joueur"
-              className="flex-1"
-              ref={el => {
-                if (el) inputRefs.current.set(index, el)
-              }}
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => removePlayer(index)}
-              disabled={players.length === 1}
-              className="p-0 h-9 w-9 rounded-full cursor-pointer"
-            >
-              <X className="h-4 w-4" />
-              <span className="sr-only">Supprimer</span>
-            </Button>
-          </div>
-        ))}
+        <div className="grid grid-cols-2 gap-2">
+          {players.map((player, index) => (
+            <div key={index} className="flex items-center gap-3 min-w-0">
+              <Input
+                value={player}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updatePlayerName(index, e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Nom du joueur"
+                className="flex-1 min-w-0"
+                clearable
+                onClear={() => removePlayer(index)}
+                ref={el => {
+                  if (el) inputRefs.current.set(index, el)
+                }}
+              />
+            </div>
+          ))}
+        </div>
         <Button
           variant="outline"
           onClick={addPlayerOrFocusEmptyInput}
