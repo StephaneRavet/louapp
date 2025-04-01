@@ -7,31 +7,14 @@ import { X, Plus } from 'lucide-react'
 import { useAppStore } from '@/store/index'
 
 export function PlayersList() {
-  const { 
-    players, 
-    lastAddedIndex, 
-    addPlayer, 
-    removePlayer, 
+  const {
+    players,
+    addPlayer,
+    removePlayer,
     updatePlayerName,
   } = useAppStore()
-  
+
   const inputRefs = useRef<Map<number, HTMLInputElement>>(new Map())
-
-  // Focus le premier input au chargement du composant
-  useEffect(() => {
-    const firstInput = inputRefs.current.get(0)
-    if (firstInput) {
-      firstInput.focus()
-    }
-  }, [])
-
-  // Focus le dernier input ajouté
-  useEffect(() => {
-    const inputToFocus = inputRefs.current.get(lastAddedIndex)
-    if (inputToFocus) {
-      inputToFocus.focus()
-    }
-  }, [lastAddedIndex])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -39,6 +22,23 @@ export function PlayersList() {
       addPlayer()
     }
   }
+
+  const addPlayerOrFocusEmptyInput = () => {
+    addPlayer()
+    focusEmptyInput()
+  }
+
+  const focusEmptyInput = () => {
+    const lastPlayerIndex = players.findIndex(player => player === '')
+    const inputToFocus = inputRefs.current.get(lastPlayerIndex)
+    if (inputToFocus) {
+      inputToFocus.focus()
+    }
+  }
+
+  useEffect(focusEmptyInput, [])
+
+  useEffect(focusEmptyInput, [players])
 
   return (
     <>
@@ -69,7 +69,7 @@ export function PlayersList() {
         ))}
         <Button
           variant="outline"
-          onClick={addPlayer}
+          onClick={addPlayerOrFocusEmptyInput}
           className="w-full flex items-center justify-center gap-1"
         >
           <Plus className="h-4 w-4" />

@@ -1,5 +1,6 @@
 import { createRoleSlice } from '@/store/slices/roleSlice'
 import type { StoreApi } from 'zustand'
+import { create } from 'zustand'
 import { createMockRole } from '@/data/rolesData'
 import { TeamType } from '@prisma/client'
 import type { AppState } from '@/store/index'
@@ -25,11 +26,10 @@ const mockRoles = [
   createMockRole({ name: 'Le Boulet', shortName: 'Boulet', slug: 'boulet', description: 'Un boulet', team: TeamType.village, color: 'BLEU', isUnique: true }, 5)
 ]
 
-// Mock complet du state
-const createMockState = (players = mockPlayers) => ({
+// Mock du state initial
+const createMockState = (players = mockPlayers): AppState => ({
   // PlayerSlice
   players,
-  lastAddedIndex: players.length - 1,
   addPlayer: () => {},
   removePlayer: () => {},
   updatePlayerName: () => {},
@@ -39,13 +39,12 @@ const createMockState = (players = mockPlayers) => ({
   roles: mockRoles,
   rolesLoaded: true,
   useDefaultRoles: true,
-  toggleDefaultRoles: () => {},
   selectedRoles: {
-    loup: { role: mockRoles.find(r => r.slug === 'loup')!, count: 2 },
-    villageois: { role: mockRoles.find(r => r.slug === 'villageois')!, count: 5 },
-    medecin: { role: mockRoles.find(r => r.slug === 'medecin')!, count: 1 },
-    chasseur: { role: mockRoles.find(r => r.slug === 'chasseur')!, count: 1 },
-    boulet: { role: mockRoles.find(r => r.slug === 'boulet')!, count: 1 }
+    loup: { role: mockRoles[0], count: 2 },
+    villageois: { role: mockRoles[1], count: 5 },
+    medecin: { role: mockRoles[2], count: 1 },
+    chasseur: { role: mockRoles[3], count: 1 },
+    boulet: { role: mockRoles[4], count: 1 }
   },
   fetchRoles: async () => {},
   incRoleCount: () => {},
@@ -56,6 +55,7 @@ const createMockState = (players = mockPlayers) => ({
   isPlayersAndRolesEqual: true,
   randomRolesAttribution: () => {},
   updateIsPlayersAndRolesEqual: () => {},
+  toggleDefaultRoles: () => {},
 
   // GameSlice
   steps: [],
@@ -65,7 +65,7 @@ const createMockState = (players = mockPlayers) => ({
   },
   gameStepsLoaded: false,
   nextGameStep: () => {},
-  getGameSteps: () => [],
+  getGameSteps: async () => Promise.resolve(),
   startGame: () => {},
 
   // AppSlice
@@ -73,69 +73,31 @@ const createMockState = (players = mockPlayers) => ({
   setError: () => {}
 })
 
-// Mock du StoreApi
-const createMockStore = (initialState: AppState): StoreApi<AppState> => {
-  const state = { ...initialState }
-  return {
-    setState: (partial, replace) => {
-      const newState = replace 
-        ? (typeof partial === 'function' ? partial(state) : partial) as AppState 
-        : { ...state, ...(typeof partial === 'function' ? partial(state) : partial) }
-      
-      // Mise à jour de l'état interne du store
-      Object.assign(state, newState)
-      
-      console.log('setState appelée, nouvel état:', state)
-    },
-    getState: () => state,
-    getInitialState: () => initialState,
-    subscribe: () => () => {}
-  }
-}
-
 describe('roleSlice', () => {
+  let store: StoreApi<AppState>
+
+  beforeEach(() => {
+    store = create<AppState>(() => createMockState())
+  })
+
   describe('randomRolesAttribution', () => {
-    test('attribue correctement les rôles aux joueurs', () => {
-      const mockState = createMockState()
-      const store = createMockStore(mockState)
-      
-      // Espionner la fonction setState
-      const setStateSpy = jest.spyOn(store, 'setState')
-      
-      // Créer une instance du slice avec le mock state
-      const slice = {
-        ...store.getState(),
-        ...createRoleSlice(
-          store.setState,
-          store.getState,
-          store
-        )
-      }
+    it('attribue correctement les rôles aux joueurs', () => {
+      const roleSlice = createRoleSlice(store.setState, store.getState, store)
+      roleSlice.randomRolesAttribution()
 
-      // Appeler la fonction
-      slice.randomRolesAttribution()
-
-      // Vérifier que setState a été appelée
-      expect(setStateSpy).toHaveBeenCalled()
-
-      // Récupérer l'état mis à jour
-      const updatedState = store.getState()
-      console.log('State après randomRolesAttribution:', updatedState)
-      console.log('playerRoles:', updatedState.playerRoles)
-
-      // Vérifier que le nombre de rôles attribués est correct
-      expect(updatedState.playerRoles).toHaveLength(10)
+      const state = store.getState()
+      expect(state.playerRoles).toHaveLength(10)
 
       // Vérifier que chaque joueur a un rôle
-      const playerNames = updatedState.playerRoles.map(pr => pr.player)
+      const playerNames = state.playerRoles.map(pr => pr.player)
       expect(playerNames).toEqual(expect.arrayContaining(mockPlayers))
 
       // Vérifier que le nombre de chaque rôle est correct
-      const loupCount = updatedState.playerRoles.filter(pr => pr.role.slug === 'loup').length
-      const villageoisCount = updatedState.playerRoles.filter(pr => pr.role.slug === 'villageois').length
-      const medecinCount = updatedState.playerRoles.filter(pr => pr.role.slug === 'medecin').length
-      const chasseurCount = updatedState.playerRoles.filter(pr => pr.role.slug === 'chasseur').length
-      const bouletCount = updatedState.playerRoles.filter(pr => pr.role.slug === 'boulet').length
+      const loupCount = state.playerRoles.filter(pr => pr.role.slug === 'loup').length
+      const villageoisCount = state.playerRoles.filter(pr => pr.role.slug === 'villageois').length
+      const medecinCount = state.playerRoles.filter(pr => pr.role.slug === 'medecin').length
+      const chasseurCount = state.playerRoles.filter(pr => pr.role.slug === 'chasseur').length
+      const bouletCount = state.playerRoles.filter(pr => pr.role.slug === 'boulet').length
       
       expect(loupCount).toBe(2)
       expect(villageoisCount).toBe(5)
@@ -144,57 +106,19 @@ describe('roleSlice', () => {
       expect(bouletCount).toBe(1)
     })
 
-    test('gère le cas où il y a plus de joueurs que de rôles', () => {
-      // Version simplifiée sans dépendre du mélange aléatoire
-      const extraPlayers = ['Joueur 1', 'Joueur 2', 'Joueur 3', 'Joueur 4', 'Joueur 5', 'Joueur 6', 
-                            'Joueur 7', 'Joueur 8', 'Joueur 9', 'Joueur 10', 'Joueur 11', 'Joueur 12']
-      const mockState = createMockState(extraPlayers)
-      const store = createMockStore(mockState)
-      const slice = {
-        ...store.getState(),
-        ...createRoleSlice(
-          store.setState,
-          store.getState,
-          store
-        )
-      }
-
-      slice.randomRolesAttribution()
-
-      const updatedState = store.getState()
-      // Vérifier que le nombre de rôles attribués correspond au nombre de rôles disponibles (10)
-      expect(updatedState.playerRoles).toHaveLength(10)
+    it('gère le cas où il y a plus de joueurs que de rôles', () => {
+      const extraPlayers = [...mockPlayers, 'Joueur 11', 'Joueur 12']
+      store.setState({ players: extraPlayers })
       
-      // Vérifier que tous les joueurs dans playerRoles sont dans la liste originale
-      const playerNames = updatedState.playerRoles.map(pr => pr.player)
+      const roleSlice = createRoleSlice(store.setState, store.getState, store)
+      roleSlice.randomRolesAttribution()
+
+      const state = store.getState()
+      expect(state.playerRoles).toHaveLength(10)
+      
+      const playerNames = state.playerRoles.map(pr => pr.player)
       playerNames.forEach(name => {
         expect(extraPlayers).toContain(name)
-      })
-
-      // Vérifier qu'il y a moins de joueurs dans playerRoles que dans la liste originale
-      expect(playerNames.length).toBeLessThan(extraPlayers.length)
-    })
-
-    test('playerRoles contient tous les noms des joueurs', () => {
-      const mockState = createMockState()
-      const store = createMockStore(mockState)
-      const slice = {
-        ...store.getState(),
-        ...createRoleSlice(
-          store.setState,
-          store.getState,
-          store
-        )
-      }
-
-      slice.randomRolesAttribution()
-
-      const updatedState = store.getState()
-      const assignedPlayers = updatedState.playerRoles.map(pr => pr.player)
-      
-      // Vérifier que tous les joueurs originaux sont présents dans playerRoles
-      mockPlayers.forEach(player => {
-        expect(assignedPlayers).toContain(player)
       })
     })
   })

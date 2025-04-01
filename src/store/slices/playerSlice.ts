@@ -6,35 +6,30 @@ import { FEATURES } from '@/config/config'
 export type PlayerSlice = {
   // État
   players: Player[]
-  lastAddedIndex: number
-  
+
   // Actions
   addPlayer: () => void
   removePlayer: (index: number) => void
   updatePlayerName: (index: number, name: string) => void
-  
+
   // Sélecteurs
   getValidPlayersCount: () => number
 }
 
 export const createPlayerSlice: StateCreator<AppState, [], [], PlayerSlice> = (set, get) => ({
   // État initial
-  players: FEATURES.AUTO_INIT ? Array.from({ length: FEATURES.DEFAULT_PLAYERS_COUNT }, (_, i) => `Joueur ${i+1}`) : [''],
-  lastAddedIndex: FEATURES.AUTO_INIT ? FEATURES.DEFAULT_PLAYERS_COUNT - 1 : -1,
-  
+  players: FEATURES.AUTO_INIT ? Array.from({ length: FEATURES.DEFAULT_PLAYERS_COUNT }, (_, i) => `Joueur ${i + 1}`) : [''],
+
   // Actions
-  addPlayer: () => {
+  addPlayer: async () => {
     const { players } = get()
     const lastPlayer = players[players.length - 1]
     if (!lastPlayer.trim()) return
-    
-    set({ 
-      players: [...players, ''],
-      lastAddedIndex: players.length
-    })
+
+    set({ players: [...players, ''] })
     get().updateIsPlayersAndRolesEqual()
   },
-  
+
   removePlayer: (index) => {
     const { players } = get()
     if (players.length > 1) {
@@ -42,7 +37,7 @@ export const createPlayerSlice: StateCreator<AppState, [], [], PlayerSlice> = (s
       get().updateIsPlayersAndRolesEqual()
     }
   },
-  
+
   updatePlayerName: (index, name) => {
     const { players } = get()
     set({
@@ -50,7 +45,7 @@ export const createPlayerSlice: StateCreator<AppState, [], [], PlayerSlice> = (s
     })
     get().updateIsPlayersAndRolesEqual()
   },
-  
+
   // Sélecteurs
   getValidPlayersCount: () => {
     return get().players.filter(p => p.trim()).length
