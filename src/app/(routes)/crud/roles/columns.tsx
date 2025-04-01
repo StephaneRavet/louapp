@@ -28,6 +28,13 @@ export const columns: ColumnDef<Role>[] = [
   {
     accessorKey: 'description',
     header: 'Description',
+    cell: ({ row }) => {
+      return (
+        <div className="whitespace-pre-wrap break-words">
+          {row.getValue('description')}
+        </div>
+      )
+    },
   },
   {
     accessorKey: 'isActive',
