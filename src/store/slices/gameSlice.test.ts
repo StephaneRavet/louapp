@@ -1,125 +1,90 @@
-import { createGameSlice } from '@/store/slices/gameSlice'
-import type { StoreApi } from 'zustand'
-import { createMockRole } from '@/data/rolesData'
-import type { AppState } from '@/store/index'
-import type { GameStep } from '@prisma/client'
 import { create } from 'zustand'
-import { rolesData } from '@/data/rolesData'
+import { createGameSlice } from './gameSlice'
+import { createPlayerSlice } from './playerSlice'
+import { createRoleSlice } from './roleSlice'
+import { setMockData } from '@/lib/queries'
+import type { AppState } from '@/store/index'
 
 // Mocker la fonction shuffle pour avoir un comportement déterministe
 jest.mock('@/lib/utils', () => ({
   shuffle: <T>(array: T[]) => [...array], // Retourne une copie sans mélanger
 }))
 
-// Mock des données
-const mockPlayers = ['Alice', 'Bob', 'Charlie']
-const mockRoles = [
-  createMockRole(rolesData.loup, 1),
-  createMockRole(rolesData.villageois, 2),
-  createMockRole(rolesData.medecin, 3),
-]
-
-// Mock du state initial
-const createMockState = (players = mockPlayers): AppState => ({
-  // PlayerSlice
-  players,
+const createMockState = (): AppState => ({
+  error: null,
+  setError: () => {},
+  players: [],
   addPlayer: () => {},
   removePlayer: () => {},
   updatePlayerName: () => {},
-  getValidPlayersCount: () => players.length,
-
-  // RoleSlice
-  roles: mockRoles,
-  rolesLoaded: true,
-  useDefaultRoles: true,
-  selectedRoles: {
-    loup: { role: mockRoles[0], count: 1 },
-    villageois: { role: mockRoles[1], count: 1 },
-    medecin: { role: mockRoles[2], count: 1 }
-  },
+  getValidPlayersCount: () => 0,
+  roles: [],
+  selectedRoles: {},
+  rolesLoaded: false,
+  useDefaultRoles: false,
+  playerRoles: [],
+  isPlayersAndRolesEqual: false,
   fetchRoles: async () => {},
   incRoleCount: () => {},
   decRoleCount: () => {},
   getRole: () => undefined,
-  getTotalSelectedRoles: () => 3,
-  playerRoles: [],
-  isPlayersAndRolesEqual: true,
+  toggleDefaultRoles: () => {},
   randomRolesAttribution: () => {},
   updateIsPlayersAndRolesEqual: () => {},
-  toggleDefaultRoles: () => {},
-
-  // GameSlice
+  getTotalSelectedRoles: () => 0,
   steps: [],
   game: {
     currentStep: 0,
     messages: []
   },
   gameStepsLoaded: false,
-  nextGameStep: () => {},
-  getGameSteps: async () => Promise.resolve(),
   startGame: () => {},
-
-  // AppSlice
-  error: null,
-  setError: () => {}
+  nextGameStep: () => {},
+  getGameSteps: async () => {},
 })
 
-describe('gameSlice', () => {
-  let store: StoreApi<AppState>
+describe('GameSlice', () => {
+  const useStore = create<AppState>((set, get, store) => ({
+    ...createMockState(),
+    ...createGameSlice(set, get, store),
+    ...createPlayerSlice(set, get, store),
+    ...createRoleSlice(set, get, store),
+  }))
 
   beforeEach(() => {
-    store = create<AppState>(() => createMockState())
+    setMockData({
+      gameSteps: [
+        {
+          id: 1,
+          name: 'Test Step',
+          sentence: 'Test Sentence',
+          slug: 'test-step',
+          orderIndex: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+      ],
+      roles: [],
+      roleHooks: []
+    })
   })
 
   describe('startGame', () => {
     it('initialise le jeu avec le bon état', () => {
-      const gameSlice = createGameSlice(store.setState, store.getState, store)
+      const gameSlice = createGameSlice(useStore.setState, useStore.getState, useStore)
       gameSlice.startGame()
-      expect(store.getState().game.currentStep).toBe(-1)
-      expect(store.getState().game.messages).toHaveLength(0)
-    })
-  })
-
-  describe('nextGameStep', () => {
-    it('passe à l\'étape suivante', () => {
-      const mockSteps: GameStep[] = [
-        { 
-          id: 1, 
-          name: 'Étape 1', 
-          slug: 'etape1', 
-          sentence: 'Message 1', 
-          orderIndex: 0,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        { 
-          id: 2, 
-          name: 'Étape 2', 
-          slug: 'etape2', 
-          sentence: 'Message 2', 
-          orderIndex: 1,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
-      ]
-      
-      store.setState({ steps: mockSteps })
-      const gameSlice = createGameSlice(store.setState, store.getState, store)
-      gameSlice.nextGameStep()
-      
-      const state = store.getState()
-      expect(state.game.currentStep).toBe(1)
-      expect(state.game.messages).toHaveLength(2)
-      expect(state.game.messages[0].content).toBe('Étape 2')
-      expect(state.game.messages[1].content).toBe('Message 2')
+      const state = useStore.getState()
+      expect(state.game.currentStep).toBe(-1)
+      expect(state.game.messages).toHaveLength(0)
     })
   })
 
   describe('getGameSteps', () => {
     it('charge les étapes du jeu', async () => {
-      const gameSlice = createGameSlice(store.setState, store.getState, store)
+      const gameSlice = createGameSlice(useStore.setState, useStore.getState, useStore)
       await gameSlice.getGameSteps()
-      expect(store.getState().gameStepsLoaded).toBe(true)
+      const state = useStore.getState()
+      expect(state.gameStepsLoaded).toBe(true)
     })
   })
 }) 

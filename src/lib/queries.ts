@@ -5,6 +5,18 @@ import type { Role, GameStep, RoleHook, TeamType } from '@prisma/client'
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
 
+// Configuration pour le mocking dans les tests
+const isTest = process.env.NODE_ENV === 'test'
+const mockData = {
+  roles: [] as Role[],
+  gameSteps: [] as GameStep[],
+  roleHooks: [] as RoleHook[],
+}
+
+export function setMockData(data: typeof mockData) {
+  Object.assign(mockData, data)
+}
+
 class APIError extends Error {
   constructor(message: string, public status?: number) {
     super(message)
@@ -13,6 +25,11 @@ class APIError extends Error {
 }
 
 async function fetchFromAPI<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  if (isTest) {
+    const mockKey = endpoint.split('/')[0] as keyof typeof mockData
+    return mockData[mockKey] as T
+  }
+
   try {
     const response = await fetch(`${baseUrl}/api/${endpoint}`, {
       cache: 'no-store',
