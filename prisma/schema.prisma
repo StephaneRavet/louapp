@@ -21,17 +21,18 @@ enum TeamType {
 }
 
 model Role {
-  id          Int         @id @default(autoincrement())
-  name        String      @unique
-  shortName   String      @unique
-  slug        String      @unique
-  level       Int         @default(1)
+  id          Int             @id @default(autoincrement())
+  name        String          @unique
+  shortName   String          @unique
+  slug        String          @unique
+  level       Int             @default(1)
   team        TeamType
   description String
-  isUnique    Boolean     @default(true)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  isUnique    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
   roleHooks   RoleHook[]
+  difficulties DifficultyRole[]
 }
 
 model GameStep {
@@ -56,4 +57,27 @@ model RoleHook {
   updatedAt DateTime  @updatedAt
 
   @@unique([roleId, hookId])
+}
+
+model Difficulty {
+  id          Int             @id @default(autoincrement())
+  name        String          @unique
+  slug        String          @unique
+  description String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  roles       DifficultyRole[]
+}
+
+model DifficultyRole {
+  id           Int        @id @default(autoincrement())
+  difficultyId Int
+  roleId       Int
+  quantity     Int        @default(1)
+  difficulty   Difficulty @relation(fields: [difficultyId], references: [id])
+  role         Role       @relation(fields: [roleId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([difficultyId, roleId])
 }

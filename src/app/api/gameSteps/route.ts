@@ -9,7 +9,7 @@ export async function GET() {
   } catch (error) {
     console.error('Erreur lors de la récupération des étapes du jeu:', error)
     return NextResponse.json(
-      { error: 'Erreur lors de la récupération des rôles' },
+      { error: 'Erreur lors de la récupération des étapes du jeu' },
       { status: 500 }
     )
   }

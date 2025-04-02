@@ -2,6 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import type { Role, GameStep, RoleHook, TeamType } from '@prisma/client'
+import type { Difficulty } from '@/types/difficulty'
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
 
@@ -137,6 +138,15 @@ export async function fetchRoleHooksDirect(): Promise<RoleHook[]> {
     return await fetchFromAPI('roleHooks')
   } catch (error) {
     console.error('Erreur lors du chargement des hooks:', error)
+    return []
+  }
+}
+
+export async function fetchDifficultiesDirect(): Promise<Difficulty[]> {
+  try {
+    return await fetchFromAPI('difficulties')
+  } catch (error) {
+    console.error('Erreur lors du chargement des difficultés:', error)
     return []
   }
 } 

@@ -1,14 +1,32 @@
 import type { StateCreator } from 'zustand'
 import type { AppState } from '@/store/index'
-
-export type Difficulty = 'very_easy' | 'easy' | 'medium' | 'hard' | 'very_hard' | 'expert'
+import { fetchDifficultiesDirect } from '@/lib/queries'
+import type { Difficulty } from '@/types/difficulty'
 
 export interface DifficultySlice {
-  difficulty: Difficulty
-  setDifficulty: (difficulty: Difficulty) => void
+  // État
+  difficulties: Difficulty[]
+  difficulty: string
+  difficultiesLoaded: boolean
+
+  // Actions
+  fetchDifficulties: () => Promise<void>
+  setDifficulty: (difficulty: string) => void
 }
 
 export const createDifficultySlice: StateCreator<AppState, [], [], DifficultySlice> = (set) => ({
+  // État initial
+  difficulties: [],
   difficulty: 'medium',
-  setDifficulty: (difficulty) => set({ difficulty }),
+  difficultiesLoaded: false,
+
+  // Actions
+  fetchDifficulties: async () => {
+    const difficulties = await fetchDifficultiesDirect()
+    set({ difficulties, difficultiesLoaded: true })
+  },
+
+  setDifficulty: (difficulty: string) => {
+    set({ difficulty })
+  }
 }) 

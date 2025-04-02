@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { UpdateRoleDto } from '@/types/role'
+import { UpdateRoleDto } from '@/app/api/roles/roles.types'
 
 export async function GET(
   request: Request,

@@ -8,6 +8,12 @@ const entities = [
     href: '/crud/roles',
     icon: '🎭'
   },
+  {
+    name: 'Difficultés',
+    description: 'Gérer les niveaux de difficulté',
+    href: '/crud/difficulties',
+    icon: '⚡'
+  },
   // Ajoutez d'autres entités ici au fur et à mesure
 ]
 

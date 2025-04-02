@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { CreateRoleDto } from '@/types/role'
+import { CreateRoleDto } from '@/app/api/roles/roles.types'
 import { TEAM_SORT_ORDER } from '@/config/config'
 
 export async function GET() {

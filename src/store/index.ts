@@ -33,3 +33,4 @@ export const useAppStore = create<AppState>()(
 // Initialisation des data dès l'importation du store
 useAppStore.getState().fetchRoles() 
 useAppStore.getState().getGameSteps() 
+useAppStore.getState().fetchDifficulties() 

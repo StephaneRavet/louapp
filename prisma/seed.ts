@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { rolesData, rolesArray } from '../data/rolesData';
+import { difficultiesArray } from '../data/difficultiesData';
 
 const prisma = new PrismaClient();
 
@@ -30,6 +31,44 @@ async function main() {
       update: { ...role },
       create: { ...role },
     });
+  }
+
+  // Création des difficultés
+  for (const difficulty of difficultiesArray) {
+    const createdDifficulty = await prisma.difficulty.upsert({
+      where: { slug: difficulty.slug },
+      update: {
+        name: difficulty.name,
+        description: difficulty.description,
+      },
+      create: {
+        name: difficulty.name,
+        slug: difficulty.slug,
+        description: difficulty.description,
+      },
+    });
+
+    // Supprimer les rôles existants de la difficulté
+    await prisma.difficultyRole.deleteMany({
+      where: { difficultyId: createdDifficulty.id },
+    });
+
+    // Ajouter les nouveaux rôles
+    for (const role of difficulty.roles) {
+      const roleRecord = await prisma.role.findUnique({
+        where: { slug: role.slug },
+      });
+
+      if (roleRecord) {
+        await prisma.difficultyRole.create({
+          data: {
+            difficultyId: createdDifficulty.id,
+            roleId: roleRecord.id,
+            quantity: role.count,
+          },
+        });
+      }
+    }
   }
 
   // Exemple d'association rôle-hook
