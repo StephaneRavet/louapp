@@ -15,6 +15,7 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  allowedDevOrigins: ['localhost:3000', 'localhost:3001']
 }
 
 module.exports = nextConfig 
