@@ -112,7 +112,6 @@
       "    slug: '${3:slug_du_role}',",
       "    description: '${4:Description du rôle}',",
       "    team: '${5|village,loup,independant,multi|}',",
-      "    color: '${6:BLEU}',",
       "    isUnique: ${8:true}",
       "  }",
       "})"

@@ -12,6 +12,7 @@ export async function GET() {
 
     return NextResponse.json(roles)
   } catch (error) {
+    console.error('Erreur lors de la récupération des rôles:', error)
     return NextResponse.json(
       { error: 'Erreur lors de la récupération des rôles' },
       { status: 500 }
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(role)
   } catch (error) {
+    console.error('Erreur lors de la création du rôle:', error)
     return NextResponse.json(
       { error: 'Erreur lors de la création du rôle' },
       { status: 500 }

@@ -30,7 +30,6 @@ const formSchema = z.object({
   slug: z.string().min(1, 'Le slug est requis'),
   description: z.string().min(1, 'La description est requise'),
   team: z.nativeEnum(TeamType),
-  color: z.string().min(1, 'La couleur est requise'),
   isUnique: z.boolean(),
   level: z.number().min(1, 'Le niveau doit être au moins 1'),
 })
@@ -51,7 +50,6 @@ export function RoleForm({ role }: RoleFormProps) {
       slug: '',
       description: '',
       team: TeamType.village,
-      color: '',
       isUnique: false,
       level: 1,
     },
@@ -158,20 +156,6 @@ export function RoleForm({ role }: RoleFormProps) {
                   ))}
                 </SelectContent>
               </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="color"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Couleur</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}

@@ -42,7 +42,7 @@ Cette application vise à aider les maîtres du jeu du Loup à gérer leurs part
 Le modèle de données principal comprend trois entités :
 
 1. `Role` : Représente les rôles du jeu (Loup, Chasseur, etc.)
-   - Attributs : id, name, shortName, slug, description, team, color, level, isUnique
+   - Attributs : id, name, shortName, slug, description, team, level, isUnique
    - Les équipes sont définies par l'enum `TeamType` : village, loup, independant, multi
 
 2. `GameStep` : Représente les étapes d'une partie (nuit, réveil, vote, etc.)

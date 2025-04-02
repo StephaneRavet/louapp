@@ -17,6 +17,7 @@ export async function GET(
 
     return NextResponse.json(role)
   } catch (error) {
+    console.error('Erreur lors de la récupération du rôle:', error)
     return NextResponse.json(
       { error: 'Erreur lors de la récupération du rôle' },
       { status: 500 }
@@ -37,6 +38,7 @@ export async function PATCH(
 
     return NextResponse.json(role)
   } catch (error) {
+    console.error('Erreur lors de la mise à jour du rôle:', error)
     return NextResponse.json(
       { error: 'Erreur lors de la mise à jour du rôle' },
       { status: 500 }
@@ -55,6 +57,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Rôle supprimé avec succès' })
   } catch (error) {
+    console.error('Erreur lors de la suppression du rôle:', error)
     return NextResponse.json(
       { error: 'Erreur lors de la suppression du rôle' },
       { status: 500 }
