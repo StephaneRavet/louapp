@@ -19,12 +19,15 @@ function RolesAttributionPage() {
   }, [playerRoles.length, randomRolesAttribution])
 
   return (
-    <div className="m-1 mt-2 mb-8">
-      <h1 className="text-4xl font-bold mb-6 text-center font-title">
+    <div className="flex flex-col h-screen max-h-screen">
+      <h1 className="text-4xl font-bold py-4 text-center font-title">
         Attribution des Rôles
       </h1>
 
-      <PlayerRolesGrid />
+      {/* Ajout de min-h-0 pour que le conteneur puisse se réduire sans dépasser */}
+      <div className="flex-1 min-h-0 overflow-auto pb-13">
+        <PlayerRolesGrid />
+      </div>
 
       <StickyFooter>
         <Button
@@ -47,4 +50,4 @@ function RolesAttributionPage() {
   )
 }
 
-export default RolesAttributionPage 
+export default RolesAttributionPage
