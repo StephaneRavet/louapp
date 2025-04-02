@@ -3,7 +3,7 @@ import type { Player } from '@/types/Player.type'
 import type { Role, GameStep } from '@prisma/client'
 import type { AppState } from '@/store/index'
 import { shuffle } from '@/lib/utils'
-import { fetchGameSteps } from '@/lib/queryAPI'
+import { fetchGameStepsDirect } from '@/lib/queries'
 
 export type PlayerRole = {
   player: Player;
@@ -59,8 +59,7 @@ export const createGameSlice: StateCreator<AppState, [], [], GameSlice> = (set, 
   },
 
   getGameSteps: async () => {
-    const { setError } = get()
-    const steps = await fetchGameSteps(setError)
+    const steps = await fetchGameStepsDirect()
     set({ steps, gameStepsLoaded: true })
   },
 

@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { useRouter } from 'next/navigation'
+import { useCreateRole, useUpdateRole } from '@/lib/queries'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Le nom est requis'),
@@ -42,6 +43,9 @@ interface RoleFormProps {
 
 export function RoleForm({ role }: RoleFormProps) {
   const router = useRouter()
+  const createRole = useCreateRole()
+  const updateRole = useUpdateRole()
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: role || {
@@ -58,17 +62,9 @@ export function RoleForm({ role }: RoleFormProps) {
   async function onSubmit(values: FormValues) {
     try {
       if (role) {
-        await fetch(`/api/roles/${role.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
-        })
+        await updateRole.mutateAsync({ id: role.id, data: values })
       } else {
-        await fetch('/api/roles', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
-        })
+        await createRole.mutateAsync(values)
       }
       router.push('/crud/roles')
       router.refresh()

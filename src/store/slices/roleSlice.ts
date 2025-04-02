@@ -4,7 +4,7 @@ import type { AppState } from '@/store/index'
 import { FEATURES } from '@/config/config'
 import { shuffle } from '@/lib/utils';
 import { PlayerRole } from '@/store/slices/gameSlice';
-import { fetchRoles } from '@/lib/queryAPI';
+import { fetchRolesDirect } from '@/lib/queries';
 
 export interface RoleSlice {
   // État
@@ -39,12 +39,12 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
 
   // Actions
   fetchRoles: async () => {
-    const { setError } = get()
-    const data = await fetchRoles(setError)
-    set({ roles: data, rolesLoaded: true })
+    const roles = await fetchRolesDirect()
+    
+    set({ roles, rolesLoaded: true })
 
     // Initialiser les rôles par défaut
-    const defaultRoles: Record<string, { role: Role, count: number }> = data.reduce(
+    const defaultRoles: Record<string, { role: Role, count: number }> = roles.reduce(
       (acc: Record<string, { role: Role, count: number }>, role: Role) => ({
         ...acc,
         [role.slug]: { role, count: 0 }
@@ -53,18 +53,18 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
     )
 
     // Trouver le slug du rôle "Loup" et "Villageois"
-    const loupRole = data.find((r: Role) =>
+    const loupRole = roles.find((r: Role) =>
       r.slug === 'loup' ||
       r.name.toLowerCase().includes('loup')
     )
-    const villageoisRole = data.find((r: Role) =>
+    const villageoisRole = roles.find((r: Role) =>
       r.slug === 'villageois' ||
       r.name.toLowerCase().includes('villageois')
     )
 
     // Trouver les rôles indépendants et multi-équipes
-    const independantRoles = data.filter((r: Role) => r.team === 'independant')
-    const multiRoles = data.filter((r: Role) => r.team === 'multi')
+    const independantRoles = roles.filter((r: Role) => r.team === 'independant')
+    const multiRoles = roles.filter((r: Role) => r.team === 'multi')
 
     // Si on utilise les rôles par défaut
     if (get().useDefaultRoles) {

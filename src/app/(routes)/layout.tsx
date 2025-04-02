@@ -4,6 +4,7 @@ import { UnifrakturCook, MedievalSharp, Cinzel, Gloock, Germania_One, Eagle_Lake
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { RolesLoadingProvider } from "@/providers/RolesLoadingProvider"
+import { QueryProvider } from "@/providers/QueryProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -119,9 +120,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem={false}
           disableTransitionOnChange={true}
         >
-          <RolesLoadingProvider>
-            {children}
-          </RolesLoadingProvider>
+          <QueryProvider>
+            <RolesLoadingProvider>
+              {children}
+            </RolesLoadingProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
