@@ -38,67 +38,72 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
   // Actions
   fetchRoles: async () => {
     const roles = await fetchRolesDirect()
-    
+
     set({ roles, rolesLoaded: true })
 
-    // Initialiser les rôles par défaut
-    const defaultRoles: Record<string, { role: Role, count: number }> = roles.reduce(
-      (acc: Record<string, { role: Role, count: number }>, role: Role) => ({
-        ...acc,
-        [role.slug]: { role, count: 0 }
-      }),
-      {}
-    )
+    // if (FEATURES.AUTO_INIT) {
+    //   // Initialiser les rôles par défaut
+    // const defaultRoles: Record<string, { role: Role, count: number }> = roles.reduce(
+    //   (acc: Record<string, { role: Role, count: number }>, role: Role) => ({
+    //     ...acc,
+    //     [role.slug]: { role, count: 0 }
+    //   }),
+    //   {}
+    // )
 
-    // Trouver le slug du rôle "Loup" et "Villageois"
-    const loupRole = roles.find((r: Role) =>
-      r.slug === 'loup' ||
-      r.name.toLowerCase().includes('loup')
-    )
-    const villageoisRole = roles.find((r: Role) =>
-      r.slug === 'villageois' ||
-      r.name.toLowerCase().includes('villageois')
-    )
+    // // Trouver le slug du rôle "Loup" et "Villageois"
+    // const loupRole = roles.find((r: Role) =>
+    //   r.slug === 'loup' ||
+    //   r.name.toLowerCase().includes('loup')
+    // ) 
+    // const villageoisRole = roles.find((r: Role) =>
+    //   r.slug === 'villageois' ||
+    //   r.name.toLowerCase().includes('villageois')
+    // )
 
-    // Trouver les rôles indépendants et multi-équipes
-    const independantRoles = roles.filter((r: Role) => r.team === 'independant')
-    const multiRoles = roles.filter((r: Role) => r.team === 'multi')
+    // // Trouver les rôles indépendants et multi-équipes
+    // const independantRoles = roles.filter((r: Role) => r.team === 'independant')
+    // const multiRoles = roles.filter((r: Role) => r.team === 'multi')
 
-    // Si on utilise les rôles par défaut
-    if (get().useDefaultRoles) {
-      // Définir le nombre de loups selon la config
-      if (loupRole) {
-        defaultRoles[loupRole.slug].count = FEATURES.DEFAULT_WEREWOLVES_COUNT
-      }
+    // // Si on utilise les rôles par défaut
+    // if (get().useDefaultRoles) {
+    //   // Définir le nombre de loups selon la config
+    //   if (loupRole) {
+    //     defaultRoles[loupRole.slug].count = FEATURES.DEFAULT_WEREWOLVES_COUNT
+    //   }
 
-      // Définir le reste en villageois selon la config
-      if (villageoisRole) {
-        defaultRoles[villageoisRole.slug].count = FEATURES.DEFAULT_ROLES_COUNT -
-          (loupRole ? FEATURES.DEFAULT_WEREWOLVES_COUNT : 0) -
-          FEATURES.DEFAULT_INDEPENDANT_COUNT -
-          FEATURES.DEFAULT_MULTI_COUNT
-      }
+    //   // Définir le reste en villageois selon la config
+    //   if (villageoisRole) {
+    //     defaultRoles[villageoisRole.slug].count = FEATURES.DEFAULT_ROLES_COUNT -
+    //       (loupRole ? FEATURES.DEFAULT_WEREWOLVES_COUNT : 0) -
+    //       FEATURES.DEFAULT_INDEPENDANT_COUNT -
+    //       FEATURES.DEFAULT_MULTI_COUNT
+    //   }
 
-      // Ajouter les rôles indépendants
-      if (independantRoles.length > 0) {
-        const selectedIndependant = independantRoles.slice(0, FEATURES.DEFAULT_INDEPENDANT_COUNT)
-        selectedIndependant.forEach((role: Role) => {
-          defaultRoles[role.slug].count = 1
-        })
-      }
+    //   // Ajouter les rôles indépendants dans l'ordre de la configuration
+    //   if (independantRoles.length > 0) {
+    //     const selectedIndependant = independantRoles
+    //       .sort((a, b) => TEAM_SORT_ORDER[a.team] - TEAM_SORT_ORDER[b.team])
+    //       .slice(0, FEATURES.DEFAULT_INDEPENDANT_COUNT)
+    //     selectedIndependant.forEach((role: Role) => {
+    //       defaultRoles[role.slug].count = 1
+    //     })
+    //   }
 
-      // Ajouter les rôles multi-équipes
-      if (multiRoles.length > 0) {
-        const selectedMulti = multiRoles.slice(0, FEATURES.DEFAULT_MULTI_COUNT)
-        selectedMulti.forEach((role: Role) => {
-          defaultRoles[role.slug].count = 1
-        })
-      }
+    //   // Ajouter les rôles multi-équipes dans l'ordre de la configuration
+    //   if (multiRoles.length > 0) {
+    //     const selectedMulti = multiRoles
+    //       .sort((a, b) => TEAM_SORT_ORDER[a.team] - TEAM_SORT_ORDER[b.team])
+    //       .slice(0, FEATURES.DEFAULT_MULTI_COUNT)
+    //     selectedMulti.forEach((role: Role) => {
+    //       defaultRoles[role.slug].count = 1
+    //     })
+    //   }
 
-      set({ selectedRoles: defaultRoles })
-    } else {
-      set({ selectedRoles: {} })
-    }
+    //   set({ selectedRoles: defaultRoles })
+    // } else {
+    //   set({ selectedRoles: {} })
+    // }
   },
 
   toggleDefaultRoles: () => {

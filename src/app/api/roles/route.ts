@@ -1,15 +1,12 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { CreateRoleDto } from '@/types/role'
+import { TEAM_SORT_ORDER } from '@/config/config'
 
 export async function GET() {
   try {
-    const roles = await prisma.role.findMany({
-      orderBy: {
-        name: 'asc'
-      }
-    })
-
+    const roles = await prisma.role.findMany();
+    roles.sort((a, b) => TEAM_SORT_ORDER[a.team] - TEAM_SORT_ORDER[b.team]); // plus simple pour trier les rôles par équipe
     return NextResponse.json(roles)
   } catch (error) {
     console.error('Erreur lors de la récupération des rôles:', error)
