@@ -13,7 +13,6 @@ export interface RoleSlice {
   rolesLoaded: boolean
   useDefaultRoles: boolean
   playerRoles: PlayerRole[]
-  isPlayersAndRolesEqual: boolean
 
   // Actions
   fetchRoles: () => Promise<void>
@@ -22,10 +21,10 @@ export interface RoleSlice {
   getRole: (roleSlug: string) => Role | undefined
   toggleDefaultRoles: () => void
   randomRolesAttribution: () => void
-  updateIsPlayersAndRolesEqual: () => void
 
   // Sélecteurs
   getTotalSelectedRoles: () => number
+  isPlayersAndRolesEqual: () => boolean
 }
 
 export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, get) => ({
@@ -35,7 +34,6 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
   rolesLoaded: false,
   useDefaultRoles: FEATURES.AUTO_INIT,
   playerRoles: [],
-  isPlayersAndRolesEqual: false,
 
   // Actions
   fetchRoles: async () => {
@@ -101,9 +99,6 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
     } else {
       set({ selectedRoles: {} })
     }
-
-    // Met à jour l'équilibre entre joueurs et rôles
-    get().updateIsPlayersAndRolesEqual()
   },
 
   toggleDefaultRoles: () => {
@@ -123,7 +118,6 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
         }
       }
     }))
-    get().updateIsPlayersAndRolesEqual()
   },
 
   decRoleCount: (roleSlug: string) => {
@@ -138,12 +132,16 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
         }
       }
     }))
-    get().updateIsPlayersAndRolesEqual()
   },
 
   // Sélecteurs
   getTotalSelectedRoles: () => {
     return Object.values(get().selectedRoles).reduce((sum, item) => sum + item.count, 0)
+  },
+
+  isPlayersAndRolesEqual: () => {
+    const { getTotalSelectedRoles, getValidPlayersCount } = get()
+    return getTotalSelectedRoles() === getValidPlayersCount()
   },
 
   getRole: (roleSlug: string) => {
@@ -179,10 +177,5 @@ export const createRoleSlice: StateCreator<AppState, [], [], RoleSlice> = (set, 
 
     // Mettre à jour l'état
     set((state) => ({ ...state, playerRoles: newPlayerRoles }))
-  },
-
-  updateIsPlayersAndRolesEqual: () => {
-    const { getTotalSelectedRoles, getValidPlayersCount } = get()
-    set({ isPlayersAndRolesEqual: getTotalSelectedRoles() === getValidPlayersCount() })
   },
 }) 

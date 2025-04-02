@@ -52,9 +52,8 @@ const createMockState = (players = mockPlayers): AppState => ({
   getRole: (slug: string) => mockRoles.find(r => r.slug === slug),
   getTotalSelectedRoles: () => 10,
   playerRoles: [],
-  isPlayersAndRolesEqual: true,
+  isPlayersAndRolesEqual: () => players.length === 10,
   randomRolesAttribution: () => { },
-  updateIsPlayersAndRolesEqual: () => { },
   toggleDefaultRoles: () => { },
 
   // GameSlice
