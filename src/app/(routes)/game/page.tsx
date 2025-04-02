@@ -4,10 +4,11 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { PlayersList } from '@/app/(routes)/game/PlayersList'
-import { RolesList } from '@/app/(routes)/game/RolesList'
+// import { RolesList } from '@/app/(routes)/game/RolesList'
 import { useAppStore } from '@/store/index'
 import { PlayersRolesCheck } from '@/app/(routes)/game/PlayersRolesCheck'
 import { StickyFooter } from '@/app/(routes)/StickyFooter'
+import { DifficultySelector } from '@/app/(routes)/game/DifficultySelector'
 // import { ThemeToggle } from '@/components/ThemeToggle'
 
 export default function Home() {
@@ -27,7 +28,9 @@ export default function Home() {
 
       <div className="grid grid-cols-1 gap-6">
         <PlayersList />
-        <RolesList />
+        <div className="h-[1px] bg-muted-foreground/20" />
+        <DifficultySelector />
+        {/* <RolesList /> */}
       </div>
 
       <StickyFooter>
