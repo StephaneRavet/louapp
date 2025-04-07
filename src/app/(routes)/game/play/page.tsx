@@ -31,7 +31,7 @@ function GamePage() {
         <Chat />
       </div>
       <StickyFooter className="flex justify-end">
-        <Button onClick={nextGameStep}>{buttonCaption}</Button>
+        <Button onClick={nextGameStep} className='select-none'>{buttonCaption}</Button>
       </StickyFooter>
     </div>
   )
