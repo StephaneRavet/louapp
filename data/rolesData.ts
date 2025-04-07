@@ -24,7 +24,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: false,
     shortName: "Villageois",
-    level: 1
+    level: 1,
+    code: "vil",
   },
   loup: {
     name: "Le Loup",
@@ -33,7 +34,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.loup,
     isUnique: false,
     shortName: "Loup",
-    level: 1
+    level: 1,
+    code: "L",
   },
   boulet: {
     name: "Le Boulet",
@@ -42,7 +44,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Boulet",
-    level: 1
+    level: 1,
+    code: "bou",
   },
   // Rôles simples (niveau 2)
   medecin: {
@@ -52,7 +55,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Médecin",
-    level: 2
+    level: 2,
+    code: "méd",
   },
   chasseur: {
     name: "Le Chasseur",
@@ -61,7 +65,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Chasseur",
-    level: 2
+    level: 2,
+    code: "cha",
   },
   protecteur: {
     name: "Le Protecteur",
@@ -70,7 +75,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Protecteur",
-    level: 2
+    level: 2,
+    code: "pro",
   },
   espion: {
     name: "L'Espion",
@@ -79,7 +85,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Espion",
-    level: 2
+    level: 2,
+    code: "esp",
   },
   loup_bleu: {
     name: "Le Loup Bleu",
@@ -88,7 +95,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.loup,
     isUnique: true,
     shortName: "Loup Bleu",
-    level: 2
+    level: 2,
+    code: "LB",
   },
   // Rôles moyens (niveau 3)
   juge: {
@@ -98,7 +106,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Juge",
-    level: 3
+    level: 3,
+    code: "jug",
   },
   contagieux: {
     name: "Le Contagieux",
@@ -107,7 +116,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Contagieux",
-    level: 3
+    level: 3,
+    code: "cont",
   },
   serveur: {
     name: "Le Serveur",
@@ -116,7 +126,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Serveur",
-    level: 3
+    level: 3,
+    code: "serv",
   },
   corbeau: {
     name: "Le Corbeau",
@@ -125,7 +136,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Corbeau",
-    level: 3
+    level: 3,
+    code: "cor",
   },
   veilleur: {
     name: "Le Veilleur",
@@ -134,7 +146,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Veilleur",
-    level: 3
+    level: 3,
+    code: "vei",
   },
   detective: {
     name: "Le Détective",
@@ -143,7 +156,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Détective",
-    level: 3
+    level: 3,
+    code: "det",
   },
   loup_blanc: {
     name: "Le Loup Blanc",
@@ -152,7 +166,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.loup,
     isUnique: true,
     shortName: "Loup Blanc",
-    level: 3
+    level: 3,
+    code: "LW",
   },
   raciste: {
     name: "Le Raciste",
@@ -161,7 +176,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Raciste",
-    level: 3
+    level: 3,
+    code: "rac",
   },
   // Rôles avancés (niveau 4)
   regent: {
@@ -171,7 +187,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Régent",
-    level: 4
+    level: 4,
+    code: "rég",
   },
   boulanger: {
     name: "Le Boulanger",
@@ -180,7 +197,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Boulanger",
-    level: 4
+    level: 4,
+    code: "blg",
   },
   barbier: {
     name: "Le Barbier",
@@ -189,7 +207,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Barbier",
-    level: 4
+    level: 4,
+    code: "barb",
   },
   chevalier: {
     name: "Le Chevalier",
@@ -198,7 +217,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Chevalier",
-    level: 4
+    level: 4,
+    code: "chev",
   },
   jumeau: {
     name: "Le Jumeau",
@@ -207,7 +227,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Jumeau",
-    level: 4
+    level: 4,
+    code: "jum",
   },
   // Rôles complexes (niveau 5)
   renard: {
@@ -217,7 +238,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Renard",
-    level: 5
+    level: 5,
+    code: "ren",
   },
   troubadour: {
     name: "Le Troubadour",
@@ -226,7 +248,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Troubadour",
-    level: 5
+    level: 5,
+    code: "trou",
   },
   geolier: {
     name: "Le Geôlier",
@@ -235,7 +258,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Geôlier",
-    level: 5
+    level: 5,
+    code: "geô",
   },
   petit_loup: {
     name: "Le Petit Loup",
@@ -244,7 +268,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.loup,
     isUnique: true,
     shortName: "Petit Loup",
-    level: 5
+    level: 5,
+    code: "PL",
   },
   grand_mechant_loup: {
     name: "Le Grand Méchant Loup",
@@ -253,7 +278,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.loup,
     isUnique: true,
     shortName: "Grand Méchant Loup",
-    level: 5
+    level: 5,
+    code: "GML",
   },
   ermite: {
     name: "L'Ermite",
@@ -262,7 +288,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Ermite",
-    level: 5
+    level: 5,
+    code: "erm",
   },
   avocat: {
     name: "L'avocat",
@@ -271,7 +298,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Avocat",
-    level: 5
+    level: 5,
+    code: "avo",
   },
   // Rôles très complexes (niveau 6)
   joker: {
@@ -281,7 +309,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.multi,
     isUnique: true,
     shortName: "Joker",
-    level: 6
+    level: 6,
+    code: "jok",
   },
   unique: {
     name: "L'Unique",
@@ -290,7 +319,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.multi,
     isUnique: true,
     shortName: "Unique",
-    level: 6
+    level: 6,
+    code: "uni",
   },
   servante_devouee: {
     name: "La Servante dévouée",
@@ -299,7 +329,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.multi,
     isUnique: true,
     shortName: "Servante dévouée",
-    level: 6
+    level: 6,
+    code: "SD",
   },
   interprete: {
     name: "L'Interprète",
@@ -308,7 +339,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Interprète",
-    level: 6
+    level: 6,
+    code: "int",
   },
   marieur: {
     name: "Le Marieur",
@@ -317,7 +349,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Marieur",
-    level: 6
+    level: 6,
+    code: "mar",
   },
   fanatique: {
     name: "Le Fanatique",
@@ -326,7 +359,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.multi,
     isUnique: true,
     shortName: "Fanatique",
-    level: 6
+    level: 6,
+    code: "fan",
   },
   chien_loup: {
     name: "Le Chien-Loup",
@@ -335,7 +369,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.loup,
     isUnique: true,
     shortName: "Chien-Loup",
-    level: 6
+    level: 6,
+    code: "CL",
   },
   voleur: {
     name: "Le Voleur",
@@ -344,7 +379,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Voleur",
-    level: 6
+    level: 6,
+    code: "vol",
   },
   pere_des_loups: {
     name: "Le Père des loups",
@@ -352,8 +388,9 @@ export const rolesData: Record<string, RoleData> = {
     description: "Il se réveille chaque nuit avec la meute de loups. Il se réveille une fois de plus après la meute pour décider ou non d'ajouter la victime des loups à la meute. La victime devient Loup et conserve en plus ses compétences initiales. Une fois cet ajout effectué, le Père des Loups ne se réveille plus en solitaire.",
     team: TeamType.loup,
     isUnique: true,
-    shortName: "Père des loups",
-    level: 6
+    shortName: "Père des Loups",
+    level: 6,
+    code: "PdL",
   },
   grande_louve: {
     name: "La Grande Louve",
@@ -362,7 +399,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Grande Louve",
-    level: 6
+    level: 6,
+    code: "GL",
   },
   marchand_de_sable: {
     name: "Le Marchand de sable",
@@ -371,7 +409,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.independant,
     isUnique: true,
     shortName: "Marchand de sable",
-    level: 6
+    level: 6,
+    code: "MS",
   },
   agent: {
     name: "L'Agent",
@@ -380,7 +419,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.independant,
     isUnique: true,
     shortName: "Agent",
-    level: 6
+    level: 6,
+    code: "agen",
   },
   livreur: {
     name: "Le Livreur",
@@ -389,7 +429,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Livreur",
-    level: 6
+    level: 6,
+    code: "liv",
   },
   traitre: {
     name: "Le Traitre",
@@ -398,7 +439,8 @@ export const rolesData: Record<string, RoleData> = {
     team: TeamType.village,
     isUnique: true,
     shortName: "Traitre",
-    level: 6
+    level: 6,
+    code: "trai",
   }
 };
 

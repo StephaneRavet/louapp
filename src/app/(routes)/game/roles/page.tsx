@@ -35,7 +35,7 @@ function RolesAttributionPage() {
           variant="secondary"
           className="flex-1"
         >
-          Relancer aléatoire
+          🎲Relancer aléatoire
         </Button>
 
         <Button
