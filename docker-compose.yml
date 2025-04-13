@@ -1,5 +1,6 @@
 services:
   louap:
+    name: louap
     build:
       context: .
       dockerfile: Dockerfile
@@ -39,7 +40,7 @@ services:
       - "traefik.http.middlewares.louap-headers.headers.forceSTSHeader=true"
       - "traefik.http.routers.louap.middlewares=louap-headers"
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:3000/api/health"]
+      test: ["CMD", "wget", "--spider", "http://louap:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
