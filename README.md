@@ -1,54 +1,88 @@
 # Le jeu du Loup
 
-Application d'aide pour les maîtres du jeu du Loup. Cette application permet de gérer facilement les rôles, les phases de jeu et les actions des joueurs.
+Application d'aide pour les maîtres du jeu du Loup : rôles, étapes de jeu et difficultés.
 
-## Pour commencer
+## Démarrer en local
 
-Lancez le serveur de développement :
+### Prérequis
+
+- [Node.js](https://nodejs.org/) 20 ou plus récent
+- `pnpm` ; Corepack est inclus avec les versions récentes de Node.js
+
+### Installation
+
+```bash
+git clone <URL_DU_DEPOT>
+cd louapp
+corepack enable
+pnpm install
+```
+
+### Configuration
+
+Créer un fichier `.env` à la racine :
+
+```dotenv
+DATABASE_URL="file:./dev.db"
+NEXT_PUBLIC_API_URL=""
+```
+
+La base SQLite locale est stockée dans `prisma/dev.db`.
+
+### Lancer l'application
 
 ```bash
 pnpm dev
 ```
 
-Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir le résultat.
+Cette commande génère automatiquement le client Prisma requis, puis démarre Next.js. Ouvrir ensuite [http://localhost:3000](http://localhost:3000).
 
-## Technologies utilisées
+Si les données locales doivent être réinitialisées, utiliser :
 
-- Next.js 15
-- Prisma
-- TailwindCSS
-- shadcn/ui
-- TypeScript
+```bash
+pnpm db:seed
+```
 
-## Scripts disponibles
+Attention : cette commande remet à zéro la base locale avant de la remplir avec les données de démonstration.
 
-- `pnpm dev` : Lance le serveur de développement
-- `pnpm build` : Construit l'application pour la production
-- `pnpm start` : Lance l'application en production
-- `pnpm lint` : Vérifie le code avec ESLint
-- `pnpm test` : Lance les tests
-- `pnpm db:seed` : Initialise la base de données avec les données de test
-- `pnpm db:studio` : Lance Prisma Studio pour visualiser la base de données
+## Vérifier le projet
+
+```bash
+pnpm lint
+pnpm test
+pnpm build
+```
+
+## Scripts utiles
+
+| Commande | Usage |
+| --- | --- |
+| `pnpm dev` | Génère Prisma et lance le serveur de développement |
+| `pnpm build` | Génère Prisma et construit l'application de production |
+| `pnpm start` | Lance le build de production |
+| `pnpm lint` | Vérifie le code avec ESLint |
+| `pnpm test` | Lance les tests Jest |
+| `pnpm db:seed` | Réinitialise et peuple la base locale |
+| `pnpm db:studio` | Ouvre Prisma Studio pour consulter la base |
+| `pnpm docker:up` | Construit et démarre le conteneur Docker |
+| `pnpm docker:down` | Arrête le conteneur Docker |
+| `pnpm docker:logs` | Affiche les journaux Docker |
 
 ## Structure du projet
 
-- `/src/app` : Pages et routes de l'application
-- `/src/components` : Composants React réutilisables
-- `/src/lib` : Utilitaires et configurations
-- `/prisma` : Schéma et migrations de la base de données
-- `/public` : Fichiers statiques
+| Dossier | Contenu |
+| --- | --- |
+| `src/app` | Pages et routes API Next.js |
+| `src/components` | Composants React réutilisables |
+| `src/lib` | Utilitaires et accès Prisma |
+| `src/store` | État de l'application |
+| `prisma` | Schéma, base SQLite locale et script de seed |
+| `data` | Données de démonstration |
+| `public` | Fichiers statiques |
 
-## Learn More
+## Technologies
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 15 et React 19
+- Prisma avec SQLite
+- TypeScript
+- Tailwind CSS et shadcn/ui

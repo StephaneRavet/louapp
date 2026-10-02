@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { X, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { useAppStore } from '@/store/index'
 
 export function PlayersList() {
@@ -36,6 +36,8 @@ export function PlayersList() {
     }
   }
 
+  // Focalise le premier champ vide au montage uniquement.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(focusEmptyInput, [])
 
   useEffect(focusEmptyInput, [players])

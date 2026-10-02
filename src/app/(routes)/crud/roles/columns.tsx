@@ -17,7 +17,7 @@ export type Role = {
   id: number
   name: string
   description: string
-  isActive: boolean
+  isActive?: boolean
 }
 
 export const columns: ColumnDef<Role>[] = [
@@ -66,7 +66,7 @@ export const columns: ColumnDef<Role>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(role.id.toString())}
             >
-              Copier l'ID
+              Copier l&apos;ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Voir les détails</DropdownMenuItem>

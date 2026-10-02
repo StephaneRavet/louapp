@@ -1,4 +1,3 @@
-import { Role } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { DataTable } from '@/components/ui/data-table'
 import { columns } from './columns'

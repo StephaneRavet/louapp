@@ -1,11 +1,11 @@
-import { Role, TeamType } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { RoleForm } from '@/components/roles/RoleForm'
 import { notFound } from 'next/navigation'
 
-export default async function EditRolePage({ params }: { params: { id: string } }) {
+export default async function EditRolePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const role = await prisma.role.findUnique({
-    where: { id: parseInt(params.id) }
+    where: { id: parseInt(id) }
   })
 
   if (!role) {

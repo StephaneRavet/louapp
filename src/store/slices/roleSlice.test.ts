@@ -2,7 +2,6 @@ import { createRoleSlice } from '@/store/slices/roleSlice'
 import type { StoreApi } from 'zustand'
 import { create } from 'zustand'
 import { createMockRole, rolesData } from '@/data/rolesData';
-import { TeamType } from '@prisma/client'
 import type { AppState } from '@/store/index'
 
 // Mocker la fonction shuffle pour avoir un comportement déterministe

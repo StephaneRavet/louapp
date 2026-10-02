@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Role } from '@prisma/client'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Le nom est requis'),
@@ -25,7 +24,6 @@ const formSchema = z.object({
 })
 
 type DifficultyFormProps = {
-  roles: Role[]
   initialData?: {
     name: string
     slug: string
@@ -35,7 +33,7 @@ type DifficultyFormProps = {
   onSubmit: (data: z.infer<typeof formSchema>) => void
 }
 
-export function DifficultyForm({ roles, initialData, onSubmit }: DifficultyFormProps) {
+export function DifficultyForm({ initialData, onSubmit }: DifficultyFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {

@@ -1,4 +1,4 @@
-import type { Difficulty, DifficultyRole } from '@prisma/client'
+import type { Difficulty } from '@prisma/client'
 
 export type CreateDifficultyDto = Omit<Difficulty, 'id' | 'createdAt' | 'updatedAt' | 'roles'> & {
   roles: {
@@ -7,4 +7,5 @@ export type CreateDifficultyDto = Omit<Difficulty, 'id' | 'createdAt' | 'updated
   }[]
 }
 
-export type UpdateDifficultyDto = Partial<CreateDifficultyDto> 
+export type UpdateDifficultyDto = Partial<Omit<CreateDifficultyDto, 'roles'>> &
+  Pick<CreateDifficultyDto, 'roles'>

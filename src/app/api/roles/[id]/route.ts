@@ -4,11 +4,12 @@ import { UpdateRoleDto } from '@/app/api/roles/roles.types'
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const role = await prisma.role.findUnique({
-      where: { id: parseInt(params.id) }
+      where: { id: parseInt(id) }
     })
 
     if (!role) {
@@ -27,12 +28,13 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body: UpdateRoleDto = await request.json()
     const role = await prisma.role.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: body
     })
 
@@ -48,11 +50,12 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await prisma.role.delete({
-      where: { id: parseInt(params.id) }
+      where: { id: parseInt(id) }
     })
 
     return NextResponse.json({ message: 'Rôle supprimé avec succès' })

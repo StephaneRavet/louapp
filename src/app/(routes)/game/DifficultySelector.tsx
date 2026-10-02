@@ -13,10 +13,6 @@ export function DifficultySelector() {
   }
 
   const currentDifficulty = difficulties.find(d => d.slug === difficulty) as DifficultyWithRoles
-  const rolesDescription = currentDifficulty?.roles
-    .map(dr => `${dr.quantity} ${dr.role.name}`)
-    .join(', ')
-
   return (
     <>
       <div className="flex items-center justify-between">
